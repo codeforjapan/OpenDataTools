@@ -2,7 +2,6 @@ name: Lint n Test
 on: [ push, pull_request ]
 defaults:
   run:
-    shell: bash
     working-directory: datamanager/nodejs
 jobs:
   build:
