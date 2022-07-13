@@ -1,0 +1,16 @@
+name: Lint n Test
+on: [ push, pull_request ]
+defaults:
+  run:
+    shell: bash
+    working-directory: datamanager/nodejs
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn test
