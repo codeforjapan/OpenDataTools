@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   root: true,
   env: {
@@ -84,7 +85,7 @@ module.exports = {
     'max-len': [
       'error',
       {
-        code: 80,
+        code: 120,
         ignoreTrailingComments: true,
         ignoreUrls: true,
         ignoreStrings: true,

@@ -1,27 +1,22 @@
-import Encoding from 'encoding-japanese';
+import EncodingJapanese from 'encoding-japanese';
 
-export default class EncodingConverter {
-  private static convert(data: Buffer, to: Encoding.Encoding): number[] {
+export default class Encoding {
+  public static convert(data: Buffer, to: EncodingJapanese.Encoding): Uint8Array {
     const code = new Uint8Array(data);
-    const originalEncoding = Encoding.detect(code) as Encoding.Encoding;
-    const convertedArray: number[] = Encoding.convert(code, {
+    const originalEncoding = EncodingJapanese.detect(code) as EncodingJapanese.Encoding;
+    const convertedArray: number[] = EncodingJapanese.convert(code, {
       to,
       from: originalEncoding,
     });
-    return convertedArray;
-  }
-  public static asArray(data: Buffer, to: Encoding.Encoding): number[] {
-    const array = EncodingConverter.convert(data, to);
+    const array = new Uint8Array(convertedArray);
     return array;
   }
-  public static asString(data: Buffer, to: Encoding.Encoding): string {
-    const array = EncodingConverter.convert(data, to);
-    const string = Encoding.codeToString(array);
+  public static toString(data: Buffer): string {
+    const code = new Uint8Array(data);
+    const originalEncoding = EncodingJapanese.detect(code) as EncodingJapanese.Encoding;
+    const decoder = new TextDecoder(originalEncoding);
+    // const convertedArray = Encoding.convertEncoding(data, 'UNICODE');
+    const string = decoder.decode(data);
     return string;
-  }
-  public static asBuffer(data: Buffer, to: Encoding.Encoding): Buffer {
-    const array = EncodingConverter.convert(data, to);
-    const buffer = Buffer.from(array);
-    return buffer;
   }
 };
