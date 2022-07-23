@@ -6,10 +6,10 @@
 	"scripts": {
 		"test": "jest --coverage",
 		"test:watch": "jest --watch",
-    "lint": "lint:eslint",
+    "lint": "yarn lint:eslint",
 		"lint:eslint": "eslint ./ --ext '**/*.{js,jsx,ts,tsx}'",
     "lint:stylelint": "stylelint '**/*.{css,scss,sass}'",
-    "format": "format:eslint && format:prettier",
+    "format": "yarn format:eslint && yarn format:prettier",
 		"format:eslint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
     "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'"
 	},
