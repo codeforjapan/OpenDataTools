@@ -11,7 +11,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'prettier'
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -30,7 +30,7 @@ module.exports = {
     },
   },
   rules: {
-    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/prop-types': ['off'],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
