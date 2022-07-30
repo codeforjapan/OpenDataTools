@@ -6,8 +6,13 @@
 	"scripts": {
 		"test": "jest --coverage",
 		"test:watch": "jest --watch",
-		"lint": "eslint ./ --ext '**/*.{js,jsx,ts,tsx}' && stylelint '**/*.{css,scss,sass}'",
-		"format": "eslint --fix '**/*.{js,jsx,ts,tsx}' && prettier --write '**/*.{js,jsx,ts,tsx}'"
+    "lint": "yarn lint:eslint",
+		"lint:eslint": "eslint ./ --ext '**/*.{js,jsx,ts,tsx}'",
+    "lint:stylelint": "stylelint '**/*.{css,scss,sass}'",
+    "format": "yarn format:eslint && yarn format:prettier",
+		"format:eslint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
+    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
+    "format:stylelint": "stylelint --fix '**/*.{css,scss,sass}'"
 	},
 	"devDependencies": {
 		"@types/encoding-japanese": "^2.0.0",
