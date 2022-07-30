@@ -60,4 +60,9 @@ describe('items/validator/latlng', () => {
 			'経度が日本の範囲から外れている可能性があります。'
 		)
 	})
+
+	test('緯度・経度が日本の範囲に入っているか', () => {
+		//検討
+		//http://turfjs.org/docs/#booleanPointInPolygonを使えば良さそう。
+	})
 })
