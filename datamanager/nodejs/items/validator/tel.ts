@@ -4,10 +4,10 @@ class ItemValidatorTel {
       throw new Error('電話番号は文字列である必要があります。');
     }
 
-    const matchesDomesticPhoneFree = data.match(/^0(\d+-??)+\d+$/)
-    const matchesDomesticPhone = data.match(/^\(0\d+\)(\d+-??)+\d+$/)
-    const matchesInternationalPhone = data.match(/^\+[1-9]+\s\([1-9]+\)(\d+-??)+\d+$/)
-    const matchesNumber = data.match(/\d+/g)
+    const matchesDomesticPhoneFree = data.match(/^0(\d+-??)+\d+$/);
+    const matchesDomesticPhone = data.match(/^\(0\d+\)(\d+-??)+\d+$/);
+    const matchesInternationalPhone = data.match(/^\+[1-9]+\s\([1-9]+\)(\d+-??)+\d+$/);
+    const matchesNumber = data.match(/\d+/g);
 
     if (
       !matchesDomesticPhoneFree &&
