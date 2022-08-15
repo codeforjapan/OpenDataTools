@@ -6,7 +6,7 @@ class ItemValidatorTel {
 
     const matchesDomesticPhoneFree = data.match(/^0(\d+-??)+\d+$/);
     const matchesDomesticPhone = data.match(/^\(0\d+\)(\d+-??)+\d+$/);
-    const matchesInternationalPhone = data.match(/^\+[1-9]+\s\([1-9]+\)(\d+-??)+\d+$/);
+    const matchesInternationalPhone = data.match(/^\+[1-9]\d*\s\([1-9]\d*\)(\d+-??)+\d+$/);
     const matchesNumber = data.match(/\d+/g);
 
     if (
