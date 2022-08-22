@@ -7,13 +7,9 @@ import { Button } from '../components/Elements/Button';
 
 const ErrorFallback = () => {
   return (
-    <div
-      role="alert"
-    >
+    <div role="alert">
       <h2>Ooops, something went wrong :( </h2>
-      <Button onClick={() => window.location.assign(window.location.origin)}>
-        Refresh
-      </Button>
+      <Button onClick={() => window.location.assign(window.location.origin)}>Refresh</Button>
     </div>
   );
 };

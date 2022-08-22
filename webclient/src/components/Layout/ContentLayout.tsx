@@ -9,7 +9,7 @@ const titleStyle = css`
   color: var(--color-white);
   background-color: var(--color-black);
   padding: 15px 30px;
-`
+`;
 
 type ContentLayoutProps = {
   children: React.ReactNode;

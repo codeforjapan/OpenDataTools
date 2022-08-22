@@ -16,7 +16,7 @@ const buttonStyle = css`
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-`
+`;
 
 const styleTypes = {
   primary: css`
@@ -34,7 +34,7 @@ const styleTypes = {
     color: var(--color-primary);
     box-shadow: 0 0 0 2px currentColor inset;
   `,
-}
+};
 
 type IconProps =
   | { startIcon: React.ReactElement; endIcon?: never }
@@ -48,24 +48,19 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      type = 'button',
-      styleType= 'primary',
-      isLoading = false,
-      startIcon,
-      endIcon,
-      ...props
-    },
+    { type = 'button', styleType = 'primary', isLoading = false, startIcon, endIcon, ...props },
     ref
   ) => {
     return (
-      <button
-        ref={ref}
-        type={type}
-        css={[buttonStyle, styleTypes[styleType]]}
-        {...props}
-      >
-        {isLoading && <Spinner size="sm" css={css`margin-right: 8px`} />}
+      <button ref={ref} type={type} css={[buttonStyle, styleTypes[styleType]]} {...props}>
+        {isLoading && (
+          <Spinner
+            size="sm"
+            css={css`
+              margin-right: 8px;
+            `}
+          />
+        )}
         {!isLoading && startIcon}
         <span>{props.children}</span> {!isLoading && endIcon}
       </button>

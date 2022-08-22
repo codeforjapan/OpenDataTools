@@ -5,13 +5,13 @@ import { NavLink } from 'react-router-dom';
 
 const globalStyle = css`
   :root {
-    --color-primary: #074EE8;
-    --color-gray: #D9D9D9;
-    --color-bg: #F5F5F5;
+    --color-primary: #074ee8;
+    --color-gray: #d9d9d9;
+    --color-bg: #f5f5f5;
     --color-black: #222;
-    --color-white: #FFF;
-    --color-focus: #FFD73E;
-    --color-error: #E24242;
+    --color-white: #fff;
+    --color-focus: #ffd73e;
+    --color-error: #e24242;
   }
 
   html {
@@ -46,25 +46,25 @@ const globalStyle = css`
     display: block !important;
     visibility: visible !important;
   }
-`
+`;
 
 const wrapperStyle = css`
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
   min-height: 100vh;
-`
+`;
 
 const commonElementStyle = css`
   background-color: var(--color-gray);
   padding: 30px;
-`
+`;
 
 const mainContainerStyle = css`
   margin: 0 auto;
   width: 90%;
   max-width: 1200px;
-`
+`;
 
 type NavigationItem = {
   name: string;
@@ -79,14 +79,18 @@ const Navigation = () => {
   ].filter(Boolean) as NavigationItem[];
 
   return (
-    <div css={css`display: flex`}>
+    <div
+      css={css`
+        display: flex;
+      `}
+    >
       {navigation.map((item, index) => (
-        <div css={css`margin: 0 8px`}>
-          <NavLink
-            end={index === 0}
-            key={item.name}
-            to={item.to}
-          >
+        <div
+          css={css`
+            margin: 0 8px;
+          `}
+        >
+          <NavLink end={index === 0} key={item.name} to={item.to}>
             {item.name}
           </NavLink>
         </div>
@@ -104,19 +108,19 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <div css={wrapperStyle}>
       <Global styles={globalStyle} />
       <header css={commonElementStyle}>
-        <div css={css`
-          display: flex;
-          justify-content: space-between;
-        `}>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+          `}
+        >
           <div>header</div>
           <Navigation />
         </div>
       </header>
       <main css={mainContainerStyle}>{children}</main>
       <footer css={commonElementStyle}>
-        <div>
-          footer
-        </div>
+        <div>footer</div>
       </footer>
     </div>
   );

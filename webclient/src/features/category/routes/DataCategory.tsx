@@ -6,9 +6,11 @@ import { Button } from '../../../components/Elements/Button';
 export const DataCategory = () => {
   return (
     <ContentLayout title="データ種別を選択">
-      <div css={css`
-        display: flex;
-      `}>
+      <div
+        css={css`
+          display: flex;
+        `}
+      >
         <Button isLoading={true}>primary</Button>
         <Button styleType="error">error</Button>
         <Button styleType="disable">disable</Button>

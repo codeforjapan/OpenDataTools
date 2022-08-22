@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react'
+import { render, waitFor, screen } from '@testing-library/react';
 import { Head } from '../Head';
 
 test('loads items eventually', async () => {
@@ -12,4 +12,4 @@ test('loads items eventually', async () => {
   const metaDescription = document.querySelector("meta[name='description']");
 
   expect(metaDescription?.getAttribute('content')).toEqual(description);
-})
+});
