@@ -86,11 +86,12 @@ const Navigation = () => {
     >
       {navigation.map((item, index) => (
         <div
+          key={item.name}
           css={css`
             margin: 0 8px;
           `}
         >
-          <NavLink end={index === 0} key={item.name} to={item.to}>
+          <NavLink end={index === 0} to={item.to}>
             {item.name}
           </NavLink>
         </div>
