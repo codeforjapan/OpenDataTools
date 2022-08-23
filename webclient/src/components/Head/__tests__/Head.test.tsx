@@ -1,7 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { Head } from '../Head';
 
-test('loads items eventually', async () => {
+test('should add proper page title and meta description', async () => {
   const title = 'Hello World';
   const titleSuffix = ' | Bulletproof React';
   const description = 'This is a description';
