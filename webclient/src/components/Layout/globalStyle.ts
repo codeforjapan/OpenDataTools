@@ -17,6 +17,8 @@ export const globalStyle = css`
   }
 
   body {
+    font-family: 'Hiragino Sans', 'Meiryo', 'Source Han Sans', 'Noto Sans CJK JP', 'Yu Gothic',
+      sans-serif;
     background-color: var(--color-bg);
   }
 
