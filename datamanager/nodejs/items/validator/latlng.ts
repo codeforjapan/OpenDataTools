@@ -1,4 +1,4 @@
-class ItemValidatorLatLng {
+export class ItemValidatorLatLng {
   validateDataType(data: any) {
     if (typeof data != 'string') {
       throw new Error('緯度、経度は文字列である必要があります。');
@@ -33,5 +33,3 @@ class ItemValidatorLatLng {
     return;
   }
 }
-
-export default ItemValidatorLatLng;

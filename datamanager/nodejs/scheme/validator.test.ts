@@ -1,4 +1,4 @@
-import SchemeValidater from './validator';
+import { SchemeValidater } from './validator';
 
 describe('scheme validator', () => {
   const schemeValidater = new SchemeValidater();
