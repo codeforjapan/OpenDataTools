@@ -6,6 +6,10 @@ import { lazyImport } from '../utils/lazyImport';
 
 const { FileUpload } = lazyImport(() => import('../features/upload'), 'FileUpload');
 const { DataCategory } = lazyImport(() => import('../features/category'), 'DataCategory');
+const { DataManagertest } = lazyImport(
+  () => import('../features/datamanagertest'),
+  'DataManagertest'
+);
 
 const App = () => {
   return (
@@ -24,6 +28,7 @@ export const publicRoutes = [
     children: [
       { path: '/', element: <FileUpload /> },
       { path: '/select-category', element: <DataCategory /> },
+      { path: '/datamanagertest', element: <DataManagertest /> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },
