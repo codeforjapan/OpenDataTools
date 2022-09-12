@@ -19,13 +19,13 @@ describe('items/validator/time', () => {
   });
 
   test('hhが正しい形式か', () => {
-    expect(() => timeValidator.validateDataType('e6:00')).toThrow('時間が数値として認識されません。');
-    expect(() => timeValidator.validateDataType('-4:0')).toThrow('時間は0以上の数値である必要があります。');
+    expect(() => timeValidator.validateDataType('e6:00')).toThrow('時間が数値として認識されないか0以下の数値です。');
+    expect(() => timeValidator.validateDataType('-4:00')).toThrow('時間が数値として認識されないか0以下の数値です。');
   });
 
   test('mmが正しい形式か', () => {
-    expect(() => timeValidator.validateDataType('06:0f')).toThrow('分が数値として認識されません。');
+    expect(() => timeValidator.validateDataType('06:0f')).toThrow('分が数値として認識されないか0以下の数値です。');
     expect(() => timeValidator.validateDataType('00:66')).toThrow('分は0~60の数値である必要があります。');
-    expect(() => timeValidator.validateDataType('00:-8')).toThrow('分は0~60の数値である必要があります。');
+    expect(() => timeValidator.validateDataType('00:-8')).toThrow('分が数値として認識されないか0以下の数値です。');
   });
 });
