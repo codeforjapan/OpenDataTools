@@ -28,7 +28,6 @@ export class SchemeFormatterItemLabel {
     urk: { collectValue: 'URL', whiteList: ['url'] },
     other: { collectValue: '備考', whiteList: ['補足'] },
   };
-
   format(inputLabel: string) {
     const formattedResult = { success: false, recommend: false, collectedLabel: inputLabel };
 

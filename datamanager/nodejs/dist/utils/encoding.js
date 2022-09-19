@@ -25,4 +25,3 @@ class Encoding {
     }
 }
 exports.default = Encoding;
-;
