@@ -19,4 +19,4 @@ export default class Encoding {
     const string = decoder.decode(data);
     return string;
   }
-};
+}
