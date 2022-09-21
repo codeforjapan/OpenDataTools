@@ -9,17 +9,13 @@ class ItemValidatorTel {
     const matchesInternationalPhone = data.match(/^\+[1-9]\d*\s\([1-9]\d*\)(\d+-??)+\d+$/);
     const matchesNumber = data.match(/\d+/g);
 
-    if (
-      !matchesDomesticPhoneFree &&
-      !matchesDomesticPhone &&
-      !matchesInternationalPhone
-    ) {
-      throw new Error('電話番号は国内電話の場合は市外局番から始まり、国際電話の場合は「+国番号」から始まる必要があります。セパレータには半角ハイフン「-」を使用します。');
+    if (!matchesDomesticPhoneFree && !matchesDomesticPhone && !matchesInternationalPhone) {
+      throw new Error(
+        '電話番号は国内電話の場合は市外局番から始まり、国際電話の場合は「+国番号」から始まる必要があります。セパレータには半角ハイフン「-」を使用します。',
+      );
     }
 
-    if (
-      matchesNumber && (matchesNumber.length < 10 || matchesNumber.length > 15)
-    ) {
+    if (matchesNumber && (matchesNumber.length < 10 || matchesNumber.length > 15)) {
       throw new Error('電話番号の数字は10桁以上15桁以内である必要があります。');
     }
     return;
