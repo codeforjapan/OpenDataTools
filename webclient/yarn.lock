@@ -1263,6 +1263,13 @@
   dependencies:
     "@chakra-ui/shared-utils" "2.0.1"
 
+"@chakra-ui/icons@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-2.0.10.tgz#61aeb44c913c10e7ff77addc798494e50d66c760"
+  integrity sha512-hxMspvysOay2NsJyadM611F/Y4vVzJU/YkXTxsyBjm6v/DbENhpVmPnUf+kwwyl7dINNb9iOF+kuGxnuIEO1Tw==
+  dependencies:
+    "@chakra-ui/icon" "3.0.10"
+
 "@chakra-ui/image@2.0.10":
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-2.0.10.tgz#712c0e1c579d959225bd8316d8d8f66cbeb95bb8"
@@ -2946,6 +2953,11 @@
   dependencies:
     "@types/mime" "*"
     "@types/node" "*"
+
+"@types/sleep@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@types/sleep/-/sleep-0.0.8.tgz#56ffe4cc662a3a25f2c1bce0e1925c53bed92cba"
+  integrity sha512-uRyqhrKEq3bFlnKq72c6oaJgxPkVCf9hgPV7GI+z0N92ZybzlOF77RCEZHfXgihX0g/vEquVAtGTZZ9I+itXtA==
 
 "@types/sockjs@^0.3.33":
   version "0.3.33"
@@ -7262,6 +7274,11 @@ multicast-dns@^7.2.5:
     dns-packet "^5.2.2"
     thunky "^1.0.2"
 
+nan@^2.14.1:
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.16.0.tgz#664f43e45460fb98faf00edca0bb0d7b8dce7916"
+  integrity sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==
+
 nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
@@ -9074,6 +9091,13 @@ slash@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
+
+sleep@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/sleep/-/sleep-6.3.0.tgz#c524e0e6d8d2e45d3f14e0ba5650fbe45f2ae876"
+  integrity sha512-+WgYl951qdUlb1iS97UvQ01pkauoBK9ML9I/CMPg41v0Ze4EyMlTgFTDDo32iYj98IYqxIjDMRd+L71lawFfpQ==
+  dependencies:
+    nan "^2.14.1"
 
 sockjs@^0.3.24:
   version "0.3.24"

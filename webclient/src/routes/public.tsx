@@ -4,8 +4,15 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { MainLayout } from '../components/Layout';
 import { lazyImport } from '../utils/lazyImport';
 
+const { Home } = lazyImport(() => import('../features/home'), 'Home');
 const { FileUpload } = lazyImport(() => import('../features/upload'), 'FileUpload');
-const { DataCategory } = lazyImport(() => import('../features/category'), 'DataCategory');
+const { NormalizeLabel } = lazyImport(
+  () => import('../features/normalize-label'),
+  'NormalizeLabel'
+);
+const { AutoConvert } = lazyImport(() => import('../features/auto-convert'), 'AutoConvert');
+const { DataEditor } = lazyImport(() => import('../features/data-editor'), 'DataEditor');
+const { Map } = lazyImport(() => import('../features/map'), 'Map');
 const { DataManagertest } = lazyImport(
   () => import('../features/datamanagertest'),
   'DataManagertest'
@@ -26,8 +33,12 @@ export const publicRoutes = [
     path: '/',
     element: <App />,
     children: [
-      { path: '/', element: <FileUpload /> },
-      { path: '/select-category', element: <DataCategory /> },
+      { path: '/', element: <Home /> },
+      { path: '/upload-file', element: <FileUpload /> },
+      { path: '/normalize-label', element: <NormalizeLabel /> },
+      { path: '/auto-convert', element: <AutoConvert /> },
+      { path: '/data-editor', element: <DataEditor /> },
+      { path: '/map', element: <Map /> },
       { path: '/datamanagertest', element: <DataManagertest /> },
       { path: '*', element: <Navigate to="." /> },
     ],
