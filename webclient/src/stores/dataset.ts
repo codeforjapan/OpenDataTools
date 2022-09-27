@@ -23,7 +23,7 @@ export const datasetItemUidList = atomFamily<string[], { datasetUid: string }>({
 
 export const datasetSingleDataAtom = atomFamily<
   Dataset.SingleData,
-  { datasetUid: string; itemUid: string; uid: string }
+  { datasetUid: string; itemUid: string; singleDataUid: string }
 >({
   key: AtomKeys.datasetSingleData,
   default: { uid: null, rowValue: null, editedValue: null, error: [] },
