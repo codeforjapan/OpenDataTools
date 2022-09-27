@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Link } from '../../../components/Elements/Link';
 
 export const Test = () => {
   return (
@@ -7,6 +8,8 @@ export const Test = () => {
       css={css`
         display: flex;
       `}
-    ></div>
+    >
+      <Link />
+    </div>
   );
 };
