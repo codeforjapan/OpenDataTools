@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SchemeValidater = void 0;
-const items_list_1 = require("./items-list");
+const items_list_1 = require("./constants/items-list");
 class SchemeValidater {
     allItemsList = {
         'public-facilities': items_list_1.PUBLIC_FACILITIES_ITEMS_LIST,

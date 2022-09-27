@@ -1,15 +1,17 @@
 import { ChakraProvider } from '@chakra-ui/react';
+import { RecoilRoot } from 'recoil';
 import { AppProvider } from './providers/app';
 import { AppRoutes } from './routes';
-import { ChakraProvider } from '@chakra-ui/react';
 
 function App() {
   return (
-    <ChakraProvider>
-      <AppProvider>
-        <AppRoutes />
-      </AppProvider>
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider>
+        <AppProvider>
+          <AppRoutes />
+        </AppProvider>
+      </ChakraProvider>
+    </RecoilRoot>
   );
 }
 

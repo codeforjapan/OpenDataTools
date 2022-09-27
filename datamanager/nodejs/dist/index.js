@@ -1,9 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateLatLng = exports.validateUrl = void 0;
+exports.datasetListOfRecommendBasic = exports.itemsListOfPublicFacitities = exports.validateLatLng = exports.validateUrl = void 0;
 const latlng_1 = require("./items/validator/latlng");
 const url_1 = require("./items/validator/url");
+const items_list_1 = require("./scheme/constants/items-list");
+const dataset_1 = require("./scheme/constants/dataset");
 const validateUrl = new url_1.ItemValidatorUrl();
 exports.validateUrl = validateUrl;
 const validateLatLng = new latlng_1.ItemValidatorLatLng();
 exports.validateLatLng = validateLatLng;
+const itemsListOfPublicFacitities = items_list_1.PUBLIC_FACILITIES_ITEMS_LIST;
+exports.itemsListOfPublicFacitities = itemsListOfPublicFacitities;
+const datasetListOfRecommendBasic = dataset_1.RECOMMEND_BASIC_DATASET_LIST;
+exports.datasetListOfRecommendBasic = datasetListOfRecommendBasic;
