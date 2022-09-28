@@ -1,4 +1,4 @@
-import { AED_LOCATION_ITEMS_LIST, PUBLIC_FACILITIES_ITEMS_LIST } from './items-list';
+import { AED_LOCATION_ITEMS_LIST, PUBLIC_FACILITIES_ITEMS_LIST } from './constants/items-list';
 
 export class SchemeValidater {
   allItemsList: { [key in Dataset.category]: Scheme.ItemList[] } = {
