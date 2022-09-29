@@ -9,8 +9,8 @@ describe('items/validator/url', () => {
   });
 
   test('10桁かどうか', () => {
-    expect(() => noValidator.validateDataType('000302133322')).toThrow('NOコードは10桁である必要があります。');
-    expect(() => noValidator.validateDataType('')).toThrow('NOコードは10桁である必要があります。');
+    expect(() => noValidator.validateDataType('000302133322')).toThrow('NOコードは10桁である必要があります。10桁未満の場合、10桁になるように先頭を0で埋めてください。');
+    expect(() => noValidator.validateDataType('')).toThrow('NOコードは10桁である必要があります。10桁未満の場合、10桁になるように先頭を0で埋めてください。');
   });
 
   test('数値かどうか', () => {

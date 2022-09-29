@@ -5,7 +5,7 @@ export class ItemValidatorNo {
       throw new Error('NOコードは文字列である必要があります。');
     }
     if (data.length !== 10) {
-      throw new Error('NOコードは10桁である必要があります。');
+      throw new Error('NOコードは10桁である必要があります。10桁未満の場合、10桁になるように先頭を0で埋めてください。');
     }
     const matched = data.match(ItemValidatorNo.INT_EXP);
     if (matched !== null) {
