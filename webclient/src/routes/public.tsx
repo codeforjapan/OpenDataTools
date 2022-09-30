@@ -2,10 +2,11 @@ import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { MainLayout } from '../components/Layout';
+import { FileUpload } from '../features/upload';
 import { lazyImport } from '../utils/lazyImport';
 
 const { Home } = lazyImport(() => import('../features/home'), 'Home');
-const { FileUpload } = lazyImport(() => import('../features/upload'), 'FileUpload');
+// const { FileUpload } = lazyImport(() => import('../features/upload'), 'FileUpload');
 const { NormalizeLabel } = lazyImport(
   () => import('../features/normalize-label'),
   'NormalizeLabel'
@@ -35,7 +36,7 @@ export const publicRoutes = [
     children: [
       { path: '/', element: <Home /> },
       { path: '/upload-file', element: <FileUpload /> },
-      { path: '/normalize-label', element: <NormalizeLabel /> },
+      { path: '/:dataset_uid/normalize-label', element: <NormalizeLabel /> },
       { path: '/auto-convert', element: <AutoConvert /> },
       { path: '/data-editor', element: <DataEditor /> },
       { path: '/map', element: <Map /> },

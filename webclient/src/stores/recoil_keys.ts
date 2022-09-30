@@ -9,4 +9,8 @@ export enum AtomKeys {
   datasetSingleDataUidList = 'datasetSingleDataUidList',
 }
 
-export enum SelectorKeys {}
+export enum SelectorKeys {
+  datasetList = 'datasetList',
+  datasetItemList = 'datasetItemList',
+  datasetSingleDataList = 'datasetSingleDataList',
+}

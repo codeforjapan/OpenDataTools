@@ -1,25 +1,20 @@
 declare namespace Dataset {
   interface Dataset {
-    uid: string | null;
+    uid: string;
     datasetName: string | null;
   }
 
   interface Item {
-    uid: string | null;
+    uid: string;
     rowLabel: string | null;
-    normalizedLabel: NormalizedItemLabel;
+    normalizedLabel: string | null;
     isActive: boolean;
   }
 
   interface SingleData {
-    uid: string | null;
+    uid: string;
     rowValue: string | number | null;
     editedValue: string | number | null;
     error: { message: string; status: 'alert' | 'warning' }[];
   }
-
-  type NormalizedItemLabel =
-    | typeof import('opendatatool-datamanager').datasetListOfRecommendBasic[number]
-    | '独自定義'
-    | null;
 }

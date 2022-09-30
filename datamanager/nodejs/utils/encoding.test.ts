@@ -1,4 +1,4 @@
-import Encoding from './encoding';
+import { Encoding } from './encoding';
 
 const SJIS_BUFFER: Buffer = Buffer.from([
   130, 177, 130, 204, 131, 101, 131, 76, 131, 88, 131, 103, 130, 205, 32, 83, 74, 73, 83, 32, 130, 197, 143, 145, 130,
@@ -11,10 +11,11 @@ const UTF8_ARRAY = new Uint8Array([
 ]);
 
 describe('encoding converter', () => {
+  const encoder = new Encoding();
   test('convert Shift_JIS to UTF-8', () => {
-    const array = Encoding.convert(SJIS_BUFFER, 'UTF8');
+    const array = encoder.convert(SJIS_BUFFER, 'UTF8');
     expect(array).toEqual(UTF8_ARRAY);
-    const string = Encoding.toString(SJIS_BUFFER);
+    const string = encoder.toString(SJIS_BUFFER);
     expect(string).toBe('このテキストは SJIS で書かれています。');
   });
 });
