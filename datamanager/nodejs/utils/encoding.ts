@@ -1,7 +1,7 @@
 import EncodingJapanese from 'encoding-japanese';
 
-export default class Encoding {
-  public static convert(data: Buffer, to: EncodingJapanese.Encoding): Uint8Array {
+export class Encoding {
+  convert(data: Buffer, to: EncodingJapanese.Encoding): Uint8Array {
     const code = new Uint8Array(data);
     const originalEncoding = EncodingJapanese.detect(code) as EncodingJapanese.Encoding;
     const convertedArray: number[] = EncodingJapanese.convert(code, {
@@ -11,7 +11,7 @@ export default class Encoding {
     const array = new Uint8Array(convertedArray);
     return array;
   }
-  public static toString(data: Buffer): string {
+  toString(data: Buffer): string {
     const code = new Uint8Array(data);
     const originalEncoding = EncodingJapanese.detect(code) as EncodingJapanese.Encoding;
     const decoder = new TextDecoder(originalEncoding);
