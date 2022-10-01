@@ -18,6 +18,7 @@ const { DataManagertest } = lazyImport(
   () => import('../features/datamanagertest'),
   'DataManagertest'
 );
+const { Test } = lazyImport(() => import('../features/test'), 'Test');
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ export const publicRoutes = [
       { path: '/data-editor', element: <DataEditor /> },
       { path: '/map', element: <Map /> },
       { path: '/datamanagertest', element: <DataManagertest /> },
+      { path: '/test', element: <Test /> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },
