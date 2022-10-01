@@ -6,8 +6,8 @@ import { Head } from '../Head';
 
 const titleStyle = css`
   font-weight: normal;
-  color: var(--color-white);
-  background-color: var(--color-black);
+  color: var(--chakra-colors-white);
+  background-color: var(--chakra-colors-black);
   padding: 15px 30px;
 `;
 

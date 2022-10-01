@@ -11,7 +11,7 @@ const wrapperStyle = css`
 `;
 
 const commonElementStyle = css`
-  background-color: var(--color-gray);
+  background-color: var(--chakra-colors-gray-light);
   padding: 30px;
 `;
 
