@@ -18,7 +18,7 @@ describe('items/validator/poi', () => {
   });
 
   test('正しいPOIコードかどうか', () => {
-    expect(() => poiValidator.validateDataType('0101')).not.toThrow('正しくないPOIコードです。');
-    expect(() => poiValidator.validateDataType('1000')).toThrow('正しくないPOIコードです。');
+    expect(() => poiValidator.validateDataType('0101')).not.toThrow('存在しないPOIコードです。');
+    expect(() => poiValidator.validateDataType('1000')).toThrow('存在しないPOIコードです。');
   });
 });

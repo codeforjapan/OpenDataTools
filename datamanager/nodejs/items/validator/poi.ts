@@ -22,7 +22,7 @@ export class ItemValidatorPoi {
     csvData.shift();
     const poiList = csvData.map((row: any) => row[1]);
     if (!poiList.includes(data)) {
-      throw new Error('正しくないPOIコードです。');
+      throw new Error('存在しないPOIコードです。');
     }
     return;
   }
