@@ -2,10 +2,11 @@
 import * as React from 'react';
 import { css } from '@emotion/react';
 import { Icon } from '../Icon';
+import { Button, ButtonGroup } from '@chakra-ui/react';
 
 const linkStyle = css`
   cursor: pointer;
-  background: #73cdff;
+
   border-radius: 18px;
   color: #1e232e;
 `;
@@ -23,13 +24,13 @@ const linkInner = css`
 export const Link = React.forwardRef(() => {
   return (
     <a css={[linkStyle]}>
-      <div css={[linkInner]}>
+      <Button css={[linkInner]} colorScheme="linkedin" width="229px" height="85px">
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Icon type="LinkIcon" />
           <span style={{ marginLeft: '8px' }}>次へ</span>
         </div>
         <Icon type="ArrowRight" />
-      </div>
+      </Button>
     </a>
   );
 });
