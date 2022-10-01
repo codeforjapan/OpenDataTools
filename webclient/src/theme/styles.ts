@@ -1,9 +1,11 @@
 const styles = {
   global: {
     body: {
-      fontFamily: '"Hiragino Sans", "Meiryo", "Source Han Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif',
+      fontFamily:
+        '"Hiragino Sans", "Meiryo", "Source Han Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif',
       background: 'body.bg',
       color: 'body.text',
+      lineHeight: 1.6,
     },
     img: {
       maxWidth: '100%',
