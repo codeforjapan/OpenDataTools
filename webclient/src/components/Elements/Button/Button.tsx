@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { css } from '@emotion/react';
-
-import { Spinner } from '../Spinner';
+import { Spinner } from '@chakra-ui/react';
 
 const buttonStyle = css`
   display: inline-flex;
@@ -53,14 +52,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <button ref={ref} type={type} css={[buttonStyle, styleTypes[styleType]]} {...props}>
-        {isLoading && (
-          <Spinner
-            size="sm"
-            css={css`
-              margin-right: 8px;
-            `}
-          />
-        )}
+        {isLoading && <Spinner size="sm" mr={2} />}
         {!isLoading && startIcon}
         <span>{props.children}</span> {!isLoading && endIcon}
       </button>
