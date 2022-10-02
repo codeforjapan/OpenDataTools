@@ -1,15 +1,11 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { Link } from '../../../components/Elements/Link';
+import { OstTextarea } from '../../../components/Elements/OstTextarea';
 
 export const Test = () => {
   return (
-    <div
-      css={css`
-        display: flex;
-      `}
-    >
+    <>
       <Link />
-    </div>
+      <OstTextarea label="ラベル" />
+    </>
   );
 };
