@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { css } from '@emotion/react';
 import { Icon } from '../Icon';
-import { Button, ButtonGroup } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 
 const linkStyle = css`
   cursor: pointer;
