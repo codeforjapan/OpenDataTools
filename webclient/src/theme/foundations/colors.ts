@@ -25,7 +25,7 @@ const colors = {
   border: {
     disabled: '#999',
   },
-  inputBorder: {
+  inputAreaBorder: {
     active: '#CCC',
   },
 };
