@@ -2,6 +2,7 @@ import { Link } from '../../../components/Elements/Link';
 import { OstInput } from '../../../components/Elements/OstInput';
 import { OstTextarea } from '../../../components/Elements/OstTextarea';
 import { OstSelect } from '../../../components/Elements/OstSelect';
+import { OstCheckbox } from '../../../components/Elements/OstCheckbox';
 
 export const Test = () => {
   return (
@@ -17,6 +18,8 @@ export const Test = () => {
           { label: 'テスト３', value: 'test3' },
         ]}
       />
+      <OstCheckbox label="チェック１" />
+      <OstCheckbox label="チェック２" isDisabled={true} />
     </>
   );
 };
