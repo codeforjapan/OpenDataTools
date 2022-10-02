@@ -47,7 +47,13 @@ export const OstSelect = forwardRef<SelectProps & OstSelectProps, 'select'>((pro
       isInvalid={isError}
     >
       {props.label && <OstFormLabel label={props.label} />}
-      <Select ref={ref} value={value} onChange={handleInputChange} placeholder={props.placeholder}>
+      <Select
+        ref={ref}
+        value={value}
+        onChange={handleInputChange}
+        placeholder={props.placeholder}
+        {...props}
+      >
         {optionItems}
       </Select>
       {!isError && props.helperText ? (

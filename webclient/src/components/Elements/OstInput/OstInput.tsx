@@ -35,7 +35,13 @@ export const OstInput = forwardRef<InputProps & OstInputProps, 'input'>((props, 
       isInvalid={isError}
     >
       {props.label && <OstFormLabel label={props.label} />}
-      <Input ref={ref} value={value} onChange={handleInputChange} placeholder={props.placeholder} />
+      <Input
+        ref={ref}
+        value={value}
+        onChange={handleInputChange}
+        placeholder={props.placeholder}
+        {...props}
+      />
       {!isError && props.helperText ? (
         <FormHelperText>{props.helperText}</FormHelperText>
       ) : (

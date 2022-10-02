@@ -41,6 +41,7 @@ export const OstTextarea = forwardRef<TextareaProps & OstTextareaProps, 'textare
           value={value}
           onChange={handleInputChange}
           placeholder={props.placeholder}
+          {...props}
         />
         {!isError && props.helperText ? (
           <FormHelperText>{props.helperText}</FormHelperText>
