@@ -3,6 +3,7 @@ import { Checkbox, forwardRef, CheckboxProps } from '@chakra-ui/react';
 
 export type OstCheckboxProps = {
   label?: string;
+  isDisabled?: boolean;
 };
 
 export const OstCheckbox = forwardRef<CheckboxProps & OstCheckboxProps, 'input'>((props, ref) => {
