@@ -1,15 +1,6 @@
-/** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { css } from '@emotion/react';
-
+import { Box, Heading } from '@chakra-ui/react';
 import { Head } from '../Head';
-
-const titleStyle = css`
-  font-weight: normal;
-  color: var(--color-white);
-  background-color: var(--color-black);
-  padding: 15px 30px;
-`;
 
 type ContentLayoutProps = {
   children: React.ReactNode;
@@ -21,7 +12,12 @@ export const ContentLayout = ({ children, title }: ContentLayoutProps) => {
     <>
       <Head title={title} />
       <div>
-        <h1 css={titleStyle}>{title}</h1>
+        <Box textStyle="h1" color="white" bg="black" px={8} py={4}>
+          {/* 2022/10/2時点 chakra-uiのバグ？でHeadingに直接textStyleを指定できない*/}
+          <Heading as="h1" fontSize="inherit" fontWeight="inherit">
+            {title}
+          </Heading>
+        </Box>
         <div>{children}</div>
       </div>
     </>

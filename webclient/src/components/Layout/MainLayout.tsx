@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { Global, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import { globalStyle } from './globalStyle';
 
 const wrapperStyle = css`
   display: grid;
@@ -12,7 +11,7 @@ const wrapperStyle = css`
 `;
 
 const commonElementStyle = css`
-  background-color: var(--color-gray);
+  background-color: var(--chakra-colors-gray-light);
   padding: 30px;
 `;
 
@@ -63,7 +62,6 @@ type MainLayoutProps = {
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div css={wrapperStyle}>
-      <Global styles={globalStyle} />
       <header css={commonElementStyle}>
         <div
           css={css`
