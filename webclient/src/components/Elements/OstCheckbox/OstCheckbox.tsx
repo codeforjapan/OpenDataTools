@@ -6,7 +6,11 @@ export type OstCheckboxProps = {
 };
 
 export const OstCheckbox = forwardRef<CheckboxProps & OstCheckboxProps, 'input'>((props, ref) => {
-  return <Checkbox ref={ref} {...props}>{props.label}</Checkbox>;
+  return (
+    <Checkbox ref={ref} {...props}>
+      {props.label}
+    </Checkbox>
+  );
 });
 
 OstCheckbox.displayName = 'OstCheckbox';
