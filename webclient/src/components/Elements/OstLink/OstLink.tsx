@@ -21,6 +21,7 @@ export const OstLink = forwardRef<LinkProps & OstLinkProps, 'button'>((props, re
       p="32px 24px"
       bg="bg.active"
       textStyle="link"
+      _hover={{ textDecoration: 'none' }}
       {...props}
     >
       <Box display="flex" alignItems="center">
