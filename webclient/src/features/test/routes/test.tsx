@@ -1,5 +1,5 @@
-import { Stack, Avatar } from '@chakra-ui/react';
-import { PhoneIcon, AddIcon, WarningIcon } from '@chakra-ui/icons';
+import { Avatar, Icon } from '@chakra-ui/react';
+import { MdFolder, MdSettings } from 'react-icons/md';
 
 import { Link } from '../../../components/Elements/Link';
 import { OstInput } from '../../../components/Elements/OstInput';
@@ -10,7 +10,7 @@ import { OstButton } from '../../../components/Elements/OstButton';
 
 export const Test = () => {
   return (
-    <div>
+    <>
       <Link />
       <OstInput label="テキストフィールド" />
       <OstTextarea label="テキストエリア" />
@@ -26,60 +26,72 @@ export const Test = () => {
       <OstCheckbox label="チェック２" isDisabled={true} />
       <OstButton label="ボタン" view="button" size="L" />
       <OstButton label="ボタン" view="button" size="L" isDisabled={true} />
-      <OstButton label="ボタン" view="button" size="L" icon={<PhoneIcon />} />
-      <OstButton label="ボタン" view="button" size="L" isDisabled={true} icon={<PhoneIcon />} />
+      <OstButton label="ボタン" view="button" size="L" icon={<Icon as={MdFolder} />} />
+      <OstButton
+        label="ボタン"
+        view="button"
+        size="L"
+        isDisabled={true}
+        icon={<Icon as={MdFolder} />}
+      />
       <OstButton
         label="ボタン"
         view="skeleton"
         size="L"
-        icon={<Avatar bg="bg.active" size="md" p="12px" icon={<PhoneIcon />} />}
+        icon={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
       <OstButton
         label="ボタン"
         view="skeleton"
         size="L"
         isDisabled={true}
-        icon={<Avatar size="md" p="12px" icon={<PhoneIcon />} />}
+        icon={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
       <OstButton
         view="icon-only"
         size="L"
-        icon={<Avatar bg="bg.active" size="md" p="12px" icon={<PhoneIcon />} />}
+        icon={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
       <OstButton
         view="icon-only"
         size="L"
         isDisabled={true}
-        icon={<Avatar size="md" p="12px" icon={<PhoneIcon />} />}
+        icon={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
       <OstButton label="ボタン" view="button" size="S" />
       <OstButton label="ボタン" view="button" size="S" isDisabled={true} />
-      <OstButton label="ボタン" view="button" size="S" icon={<PhoneIcon />} />
-      <OstButton label="ボタン" view="button" size="S" isDisabled={true} icon={<PhoneIcon />} />
+      <OstButton label="ボタン" view="button" size="S" icon={<Icon as={MdSettings} />} />
+      <OstButton
+        label="ボタン"
+        view="button"
+        size="S"
+        isDisabled={true}
+        icon={<Icon as={MdSettings} />}
+      />
       <OstButton
         label="ボタン"
         view="skeleton"
         size="S"
-        icon={<Avatar bg="bg.active" size="sm" icon={<PhoneIcon />} />}
+        icon={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
       />
       <OstButton
         label="ボタン"
         view="skeleton"
         size="S"
         isDisabled={true}
-        icon={<Avatar size="sm" icon={<PhoneIcon />} />}
+        icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
       />
       <OstButton
         view="icon-only"
         size="S"
-        icon={<Avatar bg="bg.active" size="sm" icon={<PhoneIcon />} />}
+        icon={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
       />
       <OstButton
         view="icon-only"
         size="S"
         isDisabled={true}
-        icon={<Avatar size="sm" icon={<PhoneIcon />} />}
+        icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
       />
-    </div>
+    </>
   );
 };
