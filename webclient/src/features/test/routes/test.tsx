@@ -1,5 +1,5 @@
 import { Avatar, Icon } from '@chakra-ui/react';
-import { MdFolder, MdSettings } from 'react-icons/md';
+import { MdFolder, MdSettings, MdSupervisedUserCircle } from 'react-icons/md';
 
 import { Link } from '../../../components/Elements/Link';
 import { OstInput } from '../../../components/Elements/OstInput';
@@ -7,6 +7,7 @@ import { OstTextarea } from '../../../components/Elements/OstTextarea';
 import { OstSelect } from '../../../components/Elements/OstSelect';
 import { OstCheckbox } from '../../../components/Elements/OstCheckbox';
 import { OstButton } from '../../../components/Elements/OstButton';
+import { OstLink } from '../../../components/Elements/OstLink';
 
 export const Test = () => {
   return (
@@ -91,6 +92,12 @@ export const Test = () => {
         size="S"
         isDisabled={true}
         icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
+      />
+      <OstLink url="https://www.google.com" label="リンク" />
+      <OstLink
+        url="https://www.google.com"
+        label="リンク"
+        icon={<Icon as={MdSupervisedUserCircle} />}
       />
     </>
   );
