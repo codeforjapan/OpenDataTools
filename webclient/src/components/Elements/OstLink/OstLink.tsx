@@ -5,7 +5,7 @@ import { MdOutlineChevronRight } from 'react-icons/md';
 export type OstLinkProps = {
   isDisabled?: boolean;
   icon?: React.ReactElement;
-  label?: string;
+  children?: React.ReactNode;
   url: string;
 };
 
@@ -25,7 +25,7 @@ export const OstLink = forwardRef<LinkProps & OstLinkProps, 'button'>((props, re
     >
       <Box display="flex" alignItems="center">
         {props.icon}
-        {props.label}
+        {props.children}
       </Box>
       <Icon as={MdOutlineChevronRight} w={6} h={6} />
     </Link>

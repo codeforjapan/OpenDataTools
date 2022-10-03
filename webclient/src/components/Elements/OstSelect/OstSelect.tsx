@@ -46,7 +46,7 @@ export const OstSelect = forwardRef<SelectProps & OstSelectProps, 'select'>((pro
       isDisabled={props.isDisabled}
       isInvalid={isError}
     >
-      {props.label && <OstFormLabel label={props.label} />}
+      {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
       <Select
         ref={ref}
         value={value}

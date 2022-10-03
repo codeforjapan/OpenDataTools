@@ -35,7 +35,7 @@ export const OstTextarea = forwardRef<TextareaProps & OstTextareaProps, 'textare
         isDisabled={props.isDisabled}
         isInvalid={isError}
       >
-        {props.label && <OstFormLabel label={props.label} />}
+        {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
         <Textarea
           ref={ref}
           value={value}

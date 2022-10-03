@@ -21,31 +21,35 @@ export const Test = () => {
           { label: 'テスト３', value: 'test3' },
         ]}
       />
-      <OstCheckbox label="チェック１" />
-      <OstCheckbox label="チェック２" isDisabled={true} />
-      <OstButton label="ボタン" view="button" size="L" />
-      <OstButton label="ボタン" view="button" size="L" isDisabled={true} />
-      <OstButton label="ボタン" view="button" size="L" icon={<Icon as={MdFolder} />} />
+      <OstCheckbox>チェック１</OstCheckbox>
+      <OstCheckbox isDisabled={true}>チェック２</OstCheckbox>
+      <OstButton view="button" size="L">
+        ボタン
+      </OstButton>
+      <OstButton view="button" size="L" isDisabled={true}>
+        ボタン
+      </OstButton>
+      <OstButton view="button" size="L" icon={<Icon as={MdFolder} />}>
+        ボタン
+      </OstButton>
+      <OstButton view="button" size="L" isDisabled={true} icon={<Icon as={MdFolder} />}>
+        ボタン
+      </OstButton>
       <OstButton
-        label="ボタン"
-        view="button"
-        size="L"
-        isDisabled={true}
-        icon={<Icon as={MdFolder} />}
-      />
-      <OstButton
-        label="ボタン"
         view="skeleton"
         size="L"
         icon={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
-      />
+      >
+        ボタン
+      </OstButton>
       <OstButton
-        label="ボタン"
         view="skeleton"
         size="L"
         isDisabled={true}
         icon={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
-      />
+      >
+        ボタン
+      </OstButton>
       <OstButton
         view="icon-only"
         size="L"
@@ -57,29 +61,33 @@ export const Test = () => {
         isDisabled={true}
         icon={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
-      <OstButton label="ボタン" view="button" size="S" />
-      <OstButton label="ボタン" view="button" size="S" isDisabled={true} />
-      <OstButton label="ボタン" view="button" size="S" icon={<Icon as={MdSettings} />} />
+      <OstButton view="button" size="S">
+        ボタン
+      </OstButton>
+      <OstButton view="button" size="S" isDisabled={true}>
+        ボタン
+      </OstButton>
+      <OstButton view="button" size="S" icon={<Icon as={MdSettings} />}>
+        ボタン
+      </OstButton>
+      <OstButton view="button" size="S" isDisabled={true} icon={<Icon as={MdSettings} />}>
+        ボタン
+      </OstButton>
       <OstButton
-        label="ボタン"
-        view="button"
-        size="S"
-        isDisabled={true}
-        icon={<Icon as={MdSettings} />}
-      />
-      <OstButton
-        label="ボタン"
         view="skeleton"
         size="S"
         icon={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
-      />
+      >
+        ボタン
+      </OstButton>
       <OstButton
-        label="ボタン"
         view="skeleton"
         size="S"
         isDisabled={true}
         icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
-      />
+      >
+        ボタン
+      </OstButton>
       <OstButton
         view="icon-only"
         size="S"
@@ -91,12 +99,10 @@ export const Test = () => {
         isDisabled={true}
         icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
       />
-      <OstLink url="https://www.google.com" label="リンク" />
-      <OstLink
-        url="https://www.google.com"
-        label="リンク"
-        icon={<Icon as={MdSupervisedUserCircle} />}
-      />
+      <OstLink url="https://www.google.com">リンク</OstLink>
+      <OstLink url="https://www.google.com" icon={<Icon as={MdSupervisedUserCircle} />}>
+        リンク
+      </OstLink>
     </>
   );
 };

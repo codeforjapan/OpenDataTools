@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Button } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react';
 
 const ErrorFallback = () => {
   return (

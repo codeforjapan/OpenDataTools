@@ -34,7 +34,7 @@ export const OstInput = forwardRef<InputProps & OstInputProps, 'input'>((props, 
       isDisabled={props.isDisabled}
       isInvalid={isError}
     >
-      {props.label && <OstFormLabel label={props.label} />}
+      {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
       <Input
         ref={ref}
         value={value}

@@ -5,7 +5,7 @@ export type OstButtonProps = {
   isDisabled?: boolean;
   icon?: React.ReactElement;
   size: 'L' | 'S';
-  label?: string;
+  children?: React.ReactNode;
   view: 'button' | 'skeleton' | 'icon-only';
 };
 
@@ -31,7 +31,7 @@ export const OstButton = forwardRef<ButtonProps & OstButtonProps, 'button'>((pro
 
   return (
     <Button ref={ref} variant={variant} leftIcon={props.icon} {...props}>
-      {props.label}
+      {props.children}
     </Button>
   );
 });
