@@ -1,12 +1,12 @@
 import * as React from 'react';
-import LinkIcon from './Icons/link';
-import ArrowRight from './Icons/arrow_right';
+import LinkIcon from './Icons/LinkIcon';
+import ArrowRightIcon from './Icons/ArrowRightIcon';
 
 export type Props = { type: Type };
 
 const svgMap = {
   LinkIcon: LinkIcon,
-  ArrowRight: ArrowRight,
+  ArrowRight: ArrowRightIcon,
 };
 
 export type Type = keyof typeof svgMap; //enum(列挙型=またはまたはまたは)
