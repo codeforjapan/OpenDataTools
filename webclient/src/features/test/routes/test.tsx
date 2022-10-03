@@ -1,7 +1,6 @@
 import { Avatar, Icon } from '@chakra-ui/react';
 import { MdFolder, MdSettings, MdSupervisedUserCircle } from 'react-icons/md';
 
-import { Link } from '../../../components/Elements/Link';
 import { OstInput } from '../../../components/Elements/OstInput';
 import { OstTextarea } from '../../../components/Elements/OstTextarea';
 import { OstSelect } from '../../../components/Elements/OstSelect';
@@ -12,7 +11,6 @@ import { OstLink } from '../../../components/Elements/OstLink';
 export const Test = () => {
   return (
     <>
-      <Link />
       <OstInput label="テキストフィールド" />
       <OstTextarea label="テキストエリア" />
       <OstSelect
