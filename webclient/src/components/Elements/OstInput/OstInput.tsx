@@ -16,17 +16,12 @@ export type OstInputProps = {
   placeholder?: string;
   helperText?: string;
   errorMessage?: string;
+  value?: string | number;
+  changeValue?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const OstInput = forwardRef<InputProps & OstInputProps, 'input'>((props, ref) => {
-  const [value, setValue] = React.useState('');
-
-  const handleInputChange = (e: { target: { value: string } }) => {
-    const inputValue = e.target.value;
-    setValue(inputValue);
-  };
-
-  const isError = props.isRequired ? value === '' : false;
+  const isError = props.isRequired ? props.value === '' : false;
 
   return (
     <FormControl
@@ -37,8 +32,8 @@ export const OstInput = forwardRef<InputProps & OstInputProps, 'input'>((props, 
       {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
       <Input
         ref={ref}
-        value={value}
-        onChange={handleInputChange}
+        value={props.value}
+        onChange={(e) => props.changeValue?.(e)}
         placeholder={props.placeholder}
         {...props}
       />
