@@ -9,7 +9,7 @@ const itemLabelFormatter = new SchemeFormatterItemLabel();
 const validateUrl = new ItemValidatorUrl();
 const validateLatLng = new ItemValidatorLatLng();
 const utilCharEncoding = new Encoding();
-const itemsListOfPublicFacitities = PUBLIC_FACILITIES_ITEMS_LIST;
+const itemsListOfPublicFacilities = PUBLIC_FACILITIES_ITEMS_LIST;
 const datasetListOfRecommendBasic = RECOMMEND_BASIC_DATASET_LIST;
 
 export {
@@ -17,6 +17,6 @@ export {
   validateUrl,
   validateLatLng,
   utilCharEncoding,
-  itemsListOfPublicFacitities,
+  itemsListOfPublicFacilities,
   datasetListOfRecommendBasic,
 };
