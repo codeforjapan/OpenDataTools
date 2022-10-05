@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import NormalizeDatasetItemLabel from '../../../components/Elements/Dataset/NormalizeDatasetItemLabel';
-import { ContentLayout } from '../../../components/Layout';
+import { StepLayout } from '../../../components/Layout';
 import { OstLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
 import { datasetAtom, datasetItemUidListAtom } from '../../../stores/dataset';
@@ -22,7 +22,7 @@ export const NormalizeLabel: FC = () => {
   };
 
   return (
-    <ContentLayout title="項目名の正規化">
+    <StepLayout pageTitle="項目名の正規化" headingText="データ項目名の正規化" uid={dataset_uid}>
       <Box my={4}>
         <OstSelect
           label="データセット名を選択してください。"
@@ -44,6 +44,6 @@ export const NormalizeLabel: FC = () => {
       <Box w="300px">
         <OstLink to="/auto-convert">次へ（自動変換ページ）</OstLink>
       </Box>
-    </ContentLayout>
+    </StepLayout>
   );
 };

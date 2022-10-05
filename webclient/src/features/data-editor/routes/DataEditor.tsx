@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { FC, useMemo } from 'react';
-import { ContentLayout } from '../../../components/Layout';
+import { StepLayout } from '../../../components/Layout';
 import { OstLink } from '../../../components/Elements/OstLink';
 import { OstInput } from '../../../components/Elements/OstInput';
 
@@ -45,7 +45,7 @@ export const DataEditor: FC = () => {
   };
 
   return (
-    <ContentLayout title="データ詳細編集">
+    <StepLayout pageTitle="データ詳細編集" headingText="データ形式確認">
       <Grid gridTemplateColumns="200px 1fr" mt={4}>
         <GridItem pr={3} borderRight="1px solid">
           {DataLabels.map((label, index) => (
@@ -71,6 +71,6 @@ export const DataEditor: FC = () => {
       <Box w="300px">
         <OstLink to="/map">次へ（マップページ）</OstLink>
       </Box>
-    </ContentLayout>
+    </StepLayout>
   );
 };

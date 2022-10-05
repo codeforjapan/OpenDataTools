@@ -1,7 +1,7 @@
 import { CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
 import { Box, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
-import { ContentLayout } from '../../../components/Layout';
+import { StepLayout } from '../../../components/Layout';
 import { OstLink } from '../../../components/Elements/OstLink';
 
 export const AutoConvert: FC = () => {
@@ -78,7 +78,7 @@ export const AutoConvert: FC = () => {
   };
 
   return (
-    <ContentLayout title="自動変換">
+    <StepLayout pageTitle="自動変換" headingText={`データを自動変換しています`}>
       <Box p={5} background="gray.200" border="1px solid" my={3}>
         <CharacterCodeStatusElm />
         文字コードを変換しています。
@@ -94,6 +94,6 @@ export const AutoConvert: FC = () => {
       <Box w="300px">
         <OstLink to="/data-editor">次へ（データ項目詳細編集）</OstLink>
       </Box>
-    </ContentLayout>
+    </StepLayout>
   );
 };

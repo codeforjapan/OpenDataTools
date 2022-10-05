@@ -1,7 +1,7 @@
 import { Box, Input } from '@chakra-ui/react';
 import { ChangeEvent, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ContentLayout } from '../../../components/Layout';
+import { StepLayout } from '../../../components/Layout';
 import parser, { ParseResult } from 'papaparse';
 import { utilCharEncoding } from 'opendatatool-datamanager';
 import { useImportDataset } from '../../../hooks/useDataset';
@@ -39,7 +39,7 @@ export const FileUpload: FC = () => {
   };
 
   return (
-    <ContentLayout title="CSVアップロード">
+    <StepLayout pageTitle="CSVアップロード" headingText={`CSVファイルをアップロードしてください`}>
       <Box
         p={20}
         mt={4}
@@ -53,6 +53,6 @@ export const FileUpload: FC = () => {
         CSVファイルをアップロード
         <Input type="file" display="none" accept="text/csv" onChange={(e) => readInputFile(e)} />
       </Box>
-    </ContentLayout>
+    </StepLayout>
   );
 };
