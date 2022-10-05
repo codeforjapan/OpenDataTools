@@ -7,7 +7,7 @@ import GeoJSON from 'geojson';
 export const Map: FC = () => {
   const points = [
     { description: '東京駅', lng: 139.766103, lat: 35.681391 },
-    { description: '有楽町駅', lng: 139.763806 , lat: 35.675441 },
+    { description: '有楽町駅', lng: 139.763806, lat: 35.675441 },
     { description: '新橋駅', lng: 139.758587, lat: 35.666195 },
     { description: '浜松町駅', lng: 139.757135, lat: 35.655391 },
     { description: '田町駅', lng: 139.747575, lat: 35.645736 },
@@ -35,12 +35,12 @@ export const Map: FC = () => {
     { description: '御徒町駅', lng: 139.774727, lat: 35.707282 },
     { description: '秋葉原駅', lng: 139.773288, lat: 35.698619 },
     { description: '神田駅', lng: 139.770641, lat: 35.691173 },
-  ]
+  ];
 
   const onLoad = useCallback((map: any) => {
     map.on('load', () => {
       const geojson = (GeoJSON as any).parse(points, {
-        Point: ['lat', 'lng']
+        Point: ['lat', 'lng'],
       });
       const simpleStyle = new (window as any).geolonia.simpleStyle(geojson);
       simpleStyle.addTo(map).fitBounds();
@@ -48,15 +48,16 @@ export const Map: FC = () => {
   }, []);
 
   return (
-    <ContentLayout title='マップ'>
+    <ContentLayout title="マップ">
       <Box></Box>
-      <GeoloniaMap style={{height: '300px', width: '100%'}}
-        className='geolonia'
-        lat='35.681236'
-        lng='139.767125'
-        zoom='16'
-        markerColor='#555'
-        marker='off'
+      <GeoloniaMap
+        style={{ height: '300px', width: '100%' }}
+        className="geolonia"
+        lat="35.681236"
+        lng="139.767125"
+        zoom="16"
+        markerColor="#555"
+        marker="off"
         onLoad={onLoad}
       />
     </ContentLayout>
