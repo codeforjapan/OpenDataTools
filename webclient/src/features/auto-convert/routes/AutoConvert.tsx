@@ -1,8 +1,8 @@
-import { CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
-import { Box, Spinner } from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowForwardIcon, CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
+import { Avatar, Box, Flex, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
-import { OstLink } from '../../../components/Elements/OstLink';
+import { OstNavLink } from '../../../components/Elements/OstLink';
 
 export const AutoConvert: FC = () => {
   const [progress, setProgress] = useState({
@@ -91,9 +91,22 @@ export const AutoConvert: FC = () => {
         <RequiredFieldStatusElm />
         必須項目を確認しています。
       </Box>
-      <Box w="300px">
-        <OstLink to="/data-editor">次へ（データ項目詳細編集）</OstLink>
-      </Box>
+
+      <Flex mt={4} justifyContent="space-between">
+        <OstNavLink
+          to="/upload-file"
+          iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+        >
+          ステップ１に戻る
+        </OstNavLink>
+        <OstNavLink
+          to="/data-editor"
+          isDisabled={false}
+          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
+        >
+          次のステップへ
+        </OstNavLink>
+      </Flex>
     </StepLayout>
   );
 };

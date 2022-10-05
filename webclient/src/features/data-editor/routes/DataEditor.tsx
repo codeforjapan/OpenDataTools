@@ -1,8 +1,8 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { Avatar, Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import { FC, useMemo } from 'react';
 import { StepLayout } from '../../../components/Layout';
-import { OstLink } from '../../../components/Elements/OstLink';
+import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstInput } from '../../../components/Elements/OstInput';
 
 export const DataEditor: FC = () => {
@@ -45,7 +45,7 @@ export const DataEditor: FC = () => {
   };
 
   return (
-    <StepLayout pageTitle="データ詳細編集" headingText="データ形式確認">
+    <StepLayout pageTitle="データ形式確認" headingText="データ形式確認">
       <Grid gridTemplateColumns="200px 1fr" mt={4}>
         <GridItem pr={3} borderRight="1px solid">
           {DataLabels.map((label, index) => (
@@ -68,9 +68,22 @@ export const DataEditor: FC = () => {
           ))}
         </GridItem>
       </Grid>
-      <Box w="300px">
-        <OstLink to="/map">次へ（マップページ）</OstLink>
-      </Box>
+
+      <Flex mt={4} justifyContent="space-between">
+        <OstNavLink
+          to="/upload-file"
+          iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+        >
+          ステップ３に戻る
+        </OstNavLink>
+        <OstNavLink
+          to="/map"
+          isDisabled={false}
+          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
+        >
+          完了
+        </OstNavLink>
+      </Flex>
     </StepLayout>
   );
 };

@@ -1,7 +1,9 @@
-import { Box, Input } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Input } from '@chakra-ui/react';
 import { ChangeEvent, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StepLayout } from '../../../components/Layout';
+import { OstNavLink } from '../../../components/Elements/OstLink';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 import parser, { ParseResult } from 'papaparse';
 import { utilCharEncoding } from 'opendatatool-datamanager';
 import { useImportDataset } from '../../../hooks/useDataset';
@@ -53,6 +55,15 @@ export const FileUpload: FC = () => {
         CSVファイルをアップロード
         <Input type="file" display="none" accept="text/csv" onChange={(e) => readInputFile(e)} />
       </Box>
+      <Flex mt={4} justifyContent="flex-end">
+        <OstNavLink
+          to="/auto-convert"
+          isDisabled={true}
+          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
+        >
+          次のステップへ
+        </OstNavLink>
+      </Flex>
     </StepLayout>
   );
 };

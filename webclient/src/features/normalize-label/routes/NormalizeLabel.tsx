@@ -1,11 +1,12 @@
-import { Box, Divider, Grid, GridItem } from '@chakra-ui/react';
+import { Avatar, Box, Divider, Flex, Grid, GridItem } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import NormalizeDatasetItemLabel from '../../../components/Elements/Dataset/NormalizeDatasetItemLabel';
 import { StepLayout } from '../../../components/Layout';
-import { OstLink } from '../../../components/Elements/OstLink';
+import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { datasetAtom, datasetItemUidListAtom } from '../../../stores/dataset';
 
 export const NormalizeLabel: FC = () => {
@@ -41,9 +42,21 @@ export const NormalizeLabel: FC = () => {
         <NormalizeDatasetItemLabel datasetUid={String(dataset_uid)} itemUid={uid} key={uid} />
       ))}
 
-      <Box w="300px">
-        <OstLink to="/auto-convert">次へ（自動変換ページ）</OstLink>
-      </Box>
+      <Flex mt={4} justifyContent="space-between">
+        <OstNavLink
+          to="/auto-convert"
+          iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+        >
+          ステップ２に戻る
+        </OstNavLink>
+        <OstNavLink
+          to="/auto-convert"
+          isDisabled={false}
+          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
+        >
+          次のステップへ
+        </OstNavLink>
+      </Flex>
     </StepLayout>
   );
 };
