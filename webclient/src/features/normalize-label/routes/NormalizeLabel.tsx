@@ -1,9 +1,11 @@
-import { Box, Button, Checkbox, Divider, Grid, GridItem, Select, Text } from '@chakra-ui/react';
+import { Box, Divider, Grid, GridItem } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import NormalizeDatasetItemLabel from '../../../components/Elements/Dataset/NormalizeDatasetItemLabel';
 import { ContentLayout } from '../../../components/Layout';
+import { OstLink } from '../../../components/Elements/OstLink';
+import { OstSelect } from '../../../components/Elements/OstSelect';
 import { datasetAtom, datasetItemUidListAtom } from '../../../stores/dataset';
 
 export const NormalizeLabel: FC = () => {
@@ -22,10 +24,10 @@ export const NormalizeLabel: FC = () => {
   return (
     <ContentLayout title="項目名の正規化">
       <Box my={4}>
-        <Text>データセット名を選択してください。</Text>
-        <Select onChange={(e) => handleSelectDataset(e.target.value)}>
-          <option value="public-facility">公共施設一覧</option>
-        </Select>
+        <OstSelect
+          label="データセット名を選択してください。"
+          options={[{ label: '公共施設一覧', value: 'public-facility' }]}
+        />
       </Box>
       <Divider my={10} borderColor="black" />
       <Grid gridTemplateColumns="70px 120px 1fr 1fr" mb={5}>
@@ -39,9 +41,9 @@ export const NormalizeLabel: FC = () => {
         <NormalizeDatasetItemLabel datasetUid={String(dataset_uid)} itemUid={uid} key={uid} />
       ))}
 
-      <Button color="blue.400" variant="solid">
-        <Link to="/auto-convert">次へ（自動変換ページ）</Link>
-      </Button>
+      <Box w="300px">
+        <OstLink to="/auto-convert">次へ（自動変換ページ）</OstLink>
+      </Box>
     </ContentLayout>
   );
 };

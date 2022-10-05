@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, Icon, Box, forwardRef, LinkProps } from '@chakra-ui/react';
 import { MdOutlineChevronRight } from 'react-icons/md';
+import { Link as ReactLink } from 'react-router-dom';
 
 export type OstLinkProps = {
   isDisabled?: boolean;
   icon?: React.ReactElement;
   children?: React.ReactNode;
-  url: string;
+  url?: string;
+  to?: string;
 };
 
 export const OstLink = forwardRef<LinkProps & OstLinkProps, 'button'>((props, ref) => {
@@ -14,6 +16,8 @@ export const OstLink = forwardRef<LinkProps & OstLinkProps, 'button'>((props, re
     <Link
       ref={ref}
       href={props.url}
+      as={props.to ? ReactLink : undefined}
+      to={props.to}
       display="flex"
       alignItems="center"
       justifyContent="space-between"

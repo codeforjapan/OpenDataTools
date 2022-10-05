@@ -22,17 +22,12 @@ export type OstSelectProps = {
   helperText?: string;
   errorMessage?: string;
   options: Option[];
+  value?: string | number;
+  changeValue?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export const OstSelect = forwardRef<SelectProps & OstSelectProps, 'select'>((props, ref) => {
-  const [value, setValue] = React.useState('');
-
-  const handleInputChange = (e: { target: { value: string } }) => {
-    const inputValue = e.target.value;
-    setValue(inputValue);
-  };
-
-  const isError = props.isRequired ? value === '' : false;
+  const isError = props.isRequired ? props.value === '' : false;
 
   const optionItems = props.options.map((item, index) => (
     <option key={`option-${index}`} value={item.value}>
@@ -49,8 +44,8 @@ export const OstSelect = forwardRef<SelectProps & OstSelectProps, 'select'>((pro
       {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
       <Select
         ref={ref}
-        value={value}
-        onChange={handleInputChange}
+        value={props.value}
+        onChange={(e) => props.changeValue?.(e)}
         placeholder={props.placeholder}
         {...props}
       >

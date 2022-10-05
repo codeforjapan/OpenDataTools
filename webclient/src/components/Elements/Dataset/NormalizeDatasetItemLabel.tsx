@@ -1,8 +1,10 @@
-import { Checkbox, Grid, GridItem, Select } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { datasetItemAtom } from '../../../stores/dataset';
-import { itemLabelFormatter, itemsListOfPublicFacitities } from 'opendatatool-datamanager';
+import { itemLabelFormatter, itemsListOfPublicFacilities } from 'opendatatool-datamanager';
+import { OstCheckbox } from '../OstCheckbox';
+import { OstSelect } from '../OstSelect';
 
 type Params = {
   datasetUid: string;
@@ -21,6 +23,10 @@ const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
       setItem({ ...item, normalizedLabel: item.rowLabel });
     }
   }, [item?.rowLabel]);
+
+  const options = itemsListOfPublicFacilities.map((item) => {
+    return { label: item.label, value: item.label };
+  });
 
   const handleIsActiveCheck = () => {
     // 該当項目を使うかどうかの選択処理
@@ -41,7 +47,7 @@ const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
   return (
     <Grid gridTemplateColumns="70px 120px 1fr 1fr" mb={2}>
       <GridItem>
-        <Checkbox
+        <OstCheckbox
           defaultChecked={item?.isActive}
           onChange={() => {
             handleIsActiveCheck();
@@ -49,7 +55,7 @@ const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
         />
       </GridItem>
       <GridItem>
-        <Checkbox
+        <OstCheckbox
           onChange={() => {
             handleOriginalCheck();
           }}
@@ -57,16 +63,11 @@ const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
       </GridItem>
       <GridItem>{item?.rowLabel}</GridItem>
       <GridItem>
-        <Select value={item?.normalizedLabel || ''} onChange={(e) => handleSelect(e.target.value)}>
-          <option value="">選択してください</option>
-          {itemsListOfPublicFacitities
-            .map((item) => item.label)
-            .map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-        </Select>
+        <OstSelect
+          options={[{ label: '選択してください', value: '' }, ...options]}
+          value={item?.normalizedLabel || ''}
+          changeValue={(e) => handleSelect(e.target.value)}
+        />
       </GridItem>
     </Grid>
   );

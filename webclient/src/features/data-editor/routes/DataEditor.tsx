@@ -1,8 +1,9 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Button, Grid, GridItem, Input } from '@chakra-ui/react';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { FC, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { ContentLayout } from '../../../components/Layout';
+import { OstLink } from '../../../components/Elements/OstLink';
+import { OstInput } from '../../../components/Elements/OstInput';
 
 export const DataEditor: FC = () => {
   const DataLabels = useMemo(() => {
@@ -55,21 +56,21 @@ export const DataEditor: FC = () => {
           {selectedLabelData.map((data, dIndex) => (
             <Grid key={`data_${dIndex}`} gridTemplateColumns="1fr 50px 1fr" mb={5}>
               <GridItem>
-                <Input type="text" value={data.rowData} disabled />
+                <OstInput value={data.rowData} isDisabled={true} />
               </GridItem>
               <GridItem>
                 <ChevronRightIcon w={10} h={10} />
               </GridItem>
               <GridItem>
-                <Input type="text" onChange={(e) => handleChangeData(e.target.value)} />
+                <OstInput changeValue={(e) => handleChangeData(e.target.value)} />
               </GridItem>
             </Grid>
           ))}
         </GridItem>
       </Grid>
-      <Button color="blue.400" variant="solid">
-        <Link to="/map">次へ（マップページ）</Link>
-      </Button>
+      <Box w="300px">
+        <OstLink to="/map">次へ（マップページ）</OstLink>
+      </Box>
     </ContentLayout>
   );
 };
