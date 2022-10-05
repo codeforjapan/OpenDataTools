@@ -47,21 +47,28 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
       })
     );
 
-    const handleChangeData = (v: string) => {
+    useEffect(() => {
       if (!singleData) return;
       try {
         const validator = validatorFactory();
-        validator(v);
-        setSingleData({ ...singleData, editedValue: v, error: [] });
+        validator(singleData.editedValue);
+        setSingleData({
+          ...singleData,
+          error: [],
+        });
       } catch (error: any) {
         if (error.message) {
           setSingleData({
             ...singleData,
-            editedValue: v,
             error: [{ message: error.message, status: 'warning' }],
           });
         }
       }
+    }, [singleData?.editedValue]);
+
+    const handleChangeData = (v: string) => {
+      if (!singleData) return;
+      setSingleData({ ...singleData, editedValue: v });
     };
 
     return (
