@@ -1,7 +1,7 @@
 import { Checkbox, Grid, GridItem, Select } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { datasetItemAtom } from '../../../stores/dataset';
+import { datasetItemAtom } from '../../stores/dataset';
 import { itemLabelFormatter, itemsListOfPublicFacitities } from 'opendatatool-datamanager';
 
 type Params = {
@@ -9,7 +9,7 @@ type Params = {
   itemUid: string;
 };
 
-const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
+export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
   const [item, setItem] = useRecoilState(datasetItemAtom({ datasetUid, itemUid }));
 
   useEffect(() => {
@@ -71,5 +71,3 @@ const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) => {
     </Grid>
   );
 };
-
-export default NormalizeDatasetItemLabel;

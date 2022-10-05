@@ -1,4 +1,4 @@
-import ItemValidatorTel from './tel';
+import { ItemValidatorTel } from './tel';
 
 describe('items/validator/tel', () => {
   const telValidator = new ItemValidatorTel();
@@ -33,5 +33,10 @@ describe('items/validator/tel', () => {
     expect(() => telValidator.validateDataType('09999-9999-9999-9999')).toThrow(
       '電話番号の数字は10桁以上15桁以内である必要があります。',
     );
+  });
+
+  test('エラーなし', () => {
+    const result = telValidator.validateDataType('08032521423');
+    expect(result).toEqual(undefined);
   });
 });

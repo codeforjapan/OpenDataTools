@@ -2,9 +2,9 @@ import { Box, Button, Checkbox, Divider, Grid, GridItem, Select, Text } from '@c
 import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import NormalizeDatasetItemLabel from '../../../components/Elements/Dataset/NormalizeDatasetItemLabel';
+import { NormalizeDatasetItemLabel } from '../../../components/Editor';
 import { ContentLayout } from '../../../components/Layout';
-import { datasetAtom, datasetItemUidListAtom } from '../../../stores/dataset';
+import { datasetItemUidListAtom } from '../../../stores/dataset';
 
 export const NormalizeLabel: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
@@ -40,7 +40,7 @@ export const NormalizeLabel: FC = () => {
       ))}
 
       <Button color="blue.400" variant="solid">
-        <Link to="/auto-convert">次へ（自動変換ページ）</Link>
+        <Link to={`/${dataset_uid}/auto-convert`}>次へ（自動変換ページ）</Link>
       </Button>
     </ContentLayout>
   );

@@ -1,10 +1,11 @@
 import { CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
 import { Box, Button, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ContentLayout } from '../../../components/Layout';
 
 export const AutoConvert: FC = () => {
+  const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [progress, setProgress] = useState({
     characterCode: { status: 'waiting', error: false },
     characterType: { status: 'waiting', error: false },
@@ -93,7 +94,7 @@ export const AutoConvert: FC = () => {
       </Box>
 
       <Button color="blue.400" variant="solid">
-        <Link to="/data-editor">次へ（データ項目詳細編集）</Link>
+        <Link to={`/${dataset_uid}/data-editor`}>次へ（データ項目詳細編集）</Link>
       </Button>
     </ContentLayout>
   );
