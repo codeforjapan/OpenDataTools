@@ -1,9 +1,8 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Button, Grid, GridItem, Input } from '@chakra-ui/react';
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { ContentLayout } from '../../../components/Layout';
+import { OstLink } from '../../../components/Elements/OstLink';
 
 export const DataEditor: FC = () => {
   const [selectedItemUid, setItemUid] = useState<string>();
@@ -29,9 +28,9 @@ export const DataEditor: FC = () => {
           <DataEditorMain selectedItemUid={selectedItemUid} />
         </GridItem>
       </Grid>
-      <Button color="blue.400" variant="solid">
-        <Link to="/map">次へ（マップページ）</Link>
-      </Button>
+      <Box w="300px">
+        <OstLink to="/map">次へ（マップページ）</OstLink>
+      </Box>
     </ContentLayout>
   );
 };

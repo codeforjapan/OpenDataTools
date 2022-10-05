@@ -1,8 +1,9 @@
-import { Checkbox, Grid, GridItem, Select } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
+import { Checkbox, Grid, GridItem } from '@chakra-ui/react';
+import { FC, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { datasetItemAtom } from '../../stores/dataset';
-import { itemLabelFormatter, itemsListOfPublicFacitities } from 'opendatatool-datamanager';
+import { itemLabelFormatter, itemsListOfPublicFacilities } from 'opendatatool-datamanager';
+import { OstSelect } from '../Elements/OstSelect';
 
 type Params = {
   datasetUid: string;
@@ -38,6 +39,14 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
     return;
   };
 
+  const selectOptions = useMemo(() => {
+    const optionsList = itemsListOfPublicFacilities.map((item) => {
+      return { value: item.label, label: item.label };
+    });
+    optionsList.unshift({ value: '', label: '選択してください' });
+    return optionsList;
+  }, []);
+
   return (
     <Grid gridTemplateColumns="70px 120px 1fr 1fr" mb={2}>
       <GridItem>
@@ -57,16 +66,11 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
       </GridItem>
       <GridItem>{item?.rowLabel}</GridItem>
       <GridItem>
-        <Select value={item?.normalizedLabel || ''} onChange={(e) => handleSelect(e.target.value)}>
-          <option value="">選択してください</option>
-          {itemsListOfPublicFacitities
-            .map((item) => item.label)
-            .map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-        </Select>
+        <OstSelect
+          value={item?.normalizedLabel || ''}
+          onChange={(e) => handleSelect(e.target.value)}
+          options={selectOptions}
+        />
       </GridItem>
     </Grid>
   );

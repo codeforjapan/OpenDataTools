@@ -1,8 +1,9 @@
 import { CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
-import { Box, Button, Spinner } from '@chakra-ui/react';
+import { Box, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ContentLayout } from '../../../components/Layout';
+import { OstLink } from '../../../components/Elements/OstLink';
 
 export const AutoConvert: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
@@ -92,10 +93,9 @@ export const AutoConvert: FC = () => {
         <RequiredFieldStatusElm />
         必須項目を確認しています。
       </Box>
-
-      <Button color="blue.400" variant="solid">
-        <Link to={`/${dataset_uid}/data-editor`}>次へ（データ項目詳細編集）</Link>
-      </Button>
+      <Box w="300px">
+        <OstLink to={`/${dataset_uid}/data-editor`}>次へ（データ項目詳細編集）</OstLink>
+      </Box>
     </ContentLayout>
   );
 };
