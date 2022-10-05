@@ -1,9 +1,10 @@
-import { Checkbox, Grid, GridItem } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import { FC, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { datasetItemAtom } from '../../stores/dataset';
 import { itemLabelFormatter, itemsListOfPublicFacilities } from 'opendatatool-datamanager';
 import { OstSelect } from '../Elements/OstSelect';
+import { OstCheckbox } from '../Elements/OstCheckbox';
 
 type Params = {
   datasetUid: string;
@@ -50,7 +51,7 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
   return (
     <Grid gridTemplateColumns="70px 120px 1fr 1fr" mb={2}>
       <GridItem>
-        <Checkbox
+        <OstCheckbox
           defaultChecked={item?.isActive}
           onChange={() => {
             handleIsActiveCheck();
@@ -58,7 +59,7 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
         />
       </GridItem>
       <GridItem>
-        <Checkbox
+        <OstCheckbox
           onChange={() => {
             handleOriginalCheck();
           }}
