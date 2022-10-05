@@ -6,11 +6,11 @@ export const FONT_WEIGHT = {
 
 const textStyles = {
   h1: {
-    fontSize: '20px',
+    fontSize: '32px',
     fontWeight: FONT_WEIGHT.BOLD,
   },
   h1Normal: {
-    fontSize: '20px',
+    fontSize: '32px',
     fontWeight: FONT_WEIGHT.NORMAL,
   },
   h2: {

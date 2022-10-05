@@ -3,7 +3,6 @@ const styles = {
     body: {
       fontFamily:
         '"Hiragino Sans", "Meiryo", "Source Han Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif',
-      background: 'body.bg',
       color: 'body.text',
       lineHeight: 1.6,
     },

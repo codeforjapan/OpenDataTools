@@ -8,7 +8,7 @@ const colors = {
   },
   focus: '#ffd73e',
   body: {
-    bg: '#FFF',
+    bg: '#B9C5D3',
     text: '#222',
   },
   icon: {
