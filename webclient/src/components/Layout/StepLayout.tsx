@@ -33,6 +33,10 @@ export const StepLayout = (props: StepLayoutProps) => {
     },
   ];
 
+  const currentIndex = stepItems.findIndex((item) => {
+    return item.path === location.pathname;
+  });
+
   return (
     <>
       <Head title={props.pageTitle} />
@@ -55,10 +59,7 @@ export const StepLayout = (props: StepLayoutProps) => {
                   mb={10}
                   borderRadius="50%"
                   sx={
-                    index <=
-                    stepItems.findIndex((item) => {
-                      return item.path === location.pathname;
-                    })
+                    index <= currentIndex
                       ? {
                           border: '3px solid white',
                           bg: 'icon.active',
@@ -91,10 +92,7 @@ export const StepLayout = (props: StepLayoutProps) => {
                       : {}
                   }
                 >
-                  {index <
-                    stepItems.findIndex((item) => {
-                      return item.path === location.pathname;
-                    }) && <CheckIcon color="white" />}
+                  {index < currentIndex && <CheckIcon color="white" />}
                 </Flex>
                 <Box
                   w="100%"
