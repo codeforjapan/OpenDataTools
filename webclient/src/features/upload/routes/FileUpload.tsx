@@ -57,7 +57,7 @@ export const FileUpload: FC = () => {
       <Flex mt={4} justifyContent="flex-end">
         <OstNavLink
           to={`/${datasetUid}/auto-convert`}
-          isDisabled={true}
+          isDisabled={!datasetUid}
           iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
         >
           次のステップへ
