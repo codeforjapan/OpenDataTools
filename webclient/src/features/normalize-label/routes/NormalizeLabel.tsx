@@ -37,13 +37,13 @@ export const NormalizeLabel: FC = () => {
 
       <Flex mt={4} justifyContent="space-between">
         <OstNavLink
-          to="/auto-convert"
+          to={`/${dataset_uid}/auto-convert`}
           iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
         >
           ステップ２に戻る
         </OstNavLink>
         <OstNavLink
-          to="/auto-convert"
+          to={`/${dataset_uid}/data-editor`}
           isDisabled={false}
           iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
         >

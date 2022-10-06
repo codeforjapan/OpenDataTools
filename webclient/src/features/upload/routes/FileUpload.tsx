@@ -1,6 +1,5 @@
 import { Avatar, Box, Flex, Input } from '@chakra-ui/react';
-import { ChangeEvent, FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, FC, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -9,7 +8,7 @@ import { utilCharEncoding } from 'opendatatool-datamanager';
 import { useImportDataset } from '../../../hooks/useDataset';
 
 export const FileUpload: FC = () => {
-  const navigator = useNavigate();
+  const [datasetUid, setDatasetUid] = useState<string>();
   const importRowData = useImportDataset();
 
   const readInputFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +30,7 @@ export const FileUpload: FC = () => {
           headers: rowHeaders,
           rowDatas: rowDataObject.data,
         });
-        navigator(`/${importedDatasetUid}/normalize-label`);
+        setDatasetUid(importedDatasetUid);
       } catch (error) {
         return;
       }
@@ -57,7 +56,7 @@ export const FileUpload: FC = () => {
       </Box>
       <Flex mt={4} justifyContent="flex-end">
         <OstNavLink
-          to="/auto-convert"
+          to={`/${datasetUid}/auto-convert`}
           isDisabled={true}
           iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
         >

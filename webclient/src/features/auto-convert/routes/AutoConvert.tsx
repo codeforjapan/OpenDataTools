@@ -80,7 +80,7 @@ export const AutoConvert: FC = () => {
   };
 
   return (
-    <StepLayout pageTitle="自動変換" headingText={`データを自動変換しています`}>
+    <StepLayout pageTitle="自動変換" headingText={`データを自動変換しています`} uid={dataset_uid}>
       <Box p={5} background="gray.200" border="1px solid" my={3}>
         <CharacterCodeStatusElm />
         文字コードを変換しています。
@@ -102,7 +102,7 @@ export const AutoConvert: FC = () => {
           ステップ１に戻る
         </OstNavLink>
         <OstNavLink
-          to="/data-editor"
+          to={`/${dataset_uid}/normalize-label`}
           isDisabled={false}
           iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
         >
