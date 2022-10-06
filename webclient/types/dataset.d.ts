@@ -9,6 +9,7 @@ declare namespace Dataset {
     rowLabel: string | null;
     normalizedLabel: string | null;
     isActive: boolean;
+    dataType: Dataset.DataType;
   }
 
   interface SingleData {
@@ -17,4 +18,20 @@ declare namespace Dataset {
     editedValue: string | number | null;
     error: { message: string; status: 'alert' | 'warning' }[];
   }
+
+  type DataType =
+    | 'regcode'
+    | 'no'
+    | 'kana_string'
+    | 'lat'
+    | 'lng'
+    | 'tel'
+    | 'extension_tel'
+    | 'address'
+    | 'day_of_week'
+    | 'time'
+    | 'date'
+    | 'poi'
+    | 'barrier_free'
+    | null;
 }

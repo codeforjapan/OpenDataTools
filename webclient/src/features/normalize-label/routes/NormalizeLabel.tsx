@@ -2,25 +2,18 @@ import { Avatar, Box, Divider, Flex, Grid, GridItem } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import NormalizeDatasetItemLabel from '../../../components/Elements/Dataset/NormalizeDatasetItemLabel';
+import { NormalizeDatasetItemLabel } from '../../../components/Editor';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { datasetAtom, datasetItemUidListAtom } from '../../../stores/dataset';
+import { datasetItemUidListAtom } from '../../../stores/dataset';
 
 export const NormalizeLabel: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const datasetItemUidList = useRecoilValue(
     datasetItemUidListAtom({ datasetUid: String(dataset_uid) })
   );
-  const handleSelectDataset = (v: string) => {
-    // データセット種類選択時の処理
-    // データ項目の候補や推定を変更
-    // 正規化された項目名のSelectorの中身更新
-    console.log(v);
-    return;
-  };
 
   return (
     <StepLayout pageTitle="項目名の正規化" headingText="データ項目名の正規化" uid={dataset_uid}>

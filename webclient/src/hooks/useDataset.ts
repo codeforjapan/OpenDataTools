@@ -23,6 +23,7 @@ export const useImportDataset = () => {
             rowLabel: header,
             normalizedLabel: null,
             isActive: false,
+            dataType: null,
           };
         });
         set(datasetItemListSelector(params), items);

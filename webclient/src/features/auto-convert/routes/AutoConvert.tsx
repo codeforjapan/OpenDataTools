@@ -3,8 +3,10 @@ import { Avatar, Box, Flex, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
+import { useParams } from 'react-router-dom';
 
 export const AutoConvert: FC = () => {
+  const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [progress, setProgress] = useState({
     characterCode: { status: 'waiting', error: false },
     characterType: { status: 'waiting', error: false },
