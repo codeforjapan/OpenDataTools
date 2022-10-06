@@ -26,7 +26,7 @@ export const DataEditor: FC = () => {
 
       <Flex mt={4} justifyContent="space-between">
         <OstNavLink
-          to={`/${dataset_uid}/upload-file`}
+          to={`/${dataset_uid}/normalize-label`}
           iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
         >
           ステップ３に戻る
