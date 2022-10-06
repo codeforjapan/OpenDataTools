@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, forwardRef, LinkProps } from '@chakra-ui/react';
-import { Link as ReactLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 export type OstNavLinkProps = {
   isDisabled?: boolean;
@@ -16,8 +16,8 @@ export const OstNavLink = forwardRef<LinkProps & OstNavLinkProps, 'button'>((pro
     <Link
       ref={ref}
       href={props.url}
-      as={props.to ? ReactLink : undefined}
-      to={props.to as string}
+      as={props.to && !props.isDisabled ? RouterLink : 'span'}
+      to={props.to}
       display="flex"
       alignItems="center"
       gap={2}
@@ -40,6 +40,7 @@ export const OstNavLink = forwardRef<LinkProps & OstNavLinkProps, 'button'>((pro
               },
             }
       }
+      {...props}
     >
       {props.iconLeft}
       {props.children}
