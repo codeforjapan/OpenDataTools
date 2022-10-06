@@ -1,5 +1,4 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Input } from '@chakra-ui/input';
 import { Box, Grid, GridItem, Text } from '@chakra-ui/layout';
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -10,6 +9,7 @@ import {
   datasetSingleDataAtom,
   datasetSingleDataUidListAtom,
 } from '../../stores/dataset';
+import { OstInput } from '../Elements/OstInput';
 
 type Props = {
   selectedItemUid?: string;
@@ -79,13 +79,13 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
         </Grid>
         <Grid gridTemplateColumns="1fr 50px 1fr" mb={5}>
           <GridItem>
-            <Input type="text" value={singleData?.rowValue || ''} disabled />
+            <OstInput type="text" value={singleData?.rowValue || ''} disabled />
           </GridItem>
           <GridItem>
             <ChevronRightIcon w={10} h={10} />
           </GridItem>
           <GridItem>
-            <Input
+            <OstInput
               value={singleData?.editedValue || ''}
               type="text"
               onChange={(e) => handleChangeData(e.target.value)}
