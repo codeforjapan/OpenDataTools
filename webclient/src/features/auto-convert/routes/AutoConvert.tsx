@@ -1,9 +1,9 @@
-import { CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
-import { Box, Spinner } from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowForwardIcon, CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
+import { Avatar, Box, Flex, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { ContentLayout } from '../../../components/Layout';
-import { OstLink } from '../../../components/Elements/OstLink';
+import { StepLayout } from '../../../components/Layout';
+import { OstNavLink } from '../../../components/Elements/OstLink';
+import { useParams } from 'react-router-dom';
 
 export const AutoConvert: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
@@ -80,7 +80,7 @@ export const AutoConvert: FC = () => {
   };
 
   return (
-    <ContentLayout title="自動変換">
+    <StepLayout pageTitle="自動変換" headingText={`データを自動変換しています`} uid={dataset_uid}>
       <Box p={5} background="gray.200" border="1px solid" my={3}>
         <CharacterCodeStatusElm />
         文字コードを変換しています。
@@ -93,9 +93,22 @@ export const AutoConvert: FC = () => {
         <RequiredFieldStatusElm />
         必須項目を確認しています。
       </Box>
-      <Box w="300px">
-        <OstLink to={`/${dataset_uid}/data-editor`}>次へ（データ項目詳細編集）</OstLink>
-      </Box>
-    </ContentLayout>
+
+      <Flex mt={4} justifyContent="space-between">
+        <OstNavLink
+          to="/upload-file"
+          iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+        >
+          ステップ１に戻る
+        </OstNavLink>
+        <OstNavLink
+          to={`/${dataset_uid}/normalize-label`}
+          isDisabled={false}
+          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
+        >
+          次のステップへ
+        </OstNavLink>
+      </Flex>
+    </StepLayout>
   );
 };

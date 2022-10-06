@@ -14,10 +14,6 @@ const { NormalizeLabel } = lazyImport(
 const { AutoConvert } = lazyImport(() => import('../features/auto-convert'), 'AutoConvert');
 const { DataEditor } = lazyImport(() => import('../features/data-editor'), 'DataEditor');
 const { Map } = lazyImport(() => import('../features/map'), 'Map');
-const { DataManagertest } = lazyImport(
-  () => import('../features/datamanagertest'),
-  'DataManagertest'
-);
 const { Test } = lazyImport(() => import('../features/test'), 'Test');
 
 const App = () => {
@@ -37,8 +33,8 @@ export const publicRoutes = [
     children: [
       { path: '/', element: <Home /> },
       { path: '/upload-file', element: <FileUpload /> },
-      { path: '/:dataset_uid/normalize-label', element: <NormalizeLabel /> },
       { path: '/:dataset_uid/auto-convert', element: <AutoConvert /> },
+      { path: '/:dataset_uid/normalize-label', element: <NormalizeLabel /> },
       { path: '/:dataset_uid/data-editor', element: <DataEditor /> },
       { path: '/:dataset_uid/map', element: <Map /> },
       { path: '/test', element: <Test /> },
