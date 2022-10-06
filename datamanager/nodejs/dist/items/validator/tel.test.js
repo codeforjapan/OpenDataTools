@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tel_1 = __importDefault(require("./tel"));
+const tel_1 = require("./tel");
 describe('items/validator/tel', () => {
-    const telValidator = new tel_1.default();
+    const telValidator = new tel_1.ItemValidatorTel();
     test('半角文字かどうか', () => {
         expect(() => telValidator.validateDataType(1000)).toThrow('電話番号は文字列である必要があります。');
         expect(() => telValidator.validateDataType(true)).toThrow('電話番号は文字列である必要があります。');
@@ -20,5 +17,9 @@ describe('items/validator/tel', () => {
     test('数字は10桁以上15桁以内かどうか', () => {
         expect(() => telValidator.validateDataType('(09)999-99')).toThrow('電話番号の数字は10桁以上15桁以内である必要があります。');
         expect(() => telValidator.validateDataType('09999-9999-9999-9999')).toThrow('電話番号の数字は10桁以上15桁以内である必要があります。');
+    });
+    test('エラーなし', () => {
+        const result = telValidator.validateDataType('08032521423');
+        expect(result).toEqual(undefined);
     });
 });

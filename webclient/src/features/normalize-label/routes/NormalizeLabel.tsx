@@ -2,7 +2,7 @@ import { Box, Divider, Grid, GridItem } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import NormalizeDatasetItemLabel from '../../../components/Elements/Dataset/NormalizeDatasetItemLabel';
+import { NormalizeDatasetItemLabel } from '../../../components/Editor';
 import { ContentLayout } from '../../../components/Layout';
 import { OstLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
@@ -42,7 +42,7 @@ export const NormalizeLabel: FC = () => {
       ))}
 
       <Box w="300px">
-        <OstLink to="/auto-convert">次へ（自動変換ページ）</OstLink>
+        <OstLink to={`/${dataset_uid}/auto-convert`}>次へ（自動変換ページ）</OstLink>
       </Box>
     </ContentLayout>
   );

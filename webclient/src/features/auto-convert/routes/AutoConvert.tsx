@@ -1,10 +1,12 @@
 import { CheckCircleIcon, MinusIcon } from '@chakra-ui/icons';
 import { Box, Spinner } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { ContentLayout } from '../../../components/Layout';
 import { OstLink } from '../../../components/Elements/OstLink';
 
 export const AutoConvert: FC = () => {
+  const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [progress, setProgress] = useState({
     characterCode: { status: 'waiting', error: false },
     characterType: { status: 'waiting', error: false },
@@ -92,7 +94,7 @@ export const AutoConvert: FC = () => {
         必須項目を確認しています。
       </Box>
       <Box w="300px">
-        <OstLink to="/data-editor">次へ（データ項目詳細編集）</OstLink>
+        <OstLink to={`/${dataset_uid}/data-editor`}>次へ（データ項目詳細編集）</OstLink>
       </Box>
     </ContentLayout>
   );
