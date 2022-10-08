@@ -87,19 +87,32 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
         </GridItem>
         <GridItem justifyContent="end">
           <Flex flexDirection="column" alignItems="end">
-            {singleData?.error.map((err, index) => (
+            {singleData && singleData.error.length > 0 ? (
+              singleData.error.map((err, index) => (
+                <Text
+                  key={`error-${index}`}
+                  display="inline-block"
+                  bg="information.bg.alert"
+                  borderRadius={8}
+                  px={4}
+                  py={2}
+                  mb={1}
+                >
+                  {err.message}
+                </Text>
+              ))
+            ) : (
               <Text
-                key={`error-${index}`}
                 display="inline-block"
-                bg="information.bg.alert"
+                bg="information.bg.disabled"
                 borderRadius={8}
                 px={4}
                 py={2}
                 mb={1}
               >
-                {err.message}
+                完了メッセージ
               </Text>
-            ))}
+            )}
             <OstInput
               value={singleData?.editedValue || ''}
               onChange={(e) => handleChangeData(e.target.value)}
