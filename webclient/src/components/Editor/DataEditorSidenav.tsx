@@ -1,4 +1,4 @@
-import { Flex, Box, Text } from '@chakra-ui/layout';
+import { Flex, Box, Text } from '@chakra-ui/react';
 import { InfoOutlineIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { FC } from 'react';
 import { useParams } from 'react-router';

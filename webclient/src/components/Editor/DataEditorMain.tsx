@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
+import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
