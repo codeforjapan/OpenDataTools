@@ -12,19 +12,21 @@ export type OstNavLinkProps = {
 };
 
 export const OstNavLink = forwardRef<LinkProps & OstNavLinkProps, 'button'>((props, ref) => {
+  const { isDisabled, iconLeft, iconRight, ...linkProps } = props;
+
   return (
     <Link
       ref={ref}
-      href={props.url}
-      as={props.to && !props.isDisabled ? RouterLink : 'span'}
-      to={props.to}
+      href={linkProps.url}
+      as={linkProps.to && !isDisabled ? RouterLink : 'span'}
+      to={linkProps.to}
       display="flex"
       alignItems="center"
       gap={2}
       textStyle="link"
       _hover={{ textDecoration: 'none' }}
       sx={
-        props.isDisabled
+        isDisabled
           ? {
               color: 'icon.disabled',
               cursor: 'not-allowed',
@@ -40,11 +42,11 @@ export const OstNavLink = forwardRef<LinkProps & OstNavLinkProps, 'button'>((pro
               },
             }
       }
-      {...props}
+      {...linkProps}
     >
-      {props.iconLeft}
-      {props.children}
-      {props.iconRight}
+      {iconLeft}
+      {linkProps.children}
+      {iconRight}
     </Link>
   );
 });
