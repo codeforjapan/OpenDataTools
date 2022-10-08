@@ -101,7 +101,7 @@ export const NormalizeLabel: FC = () => {
             >
               ステップ２に戻る
             </OstNavLink>
-            {isCheckFinished && (
+            {isFormatSelected && isCheckFinished && (
               <OstButton
                 view="skeleton"
                 size="L"
