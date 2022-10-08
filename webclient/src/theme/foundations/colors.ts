@@ -28,6 +28,13 @@ const colors = {
   inputAreaBorder: {
     active: '#CCC',
   },
+  information: {
+    bg: {
+      alert: '#FFDE6A',
+      active: 'rgba(115, 205, 255, 0.4)',
+      disabled: 'rgba(204, 204, 204, 0.4)',
+    },
+  },
 };
 
 export default colors;
