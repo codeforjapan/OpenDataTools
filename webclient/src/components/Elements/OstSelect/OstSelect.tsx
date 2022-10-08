@@ -27,9 +27,11 @@ export type OstSelectProps = {
 };
 
 export const OstSelect = forwardRef<SelectProps & OstSelectProps, 'select'>((props, ref) => {
-  const isError = props.isRequired ? props.value === '' : false;
+  const { changeValue, ...selectProps } = props;
 
-  const optionItems = props.options.map((item, index) => (
+  const isError = selectProps.isRequired ? selectProps.value === '' : false;
+
+  const optionItems = selectProps.options.map((item, index) => (
     <option key={`option-${index}`} value={item.value}>
       {item.label}
     </option>
@@ -37,24 +39,24 @@ export const OstSelect = forwardRef<SelectProps & OstSelectProps, 'select'>((pro
 
   return (
     <FormControl
-      isRequired={props.isRequired || false}
-      isDisabled={props.isDisabled}
+      isRequired={selectProps.isRequired || false}
+      isDisabled={selectProps.isDisabled}
       isInvalid={isError}
     >
-      {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
+      {selectProps.label && <OstFormLabel>{selectProps.label}</OstFormLabel>}
       <Select
         ref={ref}
-        value={props.value}
-        onChange={(e) => props.changeValue?.(e)}
-        placeholder={props.placeholder}
-        {...props}
+        value={selectProps.value}
+        onChange={(e) => changeValue?.(e)}
+        placeholder={selectProps.placeholder}
+        {...selectProps}
       >
         {optionItems}
       </Select>
-      {!isError && props.helperText ? (
-        <FormHelperText>{props.helperText}</FormHelperText>
+      {!isError && selectProps.helperText ? (
+        <FormHelperText>{selectProps.helperText}</FormHelperText>
       ) : (
-        <FormErrorMessage>{props.errorMessage}</FormErrorMessage>
+        <FormErrorMessage>{selectProps.errorMessage}</FormErrorMessage>
       )}
     </FormControl>
   );
