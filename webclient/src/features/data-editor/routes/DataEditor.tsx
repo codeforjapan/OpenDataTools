@@ -57,13 +57,15 @@ export const DataEditor: FC = () => {
           >
             ステップ３に戻る
           </OstNavLink>
-          {isCheckFinished && <OstButton
-            view="skeleton"
-            size="L"
-            icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
-          >
-            一時ファイルのダウンロード
-          </OstButton>}
+          {isCheckFinished && (
+            <OstButton
+              view="skeleton"
+              size="L"
+              icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
+            >
+              一時ファイルのダウンロード
+            </OstButton>
+          )}
         </Flex>
         <OstNavLink
           to={`/${dataset_uid}/map`}
