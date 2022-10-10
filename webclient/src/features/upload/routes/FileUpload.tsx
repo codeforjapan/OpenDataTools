@@ -79,7 +79,7 @@ export const FileUpload: FC = () => {
       pageTitle={'CSVアップロード'}
       headingText={
         !datasetUid
-          ? `CSVファイルをアップロードしてください`
+          ? 'CSVファイルをアップロードしてください'
           : '以下のCSVファイルがアップロードされました'
       }
     >
