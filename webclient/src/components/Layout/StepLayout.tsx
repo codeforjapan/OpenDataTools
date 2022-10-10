@@ -9,6 +9,7 @@ type StepLayoutProps = {
   headingText: string;
   pageTitle: string;
   uid?: string;
+  isProcessFinished?: boolean;
 };
 
 export const StepLayout = (props: StepLayoutProps) => {
@@ -92,7 +93,10 @@ export const StepLayout = (props: StepLayoutProps) => {
                       : {}
                   }
                 >
-                  {index < currentIndex && <CheckIcon color="white" />}
+                  {(index < currentIndex ||
+                    (index === currentIndex && props.isProcessFinished)) && (
+                    <CheckIcon color="white" />
+                  )}
                 </Flex>
                 <Box
                   w="100%"
