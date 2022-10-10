@@ -140,16 +140,15 @@ export const FileUpload: FC = () => {
       )}
       {datasetUid && (
         <Flex mt={5} justifyContent="flex-end">
-          <Box
-            bg="information.bg.active"
-            px={10}
-            py={2}
-            borderRadius={20}
+          <Text
             display="inline-block"
-            justifyContent="right"
+            bg="information.bg.active"
+            borderRadius="3em"
+            px={8}
+            py={2}
           >
             次のステップに進むと検証前に必要な自動変換がはじまります
-          </Box>
+          </Text>
         </Flex>
       )}
       <Flex mt={4} justifyContent="flex-end">
