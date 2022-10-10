@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Grid, GridItem, Text } from '@chakra-ui/layout';
+import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -72,35 +72,62 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     };
 
     return (
-      <>
-        <Grid gridTemplateColumns="1fr 1fr">
-          <GridItem>名称がここにくる</GridItem>
-          <GridItem>{singleData?.error.map((err) => err.message)}</GridItem>
-        </Grid>
-        <Grid gridTemplateColumns="1fr 50px 1fr" mb={5}>
-          <GridItem>
-            <OstInput type="text" value={singleData?.rowValue || ''} disabled />
-          </GridItem>
-          <GridItem>
-            <ChevronRightIcon w={10} h={10} />
-          </GridItem>
-          <GridItem>
+      <Grid gridTemplateColumns="1fr 50px 1fr" alignItems="end" mb={6}>
+        <GridItem>
+          <Text>名称がここにくる</Text>
+          <OstInput
+            value={singleData?.rowValue || ''}
+            readOnly
+            bg="information.bg.disabled"
+            color="body.text"
+          />
+        </GridItem>
+        <GridItem>
+          <ChevronRightIcon w={10} h={10} />
+        </GridItem>
+        <GridItem justifyContent="end">
+          <Flex flexDirection="column" alignItems="end">
+            {singleData && singleData.error.length > 0 ? (
+              singleData.error.map((err, index) => (
+                <Text
+                  key={`error-${index}`}
+                  display="inline-block"
+                  bg="information.bg.alert"
+                  borderRadius={8}
+                  px={4}
+                  py={2}
+                  mb={1}
+                >
+                  {err.message}
+                </Text>
+              ))
+            ) : (
+              <Text
+                display="inline-block"
+                bg="information.bg.disabled"
+                borderRadius={8}
+                px={4}
+                py={2}
+                mb={1}
+              >
+                完了メッセージ
+              </Text>
+            )}
             <OstInput
               value={singleData?.editedValue || ''}
-              type="text"
               onChange={(e) => handleChangeData(e.target.value)}
             />
-          </GridItem>
-        </Grid>
-      </>
+          </Flex>
+        </GridItem>
+      </Grid>
     );
   };
 
   return (
-    <Box>
+    <>
       {singleDataUidList.map((uid, index) => (
         <SingleDataElm key={index} singleDataUid={uid} />
       ))}
-    </Box>
+    </>
   );
 };
