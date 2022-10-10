@@ -1,4 +1,4 @@
-import { Avatar, Box, Center, cssVar, Flex, Input, InputGroup } from '@chakra-ui/react';
+import { Avatar, Box, Center, Flex, Input, InputGroup, Text } from '@chakra-ui/react';
 import { ChangeEvent, FC, useCallback, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
