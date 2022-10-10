@@ -76,7 +76,7 @@ export const FileUpload: FC = () => {
 
   return (
     <StepLayout
-      pageTitle={'CSVアップロード'}
+      pageTitle="CSVアップロード"
       headingText={
         !datasetUid
           ? 'CSVファイルをアップロードしてください'
