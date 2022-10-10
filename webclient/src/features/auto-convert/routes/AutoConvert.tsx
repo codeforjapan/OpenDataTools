@@ -185,6 +185,7 @@ export const AutoConvert: FC = () => {
         isAllProgressFinished ? 'データの自動変換が完了しました' : 'データを自動変換しています'
       }
       uid={dataset_uid}
+      isProcessFinished={isAllProgressFinished}
     >
       {!isAllProgressFinished && (
         <Flex alignItems="center" px={6} py={4} bg="information.bg.alert" borderRadius={8}>
