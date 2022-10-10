@@ -23,6 +23,7 @@ export const NormalizeLabel: FC = () => {
       pageTitle="データ項目名の正規化"
       headingText="データ項目名の正規化"
       uid={dataset_uid}
+      isProcessFinished={isFormatSelected && isCheckFinished}
     >
       <Flex
         alignItems="center"

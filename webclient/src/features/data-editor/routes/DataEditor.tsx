@@ -20,7 +20,12 @@ export const DataEditor: FC = () => {
   const isCheckFinished = false; //TODO: 確認終了のステータスを監視する
 
   return (
-    <StepLayout pageTitle="データ形式確認" headingText="データ形式確認" uid={dataset_uid}>
+    <StepLayout
+      pageTitle="データ形式確認"
+      headingText="データ形式確認"
+      uid={dataset_uid}
+      isProcessFinished={isCheckFinished}
+    >
       <Flex
         alignItems="center"
         px={6}

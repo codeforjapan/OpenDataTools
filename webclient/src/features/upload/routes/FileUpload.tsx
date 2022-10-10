@@ -40,7 +40,11 @@ export const FileUpload: FC = () => {
   };
 
   return (
-    <StepLayout pageTitle="CSVアップロード" headingText={`CSVファイルをアップロードしてください`}>
+    <StepLayout
+      pageTitle="CSVアップロード"
+      headingText={`CSVファイルをアップロードしてください`}
+      isProcessFinished={!!datasetUid}
+    >
       <Box
         p={20}
         mt={4}
