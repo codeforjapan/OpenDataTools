@@ -39,12 +39,20 @@ const iconSpacing = defineStyle({
   paddingInlineEnd: '8',
 });
 
+const customField = defineStyle({
+  padding: '24px',
+  paddingRight: '36px',
+  height: 'auto',
+  background: 'white',
+});
+
 const sizes = {
   lg: {
     ...inputTheme.sizes?.lg,
     field: {
       ...inputTheme.sizes?.lg.field,
       ...iconSpacing,
+      ...customField,
     },
   },
   md: {
@@ -52,6 +60,7 @@ const sizes = {
     field: {
       ...inputTheme.sizes?.md.field,
       ...iconSpacing,
+      ...customField,
     },
   },
   sm: {
@@ -59,6 +68,7 @@ const sizes = {
     field: {
       ...inputTheme.sizes?.sm.field,
       ...iconSpacing,
+      ...customField,
     },
   },
   xs: {
@@ -66,6 +76,7 @@ const sizes = {
     field: {
       ...inputTheme.sizes?.xs.field,
       ...iconSpacing,
+      ...customField,
     },
     icon: {
       insetEnd: '1',

@@ -1,4 +1,4 @@
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { FC, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { datasetItemAtom } from '../../stores/dataset';
@@ -29,10 +29,7 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
     return;
   };
 
-  const handleOriginalCheck = () => {
-    // 独自定義かどうかの選択処理
-    // 独自定義の場合はrowLabelをそのままnormalizedLabelにいれる
-  };
+  const isLabelOriginal = false; //TODO: 独自定義かどうかチェックする
 
   const handleSelect = (v: string) => {
     if (!item) return;
@@ -49,30 +46,42 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
   }, []);
 
   return (
-    <Grid gridTemplateColumns="70px 120px 1fr 1fr" mb={2}>
-      <GridItem>
+    <Flex
+      alignItems="center"
+      justifyContent="space-between"
+      py={4}
+      borderTop="1px solid"
+      borderColor="icon.disabled"
+    >
+      <Box flex="1 1 40%">
         <OstCheckbox
           defaultChecked={item?.isActive}
           onChange={() => {
             handleIsActiveCheck();
           }}
-        />
-      </GridItem>
-      <GridItem>
-        <OstCheckbox
-          onChange={() => {
-            handleOriginalCheck();
-          }}
-        />
-      </GridItem>
-      <GridItem>{item?.rowLabel}</GridItem>
-      <GridItem>
+        >
+          {item?.rowLabel}
+        </OstCheckbox>
+      </Box>
+      <Flex flex="1 1 60%">
+        <Box p={4}>
+          <Text
+            px={4}
+            py={2}
+            bg={isLabelOriginal ? 'information.bg.alert' : 'information.bg.disabled'}
+            borderRadius="3em"
+            whiteSpace="nowrap"
+            cursor="default"
+          >
+            {isLabelOriginal ? '項目名を選択' : '一致しました'}
+          </Text>
+        </Box>
         <OstSelect
           value={item?.normalizedLabel || ''}
           onChange={(e) => handleSelect(e.target.value)}
           options={selectOptions}
         />
-      </GridItem>
-    </Grid>
+      </Flex>
+    </Flex>
   );
 };
