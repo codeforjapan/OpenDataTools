@@ -7,46 +7,56 @@ import {
   DownloadIcon,
   InfoOutlineIcon,
 } from '@chakra-ui/icons';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
-import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { uploadedFileBufferAtom } from '../../../stores/upload_file';
+import { utilCharEncoding } from 'opendatatool-datamanager';
+import parser, { ParseResult } from 'papaparse';
+import { useImportDataset } from '../../../hooks/useDataset';
 
 export const AutoConvert: FC = () => {
-  const { dataset_uid } = useParams<{ dataset_uid: string }>();
-  const [progress, setProgress] = useState({
-    characterCode: { status: 'waiting', error: false },
-    characterType: { status: 'waiting', error: false },
-    requiredField: { status: 'waiting', error: false },
+  const [datasetUid, setDatasetUid] = useState<string>();
+  const [characterCodeProgress, setCharacterCodeProgress] = useState({
+    status: 'waiting',
+    error: false,
+  });
+  const [characterTypeProgress, setCharacterTypeProgress] = useState({
+    status: 'waiting',
+    error: false,
+  });
+  const [requiredFieldProgress, setRequiredFieldProgress] = useState({
+    status: 'waiting',
+    error: false,
   });
 
-  useEffect(() => {
-    // 自動変換を順番に実施していく処理
-    // モックとしてsleepを使っている。
-    // 実際にはuseEffect内でprogressが動的に変わらないので注意
-    const sleep = (waitSec: number) => {
-      return new Promise(function (resolve) {
-        setTimeout(function () {
-          resolve('');
-        }, waitSec);
-      });
-    };
+  const uploadedFileBuffer = useRecoilValue(uploadedFileBufferAtom);
+  const importRowData = useImportDataset();
 
-    const fetch = async () => {
-      setProgress({
-        ...progress,
-        characterCode: { status: 'processing', error: false },
+  useEffect(() => {
+    if (uploadedFileBuffer) {
+      setCharacterCodeProgress({ status: 'processing', error: false });
+      const charCodeConvertedData = utilCharEncoding.toString(uploadedFileBuffer.buffer);
+      setCharacterCodeProgress({ status: 'finished', error: false });
+      setCharacterTypeProgress({ status: 'processing', error: false });
+      setCharacterTypeProgress({ status: 'finished', error: false });
+      setRequiredFieldProgress({ status: 'processing', error: false });
+      const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
+        header: true,
       });
-      await sleep(1000);
-      setProgress({
-        ...progress,
-        characterCode: { status: 'finished', error: false },
-        characterType: { status: 'processing', error: false },
+      const rowHeaders = rowDataObject.meta.fields;
+      if (!rowHeaders) return;
+      const importedDatasetUid = importRowData({
+        datasetName: uploadedFileBuffer.fileName,
+        headers: rowHeaders,
+        rowDatas: rowDataObject.data,
       });
-    };
-    fetch();
-  }, []);
+      setDatasetUid(importedDatasetUid);
+      setRequiredFieldProgress({ status: 'finished', error: false });
+    }
+  }, [uploadedFileBuffer]);
 
   const statusStyle = (status: string) => {
     switch (status) {
@@ -78,7 +88,7 @@ export const AutoConvert: FC = () => {
   };
 
   const CharacterCodeStatusElm: FC = () => {
-    switch (progress.characterCode.status) {
+    switch (characterCodeProgress.status) {
       case 'waiting':
         return (
           <>
@@ -111,7 +121,7 @@ export const AutoConvert: FC = () => {
   };
 
   const CharacterTypeStatusElm: FC = () => {
-    switch (progress.characterType.status) {
+    switch (characterTypeProgress.status) {
       case 'waiting':
         return (
           <>
@@ -144,7 +154,7 @@ export const AutoConvert: FC = () => {
   };
 
   const RequiredFieldStatusElm: FC = () => {
-    switch (progress.requiredField.status) {
+    switch (requiredFieldProgress.status) {
       case 'waiting':
         return (
           <>
@@ -176,7 +186,17 @@ export const AutoConvert: FC = () => {
     }
   };
 
-  const isAllProgressFinished = false; //TODO: 処理完了のステータスを監視する
+  const isAllProgressFinished = useMemo(() => {
+    if (
+      characterCodeProgress.status === 'finished' &&
+      characterTypeProgress.status === 'finished' &&
+      requiredFieldProgress.status === 'finished'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [characterCodeProgress, characterTypeProgress, requiredFieldProgress]);
 
   return (
     <StepLayout
@@ -184,7 +204,7 @@ export const AutoConvert: FC = () => {
       headingText={
         isAllProgressFinished ? 'データの自動変換が完了しました' : 'データを自動変換しています'
       }
-      uid={dataset_uid}
+      uid={datasetUid}
       isProcessFinished={isAllProgressFinished}
     >
       {!isAllProgressFinished && (
@@ -202,7 +222,7 @@ export const AutoConvert: FC = () => {
           my={6}
           borderRadius={8}
           textStyle="navigationLarge"
-          {...statusStyle(progress.characterCode.status)}
+          {...statusStyle(characterCodeProgress.status)}
         >
           <CharacterCodeStatusElm />
         </Flex>
@@ -213,7 +233,7 @@ export const AutoConvert: FC = () => {
           my={6}
           borderRadius={8}
           textStyle="navigationLarge"
-          {...statusStyle(progress.characterType.status)}
+          {...statusStyle(characterTypeProgress.status)}
         >
           <CharacterTypeStatusElm />
         </Flex>
@@ -224,7 +244,7 @@ export const AutoConvert: FC = () => {
           my={6}
           borderRadius={8}
           textStyle="navigationLarge"
-          {...statusStyle(progress.requiredField.status)}
+          {...statusStyle(requiredFieldProgress.status)}
         >
           <RequiredFieldStatusElm />
         </Flex>
@@ -264,7 +284,7 @@ export const AutoConvert: FC = () => {
             )}
           </Flex>
           <OstNavLink
-            to={`/${dataset_uid}/normalize-label`}
+            to={`/${datasetUid}/normalize-label`}
             isDisabled={!isAllProgressFinished}
             iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
           >

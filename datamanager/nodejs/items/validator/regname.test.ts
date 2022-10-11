@@ -4,12 +4,8 @@ describe('items/validator/regcode', () => {
   const regnameValidator = new ItemValidatorRegname();
 
   test('文字列かどうか', () => {
-    expect(() => regnameValidator.validateDataType(1000)).toThrow(
-      '都道府県名は文字列である必要があります。',
-    );
-    expect(() => regnameValidator.validateDataType(true)).toThrow(
-      '都道府県名は文字列である必要があります。',
-    );
+    expect(() => regnameValidator.validateDataType(1000)).toThrow('都道府県名は文字列である必要があります。');
+    expect(() => regnameValidator.validateDataType(true)).toThrow('都道府県名は文字列である必要があります。');
   });
 
   test('正しい都道府県名がどうか', () => {

@@ -39,7 +39,7 @@ export const useImportDataset = () => {
           return {
             uid,
             rowValue: data,
-            editedValue: null,
+            editedValue: data,
             error: [],
           };
         });

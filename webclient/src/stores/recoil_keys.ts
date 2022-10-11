@@ -7,6 +7,8 @@ export enum AtomKeys {
   datasetItemUidList = 'datasetItemUidList',
   datasetSingleData = 'datasetSingleData',
   datasetSingleDataUidList = 'datasetSingleDataUidList',
+
+  uploadedFileBuffer = 'uploadedFileBuffer',
 }
 
 export enum SelectorKeys {

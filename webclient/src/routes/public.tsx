@@ -33,7 +33,7 @@ export const publicRoutes = [
     children: [
       { path: '/', element: <Home /> },
       { path: '/upload-file', element: <FileUpload /> },
-      { path: '/:dataset_uid/auto-convert', element: <AutoConvert /> },
+      { path: '/auto-convert', element: <AutoConvert /> },
       { path: '/:dataset_uid/normalize-label', element: <NormalizeLabel /> },
       { path: '/:dataset_uid/data-editor', element: <DataEditor /> },
       { path: '/:dataset_uid/map', element: <Map /> },
