@@ -17,7 +17,7 @@ export const DataEditor: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [selectedItemUid, setItemUid] = useState<string>();
 
-  const isCheckFinished = false; //TODO: 確認終了のステータスを監視する
+  const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
 
   return (
     <StepLayout

@@ -1,19 +1,16 @@
-import { Avatar, Box, Center, Flex, Input, InputGroup, Text } from '@chakra-ui/react';
-import { ChangeEvent, FC, useCallback, useState } from 'react';
+import { Avatar, Box, Center, Flex, InputGroup, Text } from '@chakra-ui/react';
+import { FC, useCallback, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import parser, { ParseResult } from 'papaparse';
-import { utilCharEncoding } from 'opendatatool-datamanager';
-import { useImportDataset } from '../../../hooks/useDataset';
 import { TbFileDescription } from 'react-icons/tb';
 import { useDropzone } from 'react-dropzone';
+import { useSetRecoilState } from 'recoil';
+import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 
 export const FileUpload: FC = () => {
-  const [datasetUid, setDatasetUid] = useState<string>();
   const [csvName, setCsvName] = useState<string>();
-
-  const importRowData = useImportDataset();
+  const setUploadedFileBuffer = useSetRecoilState(uploadedFileBufferAtom);
 
   const onDrop = useCallback((csvFile: any) => {
     csvFile.forEach((file: any) => {
@@ -22,18 +19,7 @@ export const FileUpload: FC = () => {
 
         reader.onload = () => {
           const rowData: any = reader.result;
-          const charCodeConvertedData = utilCharEncoding.toString(rowData);
-          const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
-            header: true,
-          });
-          const rowHeaders = rowDataObject.meta.fields;
-          if (!rowHeaders) return;
-          const importedDatasetUid = importRowData({
-            datasetName: file.name,
-            headers: rowHeaders,
-            rowDatas: rowDataObject.data,
-          });
-          setDatasetUid(importedDatasetUid);
+          setUploadedFileBuffer({ fileName: file.name, buffer: rowData });
           setCsvName(file.name);
         };
         reader.readAsArrayBuffer(file);
@@ -45,48 +31,19 @@ export const FileUpload: FC = () => {
 
   const { getRootProps, getInputProps } = useDropzone({ accept: { 'text/csv': ['.csv'] }, onDrop });
 
-  const readInputFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const csv = e.target.files[0];
-
-    const reader = new FileReader();
-    const readCsv = () => {
-      try {
-        const rowData: any = reader.result;
-        const charCodeConvertedData = utilCharEncoding.toString(rowData);
-        const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
-          header: true,
-        });
-        const rowHeaders = rowDataObject.meta.fields;
-        if (!rowHeaders) return;
-        const importedDatasetUid = importRowData({
-          datasetName: csv.name,
-          headers: rowHeaders,
-          rowDatas: rowDataObject.data,
-        });
-        setDatasetUid(importedDatasetUid);
-        setCsvName(csv.name);
-      } catch (error) {
-        return;
-      }
-    };
-    reader.onload = readCsv;
-    reader.readAsArrayBuffer(csv);
-  };
-
   return (
     <StepLayout
       pageTitle="CSVアップロード"
       headingText={
-        !datasetUid
+        !csvName
           ? 'CSVファイルをアップロードしてください'
           : '以下のCSVファイルがアップロードされました'
       }
     >
-      {!datasetUid && (
+      {!csvName && (
         <Center>検証を行いたいファイルを下記の枠内にドラッグ＆ドロップしてください</Center>
       )}
-      {!datasetUid ? (
+      {!csvName ? (
         <div {...getRootProps()}>
           <Box
             p={20}
@@ -109,12 +66,6 @@ export const FileUpload: FC = () => {
             ここに、CSVファイルをドロップしてください
             <InputGroup>
               <input {...getInputProps()} />
-              <Input
-                type="file"
-                display="none"
-                accept="text/csv"
-                onChange={(e) => readInputFile(e)}
-              />
             </InputGroup>
           </Box>
         </div>
@@ -138,7 +89,7 @@ export const FileUpload: FC = () => {
           {csvName}
         </Box>
       )}
-      {datasetUid && (
+      {csvName && (
         <Flex mt={5} justifyContent="flex-end">
           <Text display="inline-block" bg="information.bg.active" borderRadius="3em" px={8} py={2}>
             次のステップに進むと検証前に必要な自動変換がはじまります
@@ -147,8 +98,8 @@ export const FileUpload: FC = () => {
       )}
       <Flex mt={4} justifyContent="flex-end">
         <OstNavLink
-          to={`/${datasetUid}/auto-convert`}
-          isDisabled={!datasetUid}
+          to={`/auto-convert`}
+          isDisabled={!csvName}
           iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
         >
           次のステップへ

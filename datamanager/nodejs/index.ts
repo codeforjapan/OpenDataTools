@@ -6,7 +6,9 @@ import { Encoding } from './utils/encoding';
 import { PUBLIC_FACILITIES_ITEMS_LIST } from './scheme/constants/items-list';
 import { RECOMMEND_BASIC_DATASET_LIST } from './scheme/constants/dataset';
 import { ItemValidatorRegcode } from './items/validator/regcode';
+import { SchemeValidater } from './scheme/validator';
 
+const schemeValidator = new SchemeValidater();
 const itemLabelFormatter = new SchemeFormatterItemLabel();
 const validateRegCode = new ItemValidatorRegcode();
 const validateTel = new ItemValidatorTel();
@@ -17,6 +19,7 @@ const itemsListOfPublicFacilities = PUBLIC_FACILITIES_ITEMS_LIST;
 const datasetListOfRecommendBasic = RECOMMEND_BASIC_DATASET_LIST;
 
 export {
+  schemeValidator,
   itemLabelFormatter,
   validateRegCode,
   validateTel,
