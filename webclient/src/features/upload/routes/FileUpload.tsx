@@ -2,7 +2,7 @@ import { Avatar, Box, Center, Flex, InputGroup, Text } from '@chakra-ui/react';
 import { FC, useCallback, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
-import {ArrowForwardIcon, InfoOutlineIcon} from '@chakra-ui/icons';
+import { ArrowForwardIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { TbFileDescription } from 'react-icons/tb';
 import { useDropzone } from 'react-dropzone';
 import { useSetRecoilState } from 'recoil';
@@ -19,8 +19,8 @@ export const FileUpload: FC = () => {
         const reader = new FileReader();
 
         reader.onload = () => {
-          if (csvFile.length >= 2){
-            setFileLength( true);
+          if (csvFile.length >= 2) {
+            setFileLength(true);
             return;
           }
           setFileLength(false);
