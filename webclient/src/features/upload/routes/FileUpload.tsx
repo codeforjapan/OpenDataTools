@@ -20,10 +20,10 @@ export const FileUpload: FC = () => {
 
         reader.onload = () => {
           if (csvFile.length >= 2) {
-            setisFilesMultiple(true);
+            setIsFilesMultiple(true);
             return;
           }
-          setisFilesMultiple(false);
+          setIsFilesMultiple(false);
           const rowData: any = reader.result;
           setUploadedFileBuffer({ fileName: file.name, buffer: rowData });
           setCsvName(file.name);
