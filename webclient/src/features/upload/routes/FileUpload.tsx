@@ -10,7 +10,7 @@ import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 
 export const FileUpload: FC = () => {
   const [csvName, setCsvName] = useState<string>();
-  const [fileLength, setFileLength] = useState(false);
+  const [isFilesMultiple, setisFilesMultiple] = useState(false);
   const setUploadedFileBuffer = useSetRecoilState(uploadedFileBufferAtom);
 
   const onDrop = useCallback((csvFile: any) => {
@@ -20,10 +20,10 @@ export const FileUpload: FC = () => {
 
         reader.onload = () => {
           if (csvFile.length >= 2) {
-            setFileLength(true);
+            setisFilesMultiple(true);
             return;
           }
-          setFileLength(false);
+          setisFilesMultiple(false);
           const rowData: any = reader.result;
           setUploadedFileBuffer({ fileName: file.name, buffer: rowData });
           setCsvName(file.name);
@@ -46,7 +46,7 @@ export const FileUpload: FC = () => {
           : '以下のCSVファイルがアップロードされました'
       }
     >
-      {fileLength && (
+      {isFilesMultiple && (
         <Flex alignItems="center" px={6} py={4} mb={10} bg="information.bg.alert" borderRadius={8}>
           <InfoOutlineIcon />
           <Text ml={6}>CSVファイルのアップロードは一つずつ行ってください</Text>
