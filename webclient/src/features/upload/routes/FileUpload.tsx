@@ -10,7 +10,7 @@ import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 
 export const FileUpload: FC = () => {
   const [csvName, setCsvName] = useState<string>();
-  const [isFilesMultiple, setIsFilesMultiple] = useState(false);
+  const [isFilesMultiple, setIsFilesMultiple] = useState<boolean>(false);
   const setUploadedFileBuffer = useSetRecoilState(uploadedFileBufferAtom);
 
   const onDrop = useCallback((csvFile: any) => {
