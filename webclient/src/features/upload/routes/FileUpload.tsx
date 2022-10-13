@@ -2,7 +2,7 @@ import { Avatar, Box, Center, Flex, InputGroup, Text } from '@chakra-ui/react';
 import { FC, useCallback, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { TbFileDescription } from 'react-icons/tb';
 import { useDropzone } from 'react-dropzone';
 import { useSetRecoilState } from 'recoil';
@@ -10,6 +10,7 @@ import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 
 export const FileUpload: FC = () => {
   const [csvName, setCsvName] = useState<string>();
+  const [isFilesMultiple, setIsFilesMultiple] = useState<boolean>(false);
   const setUploadedFileBuffer = useSetRecoilState(uploadedFileBufferAtom);
 
   const onDrop = useCallback((csvFile: any) => {
@@ -18,6 +19,11 @@ export const FileUpload: FC = () => {
         const reader = new FileReader();
 
         reader.onload = () => {
+          if (csvFile.length >= 2) {
+            setIsFilesMultiple(true);
+            return;
+          }
+          setIsFilesMultiple(false);
           const rowData: any = reader.result;
           setUploadedFileBuffer({ fileName: file.name, buffer: rowData });
           setCsvName(file.name);
@@ -40,6 +46,12 @@ export const FileUpload: FC = () => {
           : '以下のCSVファイルがアップロードされました'
       }
     >
+      {isFilesMultiple && (
+        <Flex alignItems="center" px={6} py={4} mb={10} bg="information.bg.alert" borderRadius={8}>
+          <InfoOutlineIcon />
+          <Text ml={6}>CSVファイルのアップロードは一つずつ行ってください</Text>
+        </Flex>
+      )}
       {!csvName && (
         <Center>検証を行いたいファイルを下記の枠内にドラッグ＆ドロップしてください</Center>
       )}
