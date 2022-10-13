@@ -3,8 +3,15 @@ import { FC, useCallback } from 'react';
 import { ContentLayout } from '../../../components/Layout';
 import { GeoloniaMap } from '@geolonia/embed-react';
 import GeoJSON from 'geojson';
+import { useGetDataset } from '../../../hooks/useDataset';
+import { useParams } from 'react-router-dom';
 
 export const Map: FC = () => {
+  const { dataset_uid } = useParams<{ dataset_uid: string }>();
+
+  const dataset = useGetDataset({ datasetUid: dataset_uid || '' });
+  console.log(dataset);
+
   const points = [
     { description: '東京駅', lng: 139.766103, lat: 35.681391 },
     { description: '有楽町駅', lng: 139.763806, lat: 35.675441 },
