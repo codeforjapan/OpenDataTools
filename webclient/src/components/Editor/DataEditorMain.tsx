@@ -6,8 +6,8 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLabel2DataType, useValidator } from '../../hooks/useValidate';
 import {
   datasetItemAtom,
-  datasetSingleDataAtom,
-  datasetSingleDataUidListAtom,
+  datasetSingleCellAtom,
+  datasetSingleCellUidListByItemAtom,
 } from '../../stores/dataset';
 import { OstInput } from '../Elements/OstInput';
 
@@ -23,8 +23,8 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
   const [datasetItem, setDatasetItem] = useRecoilState(
     datasetItemAtom({ datasetUid: String(dataset_uid), itemUid: String(selectedItemUid) })
   );
-  const singleDataUidList = useRecoilValue(
-    datasetSingleDataUidListAtom({
+  const SingleCellUidListByItem = useRecoilValue(
+    datasetSingleCellUidListByItemAtom({
       datasetUid: String(dataset_uid),
       itemUid: String(selectedItemUid),
     })
@@ -37,38 +37,37 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     setDatasetItem({ ...datasetItem, dataType });
   }, [datasetItem?.normalizedLabel]);
 
-  const SingleDataElm: FC<{ singleDataUid: string }> = ({ singleDataUid }) => {
+  const SingleCellElm: FC<{ singleCellUid: string }> = ({ singleCellUid }) => {
     const validatorFactory = useValidator({ dataType: validatorDataType });
-    const [singleData, setSingleData] = useRecoilState(
-      datasetSingleDataAtom({
+    const [SingleCell, setSingleCell] = useRecoilState(
+      datasetSingleCellAtom({
         datasetUid: String(dataset_uid),
-        itemUid: String(selectedItemUid),
-        singleDataUid,
+        singleCellUid,
       })
     );
 
     useEffect(() => {
-      if (!singleData) return;
+      if (!SingleCell) return;
       try {
         const validator = validatorFactory();
-        validator(singleData.editedValue);
-        setSingleData({
-          ...singleData,
+        validator(SingleCell.editedValue);
+        setSingleCell({
+          ...SingleCell,
           error: [],
         });
       } catch (error: any) {
         if (error.message) {
-          setSingleData({
-            ...singleData,
+          setSingleCell({
+            ...SingleCell,
             error: [{ message: error.message, status: 'warning' }],
           });
         }
       }
-    }, [singleData?.editedValue]);
+    }, [SingleCell?.editedValue]);
 
     const handleChangeData = (v: string) => {
-      if (!singleData) return;
-      setSingleData({ ...singleData, editedValue: v });
+      if (!SingleCell) return;
+      setSingleCell({ ...SingleCell, editedValue: v });
     };
 
     return (
@@ -76,7 +75,7 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
         <GridItem>
           <Text>名称がここにくる</Text>
           <OstInput
-            value={singleData?.rowValue || ''}
+            value={SingleCell?.rowValue || ''}
             readOnly
             bg="information.bg.disabled"
             color="body.text"
@@ -87,8 +86,8 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
         </GridItem>
         <GridItem justifyContent="end">
           <Flex flexDirection="column" alignItems="end">
-            {singleData && singleData.error.length > 0 ? (
-              singleData.error.map((err, index) => (
+            {SingleCell && SingleCell.error.length > 0 ? (
+              SingleCell.error.map((err, index) => (
                 <Text
                   key={`error-${index}`}
                   display="inline-block"
@@ -114,7 +113,7 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
               </Text>
             )}
             <OstInput
-              value={singleData?.editedValue || ''}
+              value={SingleCell?.editedValue || ''}
               onChange={(e) => handleChangeData(e.target.value)}
             />
           </Flex>
@@ -125,8 +124,8 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
 
   return (
     <>
-      {singleDataUidList.map((uid, index) => (
-        <SingleDataElm key={index} singleDataUid={uid} />
+      {SingleCellUidListByItem.map((uid, index) => (
+        <SingleCellElm key={index} singleCellUid={uid} />
       ))}
     </>
   );

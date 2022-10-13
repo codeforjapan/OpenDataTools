@@ -12,8 +12,15 @@ declare namespace Dataset {
     dataType: Dataset.DataType;
   }
 
-  interface SingleData {
+  interface SingleRow {
     uid: string;
+    index: number;
+  }
+
+  interface SingleCell {
+    uid: string;
+    itemUid: string;
+    singleRowUid: string;
     rowValue: string | number | null;
     editedValue: string | number | null;
     error: { message: string; status: 'alert' | 'warning' }[];

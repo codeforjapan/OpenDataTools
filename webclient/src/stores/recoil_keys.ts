@@ -5,8 +5,11 @@ export enum AtomKeys {
   datasetUidList = 'datasetUidList',
   datasetItem = 'datasetItem',
   datasetItemUidList = 'datasetItemUidList',
-  datasetSingleData = 'datasetSingleData',
-  datasetSingleDataUidList = 'datasetSingleDataUidList',
+  datasetSingleRow = 'datasetSingleRow',
+  datasetSingleRowUidList = 'datasetSingleRowUidList',
+  datasetSingleCell = 'datasetSingleCell',
+  datasetSingleCellUidListByItem = 'datasetSingleCellUidListByItem',
+  datasetSingleCellUidListByRow = 'datasetSingleCellUidListByRow',
 
   uploadedFileBuffer = 'uploadedFileBuffer',
 }
@@ -14,5 +17,8 @@ export enum AtomKeys {
 export enum SelectorKeys {
   datasetList = 'datasetList',
   datasetItemList = 'datasetItemList',
-  datasetSingleDataList = 'datasetSingleDataList',
+  datasetSingleRowList = 'datasetSingleRowList',
+  datasetSingleCellList = 'datasetSingleCellList',
+  datasetSingleCellListByItem = 'datasetSingleCellListByItem',
+  datasetSingleCellListByRow = 'datasetSingleCellListByRow',
 }
