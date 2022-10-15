@@ -27,5 +27,11 @@ describe('items/validator/dow', () => {
     expect(() => dowValidator.validateDataType('目月火')).toThrow(
       '利用可能曜日が正しくありません。曜日の漢字を並べて指定してください（例：火水木金土日）。'
     );
+    expect(() => dowValidator.validateDataType('日月火')).toThrow(
+      '利用可能曜日が正しくありません。曜日の漢字を並べて指定してください（例：火水木金土日）。'
+    );
+    expect(() => dowValidator.validateDataType('水月金')).toThrow(
+      '利用可能曜日が正しくありません。曜日の漢字を並べて指定してください（例：火水木金土日）。'
+    );
   });
 });
