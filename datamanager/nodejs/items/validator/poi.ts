@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { parse } from 'csv-parse/sync';
 import { poiList } from './poiList';
 export class ItemValidatorPoi {
   static INT_EXP = /[^0-9]/;
