@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { ContentLayout } from '../../../components/Layout';
 import { GeoloniaMap } from '@geolonia/embed-react';
 import GeoJSON from 'geojson';
@@ -20,16 +20,18 @@ export const Map: FC = () => {
     </div>`;
   }
 
-  const points = dataset
-    .filter(point => point.緯度 && point.経度)
-    .map(point => {
-      return {
-        title: point.名称,
-        description: description(point),
-        lat: Number(point.緯度),
-        lng: Number(point.経度),
-      }
-    });
+  const points = useMemo(() => {
+    return dataset
+      .filter(point => point.緯度 && point.経度)
+      .map(point => {
+        return {
+          title: point.名称,
+          description: description(point),
+          lat: Number(point.緯度),
+          lng: Number(point.経度),
+        }
+      });
+  }, [dataset]);
 
   const onLoad = useCallback((map: any) => {
     map.on('load', () => {
