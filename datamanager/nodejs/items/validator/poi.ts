@@ -1,5 +1,4 @@
-import fs from 'fs';
-import { parse } from 'csv-parse/sync';
+import { poiList } from './poiList';
 
 export class ItemValidatorPoi {
   static INT_EXP = /[^0-9]/;
@@ -17,10 +16,6 @@ export class ItemValidatorPoi {
       throw new Error('POIコードは数値である必要があります。');
     }
 
-    const csvData = parse(fs.readFileSync(__dirname + '/data/poi.csv'));
-    // 先頭行はヘッダーなので削除
-    csvData.shift();
-    const poiList = csvData.map((row: any) => row[1]);
     if (!poiList.includes(data)) {
       throw new Error('存在しないPOIコードです。');
     }
