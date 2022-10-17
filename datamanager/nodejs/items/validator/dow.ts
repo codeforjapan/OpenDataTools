@@ -1,6 +1,6 @@
 export class ItemValidatorDow {
   validateDataType(data: any) {
-    if (typeof data != 'string') {
+    if (typeof data !== 'string') {
       throw new Error('利用可能曜日は文字列である必要があります。');
     }
     const matched = data.match(/^月?火?水?木?金?土?日?$/);

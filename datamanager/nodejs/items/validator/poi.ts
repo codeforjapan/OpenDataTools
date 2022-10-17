@@ -3,7 +3,7 @@ import { poiList } from './poiList';
 export class ItemValidatorPoi {
   static INT_EXP = /[^0-9]/;
   validateDataType(data: any) {
-    if (typeof data != 'string') {
+    if (typeof data !== 'string') {
       throw new Error('POIコードは文字列である必要があります。');
     }
 
