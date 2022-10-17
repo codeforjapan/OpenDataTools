@@ -37,6 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "install:vercel": "cd ../datamanager/nodejs && yarn && yarn build && cd ../../webclient && yarn install",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "yarn lint:eslint",
