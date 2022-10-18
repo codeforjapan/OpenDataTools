@@ -1,4 +1,4 @@
-import { useRecoilCallback, useRecoilTransaction_UNSTABLE, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 import {
   datasetAtom,
   datasetItemListSelector,
@@ -9,6 +9,7 @@ import {
 } from '../stores/dataset';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
+import { schemeValidator } from 'opendatatool-datamanager';
 
 export const useImportDataset = () => {
   const importDataset = useRecoilCallback(({ set }) => (datasetName: string) => {
@@ -133,9 +134,32 @@ export const useImportDataset = () => {
   return executeImport;
 };
 
-export const useGetDataset = (params: { datasetUid: string }) => {
+export const useGetDataset = (params: { datasetUid: string; hasNewItems?: boolean }) => {
   const [dataset, setDataset] = useState<{ [key: string]: number | string }[]>([]);
-  const items = useRecoilValue(datasetItemListSelector(params));
+  let items: Dataset.Item[] | any = [];
+  const originalItems = useRecoilValue(datasetItemListSelector(params));
+  if (params.hasNewItems) {
+    const currentItems = originalItems.map((item) => item.rowLabel || '');
+    const missingItems = schemeValidator
+      .getMissingItems({
+        current_items: currentItems,
+        category: 'public-facilities',
+      })
+      .map((item) => item.label);
+    const additionalItems = missingItems.map((item) => {
+      const uid = uuid();
+      return {
+        uid,
+        rowLabel: item,
+        normalizedLabel: item,
+        isActive: false,
+        dataType: null,
+      };
+    });
+    items = [originalItems, ...additionalItems];
+  } else {
+    items = originalItems;
+  }
   const rows = useRecoilValue(datasetSingleRowListSelector(params));
 
   const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
