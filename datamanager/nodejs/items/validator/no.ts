@@ -1,7 +1,7 @@
 export class ItemValidatorNo {
   static INT_EXP = /[^0-9]/;
   validateDataType(data: any) {
-    if (typeof data != 'string') {
+    if (typeof data !== 'string') {
       throw new Error('NOコードは文字列である必要があります。');
     }
     if (data.length !== 10) {
