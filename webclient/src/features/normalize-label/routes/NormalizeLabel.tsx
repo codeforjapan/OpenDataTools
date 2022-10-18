@@ -9,14 +9,29 @@ import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
 import { OstButton } from '../../../components/Elements/OstButton';
 import { datasetItemUidListAtom } from '../../../stores/dataset';
+import { useGetDataset } from '../../../hooks/useDataset';
+import { exportCsv } from '../../../utils/exportCsv';
 
 export const NormalizeLabel: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const datasetItemUidList = useRecoilValue(
     datasetItemUidListAtom({ datasetUid: String(dataset_uid) })
   );
-  const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false); //TODO: 確認終了のステータスを監視する
+  const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false);
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
+
+  const datasetWithNewItems = useGetDataset({
+    datasetUid: String(dataset_uid),
+    hasNewItems: true,
+  });
+
+  const handleSelectFormat = (value: string) => {
+    if (value !== '') {
+      setIsFormatSelected(true);
+    } else {
+      setIsFormatSelected(false);
+    }
+  };
 
   return (
     <StepLayout
@@ -39,9 +54,9 @@ export const NormalizeLabel: FC = () => {
           <OstSelect
             options={[
               { label: 'フォーマットを選択', value: '' },
-              { label: '公共施設一覧', value: 'public-facility' },
+              { label: '公共施設一覧', value: 'public-facilities' },
             ]}
-            changeValue={() => setIsFormatSelected(true)}
+            changeValue={(e) => handleSelectFormat(e.target.value)}
           />
         </Box>
       </Flex>
@@ -107,6 +122,7 @@ export const NormalizeLabel: FC = () => {
                 view="skeleton"
                 size="L"
                 icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
+                onClick={() => exportCsv(datasetWithNewItems)}
               >
                 一時ファイルのダウンロード
               </OstButton>

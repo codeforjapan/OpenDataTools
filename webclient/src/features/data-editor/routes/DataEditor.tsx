@@ -12,12 +12,19 @@ import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
 import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
 import { useParams } from 'react-router-dom';
+import { useGetDataset } from '../../../hooks/useDataset';
+import { exportCsv } from '../../../utils/exportCsv';
 
 export const DataEditor: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [selectedItemUid, setItemUid] = useState<string>();
 
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
+
+  const datasetWithNewItems = useGetDataset({
+    datasetUid: String(dataset_uid),
+    hasNewItems: true,
+  });
 
   return (
     <StepLayout
@@ -67,6 +74,7 @@ export const DataEditor: FC = () => {
               view="skeleton"
               size="L"
               icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
+              onClick={() => exportCsv(datasetWithNewItems)}
             >
               一時ファイルのダウンロード
             </OstButton>

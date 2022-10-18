@@ -15,7 +15,8 @@ import { useRecoilValue } from 'recoil';
 import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 import { utilCharEncoding } from 'opendatatool-datamanager';
 import parser, { ParseResult } from 'papaparse';
-import { useImportDataset } from '../../../hooks/useDataset';
+import { useGetDataset, useImportDataset } from '../../../hooks/useDataset';
+import { exportCsv } from '../../../utils/exportCsv';
 
 export const AutoConvert: FC = () => {
   const [datasetUid, setDatasetUid] = useState<string>();
@@ -34,6 +35,11 @@ export const AutoConvert: FC = () => {
 
   const uploadedFileBuffer = useRecoilValue(uploadedFileBufferAtom);
   const importRowData = useImportDataset();
+
+  const datasetWithNewItems = useGetDataset({
+    datasetUid: String(datasetUid),
+    hasNewItems: true,
+  });
 
   useEffect(() => {
     if (uploadedFileBuffer) {
@@ -278,6 +284,7 @@ export const AutoConvert: FC = () => {
                 view="skeleton"
                 size="L"
                 icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
+                onClick={() => exportCsv(datasetWithNewItems)}
               >
                 一時ファイルのダウンロード
               </OstButton>
