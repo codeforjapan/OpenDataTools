@@ -2,18 +2,24 @@ import { useRecoilCallback, useRecoilTransaction_UNSTABLE, useRecoilValue } from
 import {
   datasetAtom,
   datasetItemListSelector,
+  datasetListSelector,
   datasetSingleCellAtom,
   datasetSingleCellListByItemSelector,
   datasetSingleCellListByRowSelector,
   datasetSingleRowListSelector,
+  datasetUidListAtom,
 } from '../stores/dataset';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
 
 export const useImportDataset = () => {
+  const datasets = useRecoilValue(datasetListSelector);
+
   const importDataset = useRecoilCallback(({ set }) => (datasetName: string) => {
     const uid = uuid();
     set(datasetAtom({ uid }), { uid, datasetName: datasetName });
+    const datasetUidList = [...datasets.map((d) => d?.uid || ''), uid];
+    set(datasetUidListAtom, datasetUidList);
     return uid;
   });
 

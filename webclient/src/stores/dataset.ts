@@ -1,16 +1,44 @@
-import { atom, atomFamily, selector, selectorFamily, DefaultValue } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily, DefaultValue, AtomEffect } from 'recoil';
 import { AtomKeys, SelectorKeys } from './recoil_keys';
 
 // データセットの単体
 export const datasetAtom = atomFamily<Dataset.Dataset | null, { uid: string }>({
   key: AtomKeys.dataset,
   default: null,
+  effects: [
+    ({ setSelf, onSet, storeID, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        isReset
+          ? localStorage.removeItem(node.key)
+          : localStorage.setItem(node.key, JSON.stringify(newVal));
+      });
+    },
+  ],
 });
 
 // データセットのuidリスト
 export const datasetUidListAtom = atom<string[]>({
   key: AtomKeys.datasetUidList,
   default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        isReset
+          ? localStorage.removeItem(node.key)
+          : localStorage.setItem(node.key, JSON.stringify(newVal));
+      });
+    },
+  ],
 });
 
 // データセットのリスト
