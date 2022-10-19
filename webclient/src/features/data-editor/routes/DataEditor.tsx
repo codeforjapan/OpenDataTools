@@ -12,10 +12,13 @@ import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
 import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { datasetAtom } from '../../../stores/dataset';
 
 export const DataEditor: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [selectedItemUid, setItemUid] = useState<string>();
+  const dataset = useRecoilValue(datasetAtom({ uid: dataset_uid || '' }));
 
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
 
@@ -26,6 +29,7 @@ export const DataEditor: FC = () => {
       uid={dataset_uid}
       isProcessFinished={isCheckFinished}
     >
+      {dataset?.datasetName}
       <Flex
         alignItems="center"
         px={6}

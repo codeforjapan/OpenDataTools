@@ -1,16 +1,48 @@
-import { atom, atomFamily, selector, selectorFamily, DefaultValue } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily, DefaultValue, AtomEffect } from 'recoil';
 import { AtomKeys, SelectorKeys } from './recoil_keys';
 
 // データセットの単体
 export const datasetAtom = atomFamily<Dataset.Dataset | null, { uid: string }>({
   key: AtomKeys.dataset,
   default: null,
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // データセットのuidリスト
 export const datasetUidListAtom = atom<string[]>({
   key: AtomKeys.datasetUidList,
   default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // データセットのリスト
@@ -33,12 +65,44 @@ export const datasetItemAtom = atomFamily<
 >({
   key: AtomKeys.datasetItem,
   default: null,
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // データ項目のuidリスト
 export const datasetItemUidListAtom = atomFamily<string[], { datasetUid: string }>({
   key: AtomKeys.datasetItemUidList,
   default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // データ項目のリスト
@@ -77,12 +141,44 @@ export const datasetSingleRowAtom = atomFamily<
 >({
   key: AtomKeys.datasetSingleRow,
   default: null,
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // 行単位データのuidリスト
 export const datasetSingleRowUidListAtom = atomFamily<string[], { datasetUid: string }>({
   key: AtomKeys.datasetSingleRowUidList,
   default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // 行単位データのリスト
@@ -124,6 +220,22 @@ export const datasetSingleCellAtom = atomFamily<
 >({
   key: AtomKeys.datasetSingleCell,
   default: null,
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // itemでまとめたセル単位データのuidリスト
@@ -133,6 +245,22 @@ export const datasetSingleCellUidListByItemAtom = atomFamily<
 >({
   key: AtomKeys.datasetSingleCellUidListByItem,
   default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // rowでまとめたセル単位データのuidリスト
@@ -142,6 +270,22 @@ export const datasetSingleCellUidListByRowAtom = atomFamily<
 >({
   key: AtomKeys.datasetSingleCellUidListByRow,
   default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      const savedValue = localStorage.getItem(node.key);
+      if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+      }
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          localStorage.removeItem(node.key);
+        } else {
+          localStorage.setItem(node.key, JSON.stringify(newVal));
+        }
+      });
+    },
+  ],
 });
 
 // itemでまとめたセル単位データのリスト

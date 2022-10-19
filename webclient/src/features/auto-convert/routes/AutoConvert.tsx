@@ -56,7 +56,7 @@ export const AutoConvert: FC = () => {
       setDatasetUid(importedDatasetUid);
       setRequiredFieldProgress({ status: 'finished', error: false });
     }
-  }, [uploadedFileBuffer]);
+  }, []);
 
   const statusStyle = (status: string) => {
     switch (status) {
