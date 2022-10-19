@@ -1,6 +1,6 @@
 export class ItemValidatorTel {
   validateDataType(data: any) {
-    if (typeof data != 'string') {
+    if (typeof data !== 'string') {
       throw new Error('電話番号は文字列である必要があります。');
     }
 

@@ -5,7 +5,7 @@ export class ItemValidatorRegcode {
   static MIN_CODE = 10006; // 北海道
   static MAX_CODE = 473821; // 沖縄県与那国町
   validateDataType(data: any) {
-    if (typeof data != 'string') {
+    if (typeof data !== 'string') {
       throw new Error('都道府県・市区町村コードは文字列である必要があります。');
     }
     if (data.length !== 6) {
