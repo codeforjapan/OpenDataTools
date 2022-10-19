@@ -134,32 +134,9 @@ export const useImportDataset = () => {
   return executeImport;
 };
 
-export const useGetDataset = (params: { datasetUid: string; hasNewItems?: boolean }) => {
+export const useGetDataset = (params: { datasetUid: string }) => {
   const [dataset, setDataset] = useState<{ [key: string]: number | string }[]>([]);
-  let items: Dataset.Item[] | any = [];
-  const originalItems = useRecoilValue(datasetItemListSelector(params));
-  if (params.hasNewItems) {
-    const currentItems = originalItems.map((item) => item.rowLabel || '');
-    const missingItems = schemeValidator
-      .getMissingItems({
-        current_items: currentItems,
-        category: 'public-facilities',
-      })
-      .map((item) => item.label);
-    const additionalItems = missingItems.map((item) => {
-      const uid = uuid();
-      return {
-        uid,
-        rowLabel: item,
-        normalizedLabel: item,
-        isActive: false,
-        dataType: null,
-      };
-    });
-    items = [originalItems, ...additionalItems];
-  } else {
-    items = originalItems;
-  }
+  const items = useRecoilValue(datasetItemListSelector(params));
   const rows = useRecoilValue(datasetSingleRowListSelector(params));
 
   const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
@@ -177,6 +154,59 @@ export const useGetDataset = (params: { datasetUid: string; hasNewItems?: boolea
           const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
           if (!item.normalizedLabel || !singleCell) break;
           singleRow[item.normalizedLabel] = singleCell.editedValue || '';
+        }
+        dataset.push(singleRow);
+      }
+      setDataset(dataset);
+    };
+    parseDataset();
+  }, []);
+
+  return dataset;
+};
+
+export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
+  const [dataset, setDataset] = useState<{ [key: string]: number | string }[]>([]);
+  const originalItems = useRecoilValue(datasetItemListSelector(params));
+  const currentItems = originalItems.map((item) => item.rowLabel || '');
+  const missingItems = schemeValidator
+    .getMissingItems({
+      current_items: currentItems,
+      category: 'public-facilities', // TODO: paramか何かに置き換える
+    })
+    .map((item) => item.label);
+  const additionalItems = missingItems.map((item) => {
+    const uid = uuid();
+    return {
+      uid,
+      rowLabel: item,
+      normalizedLabel: item,
+      isActive: false,
+      dataType: null,
+    };
+  });
+  const items = [...originalItems, ...additionalItems];
+  const rows = useRecoilValue(datasetSingleRowListSelector(params));
+
+  const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
+    const cells = snapshot.getPromise(datasetSingleCellListByRowSelector({ ...params, rowUid }));
+    return cells;
+  });
+
+  useEffect(() => {
+    const parseDataset = async () => {
+      const dataset: { [key: string]: number | string }[] = [];
+
+      for (const row of rows) {
+        const singleRow: { [key: string]: number | string } | any = {};
+        const rowCells = await getRowCells(row.uid);
+        for (const item of items) {
+          const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
+          if (singleCell) {
+            singleRow[item.normalizedLabel] = singleCell.editedValue || ''; // TODO: どの値が入るべきか？
+          } else {
+            singleRow[item.normalizedLabel] = '';
+          }
         }
         dataset.push(singleRow);
       }

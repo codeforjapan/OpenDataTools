@@ -9,7 +9,7 @@ import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
 import { OstButton } from '../../../components/Elements/OstButton';
 import { datasetItemUidListAtom } from '../../../stores/dataset';
-import { useGetDataset } from '../../../hooks/useDataset';
+import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
 import { exportCsv } from '../../../utils/exportCsv';
 
 export const NormalizeLabel: FC = () => {
@@ -20,9 +20,8 @@ export const NormalizeLabel: FC = () => {
   const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false);
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
 
-  const datasetWithNewItems = useGetDataset({
+  const datasetWithNewItems = useGetDatasetWithNewItems({
     datasetUid: String(dataset_uid),
-    hasNewItems: true,
   });
 
   const handleSelectFormat = (value: string) => {

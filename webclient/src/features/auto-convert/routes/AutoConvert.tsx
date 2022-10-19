@@ -15,7 +15,7 @@ import { useRecoilValue } from 'recoil';
 import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 import { utilCharEncoding } from 'opendatatool-datamanager';
 import parser, { ParseResult } from 'papaparse';
-import { useGetDataset, useImportDataset } from '../../../hooks/useDataset';
+import { useGetDatasetWithNewItems, useImportDataset } from '../../../hooks/useDataset';
 import { exportCsv } from '../../../utils/exportCsv';
 
 export const AutoConvert: FC = () => {
@@ -36,9 +36,8 @@ export const AutoConvert: FC = () => {
   const uploadedFileBuffer = useRecoilValue(uploadedFileBufferAtom);
   const importRowData = useImportDataset();
 
-  const datasetWithNewItems = useGetDataset({
+  const datasetWithNewItems = useGetDatasetWithNewItems({
     datasetUid: String(datasetUid),
-    hasNewItems: true,
   });
 
   useEffect(() => {

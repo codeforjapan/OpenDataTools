@@ -12,7 +12,7 @@ import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
 import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
 import { useParams } from 'react-router-dom';
-import { useGetDataset } from '../../../hooks/useDataset';
+import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
 import { exportCsv } from '../../../utils/exportCsv';
 
 export const DataEditor: FC = () => {
@@ -21,9 +21,8 @@ export const DataEditor: FC = () => {
 
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
 
-  const datasetWithNewItems = useGetDataset({
+  const datasetWithNewItems = useGetDatasetWithNewItems({
     datasetUid: String(dataset_uid),
-    hasNewItems: true,
   });
 
   return (
