@@ -16,9 +16,11 @@ import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 import { utilCharEncoding } from 'opendatatool-datamanager';
 import parser, { ParseResult } from 'papaparse';
 import { useImportDataset } from '../../../hooks/useDataset';
+import { reject } from 'lodash';
 
 export const AutoConvert: FC = () => {
   const [datasetUid, setDatasetUid] = useState<string>();
+  const [charCodeConvertedData, setCharCodeConvertedData] = useState<string>();
   const [characterCodeProgress, setCharacterCodeProgress] = useState({
     status: 'waiting',
     error: false,
@@ -36,18 +38,34 @@ export const AutoConvert: FC = () => {
   const importRowData = useImportDataset();
 
   useEffect(() => {
-    if (uploadedFileBuffer) {
-      setCharacterCodeProgress({ status: 'processing', error: false });
-      const charCodeConvertedData = utilCharEncoding.toString(uploadedFileBuffer.buffer);
+    setCharacterCodeProgress({ status: 'processing', error: false });
+  }, []);
+
+  useEffect(() => {
+    if (characterCodeProgress.status === 'processing') {
+      if (!uploadedFileBuffer) throw new Error('file is not selected');
+      setCharCodeConvertedData(utilCharEncoding.toString(uploadedFileBuffer.buffer));
       setCharacterCodeProgress({ status: 'finished', error: false });
       setCharacterTypeProgress({ status: 'processing', error: false });
+    }
+  }, [characterCodeProgress]);
+
+  useEffect(() => {
+    if (characterTypeProgress.status === 'processing') {
       setCharacterTypeProgress({ status: 'finished', error: false });
+      setRequiredFieldProgress({ status: 'processing', error: false });
+    }
+  }, [characterTypeProgress]);
+
+  useEffect(() => {
+    if (requiredFieldProgress.status === 'processing' && charCodeConvertedData) {
+      if (!uploadedFileBuffer) throw new Error('file is not selected');
       setRequiredFieldProgress({ status: 'processing', error: false });
       const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
         header: true,
       });
       const rowHeaders = rowDataObject.meta.fields;
-      if (!rowHeaders) return;
+      if (!rowHeaders) throw new Error('file is not selected');
       const importedDatasetUid = importRowData({
         datasetName: uploadedFileBuffer.fileName,
         headers: rowHeaders,
@@ -56,7 +74,7 @@ export const AutoConvert: FC = () => {
       setDatasetUid(importedDatasetUid);
       setRequiredFieldProgress({ status: 'finished', error: false });
     }
-  }, []);
+  }, [requiredFieldProgress, charCodeConvertedData]);
 
   const statusStyle = (status: string) => {
     switch (status) {
