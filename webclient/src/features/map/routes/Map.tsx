@@ -18,30 +18,33 @@ export const Map: FC = () => {
         <li>電話番号: ${point.電話番号}</li>
       </ul>
     </div>`;
-  }
+  };
 
   const points = useMemo(() => {
     return dataset
-      .filter(point => point.緯度 && point.経度)
-      .map(point => {
+      .filter((point) => point.緯度 && point.経度)
+      .map((point) => {
         return {
           title: point.名称,
           description: description(point),
           lat: Number(point.緯度),
           lng: Number(point.経度),
-        }
+        };
       });
   }, [dataset]);
 
-  const onLoad = useCallback((map: any) => {
-    map.on('load', () => {
-      const geojson = (GeoJSON as any).parse(points, {
-        Point: ['lat', 'lng'],
+  const onLoad = useCallback(
+    (map: any) => {
+      map.on('load', () => {
+        const geojson = (GeoJSON as any).parse(points, {
+          Point: ['lat', 'lng'],
+        });
+        const simpleStyle = new (window as any).geolonia.simpleStyle(geojson);
+        simpleStyle.addTo(map).fitBounds();
       });
-      const simpleStyle = new (window as any).geolonia.simpleStyle(geojson);
-      simpleStyle.addTo(map).fitBounds();
-    });
-  }, [points]);
+    },
+    [points]
+  );
 
   return (
     <ContentLayout title="マップ">

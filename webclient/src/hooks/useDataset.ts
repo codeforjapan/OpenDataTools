@@ -17,9 +17,9 @@ export const useImportDataset = () => {
 
   const importDataset = useRecoilCallback(({ set }) => (datasetName: string) => {
     const uid = uuid();
-    set(datasetAtom({ uid }), { uid, datasetName: datasetName });
     const datasetUidList = [...datasets.map((d) => d?.uid || ''), uid];
     set(datasetUidListAtom, datasetUidList);
+    set(datasetAtom({ uid }), { uid, datasetName: datasetName });
     return uid;
   });
 
