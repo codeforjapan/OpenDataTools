@@ -6,6 +6,7 @@ import {
   MinusIcon,
   DownloadIcon,
   InfoOutlineIcon,
+  NotAllowedIcon,
 } from '@chakra-ui/icons';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
@@ -20,17 +21,18 @@ import { exportCsv } from '../../../utils/exportCsv';
 
 export const AutoConvert: FC = () => {
   const [datasetUid, setDatasetUid] = useState<string>();
+  const [charCodeConvertedData, setCharCodeConvertedData] = useState<string>();
   const [characterCodeProgress, setCharacterCodeProgress] = useState({
     status: 'waiting',
-    error: false,
+    errorMessage: '',
   });
   const [characterTypeProgress, setCharacterTypeProgress] = useState({
     status: 'waiting',
-    error: false,
+    errorMessage: '',
   });
   const [requiredFieldProgress, setRequiredFieldProgress] = useState({
     status: 'waiting',
-    error: false,
+    errorMessage: '',
   });
 
   const uploadedFileBuffer = useRecoilValue(uploadedFileBufferAtom);
@@ -41,27 +43,66 @@ export const AutoConvert: FC = () => {
   });
 
   useEffect(() => {
-    if (uploadedFileBuffer) {
-      setCharacterCodeProgress({ status: 'processing', error: false });
-      const charCodeConvertedData = utilCharEncoding.toString(uploadedFileBuffer.buffer);
-      setCharacterCodeProgress({ status: 'finished', error: false });
-      setCharacterTypeProgress({ status: 'processing', error: false });
-      setCharacterTypeProgress({ status: 'finished', error: false });
-      setRequiredFieldProgress({ status: 'processing', error: false });
-      const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
-        header: true,
-      });
-      const rowHeaders = rowDataObject.meta.fields;
-      if (!rowHeaders) return;
-      const importedDatasetUid = importRowData({
-        datasetName: uploadedFileBuffer.fileName,
-        headers: rowHeaders,
-        rowDatas: rowDataObject.data,
-      });
-      setDatasetUid(importedDatasetUid);
-      setRequiredFieldProgress({ status: 'finished', error: false });
+    setCharacterCodeProgress({ status: 'processing', errorMessage: '' });
+  }, []);
+
+  useEffect(() => {
+    if (characterCodeProgress.status === 'processing') {
+      if (!uploadedFileBuffer) {
+        setCharacterCodeProgress({
+          status: 'failed',
+          errorMessage: 'ファイルが選択されていません',
+        });
+      } else {
+        try {
+          setCharCodeConvertedData(utilCharEncoding.toString(uploadedFileBuffer.buffer));
+          setCharacterCodeProgress({ status: 'finished', errorMessage: '' });
+          setCharacterTypeProgress({ status: 'processing', errorMessage: '' });
+        } catch (error) {
+          setCharacterCodeProgress({
+            status: 'failed',
+            errorMessage: '文字コード変換に失敗しました',
+          });
+        }
+      }
     }
-  }, [uploadedFileBuffer]);
+  }, [characterCodeProgress]);
+
+  useEffect(() => {
+    if (characterTypeProgress.status === 'processing') {
+      setCharacterTypeProgress({ status: 'finished', errorMessage: '' });
+      setRequiredFieldProgress({ status: 'processing', errorMessage: '' });
+    }
+  }, [characterTypeProgress]);
+
+  useEffect(() => {
+    if (
+      requiredFieldProgress.status === 'processing' &&
+      charCodeConvertedData &&
+      uploadedFileBuffer
+    ) {
+      try {
+        setRequiredFieldProgress({ status: 'processing', errorMessage: '' });
+        const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
+          header: true,
+        });
+        const rowHeaders = rowDataObject.meta.fields;
+        if (!rowHeaders) throw new Error('file is not selected');
+        const importedDatasetUid = importRowData({
+          datasetName: uploadedFileBuffer.fileName,
+          headers: rowHeaders,
+          rowDatas: rowDataObject.data,
+        });
+        setDatasetUid(importedDatasetUid);
+        setRequiredFieldProgress({ status: 'finished', errorMessage: '' });
+      } catch (error) {
+        setRequiredFieldProgress({
+          status: 'failed',
+          errorMessage: '必須項目の確認に失敗しました。',
+        });
+      }
+    }
+  }, [requiredFieldProgress, charCodeConvertedData]);
 
   const statusStyle = (status: string) => {
     switch (status) {
@@ -82,6 +123,11 @@ export const AutoConvert: FC = () => {
           bg: 'information.bg.disabled',
           color: 'icon.active',
         };
+      case 'failed':
+        return {
+          bg: 'red.300',
+          color: 'icon.active',
+        };
       default:
         return {
           bg: 'white',
@@ -98,7 +144,7 @@ export const AutoConvert: FC = () => {
         return (
           <>
             <MinusIcon mr={6} />
-            <Text>文字コードを確認しています</Text>
+            <Text>待機中です</Text>
           </>
         );
       case 'processing':
@@ -113,6 +159,13 @@ export const AutoConvert: FC = () => {
           <>
             <CheckIcon mr={6} />
             <Text>文字コードを変換しました</Text>
+          </>
+        );
+      case 'failed':
+        return (
+          <>
+            <NotAllowedIcon mr={6} />
+            <Text>{characterCodeProgress.errorMessage}</Text>
           </>
         );
       default:
@@ -148,6 +201,13 @@ export const AutoConvert: FC = () => {
             <Text>全角半角変換しました</Text>
           </>
         );
+      case 'failed':
+        return (
+          <>
+            <NotAllowedIcon mr={6} />
+            <Text>{characterTypeProgress.errorMessage}</Text>
+          </>
+        );
       default:
         return (
           <>
@@ -179,6 +239,13 @@ export const AutoConvert: FC = () => {
           <>
             <CheckIcon mr={6} />
             <Text>必須項目を確認しました</Text>
+          </>
+        );
+      case 'failed':
+        return (
+          <>
+            <NotAllowedIcon mr={6} />
+            <Text>{requiredFieldProgress.errorMessage}</Text>
           </>
         );
       default:

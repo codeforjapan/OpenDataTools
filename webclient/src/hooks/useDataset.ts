@@ -2,18 +2,24 @@ import { useRecoilCallback, useRecoilValue } from 'recoil';
 import {
   datasetAtom,
   datasetItemListSelector,
+  datasetListSelector,
   datasetSingleCellAtom,
   datasetSingleCellListByItemSelector,
   datasetSingleCellListByRowSelector,
   datasetSingleRowListSelector,
+  datasetUidListAtom,
 } from '../stores/dataset';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
 import { schemeValidator } from 'opendatatool-datamanager';
 
 export const useImportDataset = () => {
+  const datasets = useRecoilValue(datasetListSelector);
+
   const importDataset = useRecoilCallback(({ set }) => (datasetName: string) => {
     const uid = uuid();
+    const datasetUidList = [...datasets.map((d) => d?.uid || ''), uid];
+    set(datasetUidListAtom, datasetUidList);
     set(datasetAtom({ uid }), { uid, datasetName: datasetName });
     return uid;
   });

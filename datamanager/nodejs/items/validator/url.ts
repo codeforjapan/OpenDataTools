@@ -1,6 +1,6 @@
 export class ItemValidatorUrl {
   validateDataType(data: any) {
-    if (typeof data != 'string') {
+    if (typeof data !== 'string') {
       throw new Error('URLは文字列である必要があります。');
     }
 
