@@ -11,7 +11,7 @@ import {
 } from '../stores/dataset';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
-import { schemeValidator } from 'opendatatool-datamanager';
+import { schemeValidator, itemsListOfPublicFacilities } from 'opendatatool-datamanager';
 
 export const useImportDataset = () => {
   const datasets = useRecoilValue(datasetListSelector);
@@ -178,7 +178,7 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
   const missingItems = schemeValidator
     .getMissingItems({
       current_items: currentItems,
-      category: 'public-facilities', // TODO: paramか何かに置き換える
+      category: 'public-facilities', // TODO: public-facilitiesのベタうちなので、paramか何かに置き換える
     })
     .map((item) => item.label);
   const additionalItems = missingItems.map((item) => {
@@ -191,7 +191,18 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
       dataType: null,
     };
   });
-  const items = [...originalItems, ...additionalItems];
+  const items = [...additionalItems, ...originalItems];
+  const mergedItems: Dataset.Item[] = Object.values(
+    items.reduce((acc, cur) => Object.assign(acc, { [cur.normalizedLabel]: cur }), {})
+  );
+  const labelList = itemsListOfPublicFacilities.map((item) => item.label); // TODO: itemsListOfPublicFacilitiesのベタうちなので、paramか何かに置き換える
+  const sortedItems = mergedItems.sort((x: Dataset.Item, y: Dataset.Item) => {
+    if (x.normalizedLabel) {
+      return labelList.indexOf(x.normalizedLabel) - labelList.indexOf(y.normalizedLabel);
+    } else {
+      return 1;
+    }
+  });
   const rows = useRecoilValue(datasetSingleRowListSelector(params));
 
   const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
@@ -206,12 +217,12 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
       for (const row of rows) {
         const singleRow: { [key: string]: number | string } | any = {};
         const rowCells = await getRowCells(row.uid);
-        for (const item of items) {
+        for (const item of sortedItems) {
           const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
-          if (singleCell) {
-            singleRow[item.normalizedLabel] = singleCell.editedValue || ''; // TODO: どの値が入るべきか？
+          if (singleCell && item.normalizedLabel) {
+            singleRow[item.normalizedLabel] = singleCell.editedValue || singleCell.rowValue || '';
           } else {
-            singleRow[item.normalizedLabel] = '';
+            singleRow[item.rowLabel!] = ''; // TODO: 懸案: オリジナル項目があった場合、空文字に変換されてしまう
           }
         }
         dataset.push(singleRow);
