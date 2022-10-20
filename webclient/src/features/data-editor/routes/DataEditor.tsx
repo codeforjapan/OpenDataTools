@@ -79,7 +79,7 @@ export const DataEditor: FC = () => {
               icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
               onClick={() => exportCsv(datasetWithNewItems)}
             >
-              一時ファイルのダウンロード
+              ダウンロード
             </OstButton>
           )}
         </Flex>
