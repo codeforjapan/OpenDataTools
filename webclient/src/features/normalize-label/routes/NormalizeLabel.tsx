@@ -1,16 +1,13 @@
 import { FC, useState } from 'react';
 import { Avatar, Box, Flex, Text, Spinner } from '@chakra-ui/react';
-import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, ArrowForwardIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { NormalizeDatasetItemLabel } from '../../../components/Editor';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
-import { OstButton } from '../../../components/Elements/OstButton';
 import { datasetItemUidListAtom } from '../../../stores/dataset';
-import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
-import { exportCsv } from '../../../utils/exportCsv';
 
 export const NormalizeLabel: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
@@ -19,10 +16,6 @@ export const NormalizeLabel: FC = () => {
   );
   const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false);
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
-
-  const datasetWithNewItems = useGetDatasetWithNewItems({
-    datasetUid: String(dataset_uid),
-  });
 
   const handleSelectFormat = (value: string) => {
     if (value !== '') {
@@ -108,25 +101,13 @@ export const NormalizeLabel: FC = () => {
           </Flex>
         )}
         <Flex mt={8} justifyContent="space-between">
-          <Flex flexWrap="wrap">
-            <OstNavLink
-              to={`/${dataset_uid}/auto-convert`}
-              iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
-              mr={8}
-            >
-              ステップ２に戻る
-            </OstNavLink>
-            {isFormatSelected && isCheckFinished && (
-              <OstButton
-                view="skeleton"
-                size="L"
-                icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
-                onClick={() => exportCsv(datasetWithNewItems)}
-              >
-                一時ファイルのダウンロード
-              </OstButton>
-            )}
-          </Flex>
+          <OstNavLink
+            to={`/${dataset_uid}/auto-convert`}
+            iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+            mr={8}
+          >
+            ステップ２に戻る
+          </OstNavLink>
           <OstNavLink
             to={`/${dataset_uid}/data-editor`}
             isDisabled={!isFormatSelected || !isCheckFinished}
