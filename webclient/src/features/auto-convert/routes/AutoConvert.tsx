@@ -4,14 +4,12 @@ import {
   ArrowForwardIcon,
   CheckIcon,
   MinusIcon,
-  DownloadIcon,
   InfoOutlineIcon,
   NotAllowedIcon,
 } from '@chakra-ui/icons';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
-import { OstButton } from '../../../components/Elements/OstButton';
 import { useRecoilValue } from 'recoil';
 import { uploadedFileBufferAtom } from '../../../stores/upload_file';
 import { utilCharEncoding } from 'opendatatool-datamanager';
@@ -332,24 +330,13 @@ export const AutoConvert: FC = () => {
           </Flex>
         )}
         <Flex mt={8} justifyContent="space-between">
-          <Flex flexWrap="wrap">
-            <OstNavLink
-              to="/upload-file"
-              iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
-              mr={8}
-            >
-              ステップ１に戻る
-            </OstNavLink>
-            {isAllProgressFinished && (
-              <OstButton
-                view="skeleton"
-                size="L"
-                icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
-              >
-                一時ファイルのダウンロード
-              </OstButton>
-            )}
-          </Flex>
+          <OstNavLink
+            to="/upload-file"
+            iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+            mr={8}
+          >
+            ステップ１に戻る
+          </OstNavLink>
           <OstNavLink
             to={`/${datasetUid}/normalize-label`}
             isDisabled={!isAllProgressFinished}

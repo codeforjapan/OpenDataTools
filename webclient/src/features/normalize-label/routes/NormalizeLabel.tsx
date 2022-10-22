@@ -1,13 +1,12 @@
 import { FC, useState } from 'react';
 import { Avatar, Box, Flex, Text, Spinner } from '@chakra-ui/react';
-import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, ArrowForwardIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { NormalizeDatasetItemLabel } from '../../../components/Editor';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
-import { OstButton } from '../../../components/Elements/OstButton';
 import { datasetItemUidListAtom } from '../../../stores/dataset';
 
 export const NormalizeLabel: FC = () => {
@@ -15,8 +14,16 @@ export const NormalizeLabel: FC = () => {
   const datasetItemUidList = useRecoilValue(
     datasetItemUidListAtom({ datasetUid: String(dataset_uid) })
   );
-  const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false); //TODO: 確認終了のステータスを監視する
+  const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false);
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
+
+  const handleSelectFormat = (value: string) => {
+    if (value !== '') {
+      setIsFormatSelected(true);
+    } else {
+      setIsFormatSelected(false);
+    }
+  };
 
   return (
     <StepLayout
@@ -39,9 +46,9 @@ export const NormalizeLabel: FC = () => {
           <OstSelect
             options={[
               { label: 'フォーマットを選択', value: '' },
-              { label: '公共施設一覧', value: 'public-facility' },
+              { label: '公共施設一覧', value: 'public-facilities' },
             ]}
-            changeValue={() => setIsFormatSelected(true)}
+            changeValue={(e) => handleSelectFormat(e.target.value)}
           />
         </Box>
       </Flex>
@@ -94,24 +101,13 @@ export const NormalizeLabel: FC = () => {
           </Flex>
         )}
         <Flex mt={8} justifyContent="space-between">
-          <Flex flexWrap="wrap">
-            <OstNavLink
-              to={`/${dataset_uid}/auto-convert`}
-              iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
-              mr={8}
-            >
-              ステップ２に戻る
-            </OstNavLink>
-            {isFormatSelected && isCheckFinished && (
-              <OstButton
-                view="skeleton"
-                size="L"
-                icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
-              >
-                一時ファイルのダウンロード
-              </OstButton>
-            )}
-          </Flex>
+          <OstNavLink
+            to={`/${dataset_uid}/auto-convert`}
+            iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
+            mr={8}
+          >
+            ステップ２に戻る
+          </OstNavLink>
           <OstNavLink
             to={`/${dataset_uid}/data-editor`}
             isDisabled={!isFormatSelected || !isCheckFinished}

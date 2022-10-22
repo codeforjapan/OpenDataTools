@@ -1,4 +1,4 @@
-import { useRecoilCallback, useRecoilTransaction_UNSTABLE, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 import {
   datasetAtom,
   datasetItemListSelector,
@@ -11,6 +11,7 @@ import {
 } from '../stores/dataset';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
+import { schemeValidator, itemsListOfPublicFacilities } from 'opendatatool-datamanager';
 
 export const useImportDataset = () => {
   const datasets = useRecoilValue(datasetListSelector);
@@ -159,6 +160,70 @@ export const useGetDataset = (params: { datasetUid: string }) => {
           const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
           if (!item.normalizedLabel || !singleCell) break;
           singleRow[item.normalizedLabel] = singleCell.editedValue || '';
+        }
+        dataset.push(singleRow);
+      }
+      setDataset(dataset);
+    };
+    parseDataset();
+  }, []);
+
+  return dataset;
+};
+
+export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
+  const [dataset, setDataset] = useState<{ [key: string]: number | string }[]>([]);
+  const originalItems = useRecoilValue(datasetItemListSelector(params));
+  const currentItems = originalItems.map((item) => item.rowLabel || '');
+  const missingItems = schemeValidator
+    .getMissingItems({
+      current_items: currentItems,
+      category: 'public-facilities', // TODO: public-facilitiesのベタうちなので、paramか何かに置き換える
+    })
+    .map((item) => item.label);
+  const additionalItems = missingItems.map((item) => {
+    const uid = uuid();
+    return {
+      uid,
+      rowLabel: item,
+      normalizedLabel: item,
+      isActive: false,
+      dataType: null,
+    };
+  });
+  const items = [...additionalItems, ...originalItems];
+  const mergedItems: Dataset.Item[] = Object.values(
+    items.reduce((acc, cur) => Object.assign(acc, { [cur.normalizedLabel]: cur }), {})
+  );
+  const labelList = itemsListOfPublicFacilities.map((item) => item.label); // TODO: itemsListOfPublicFacilitiesのベタうちなので、paramか何かに置き換える
+  const sortedItems = mergedItems.sort((x: Dataset.Item, y: Dataset.Item) => {
+    if (x.normalizedLabel) {
+      return labelList.indexOf(x.normalizedLabel) - labelList.indexOf(y.normalizedLabel);
+    } else {
+      return 1;
+    }
+  });
+  const rows = useRecoilValue(datasetSingleRowListSelector(params));
+
+  const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
+    const cells = snapshot.getPromise(datasetSingleCellListByRowSelector({ ...params, rowUid }));
+    return cells;
+  });
+
+  useEffect(() => {
+    const parseDataset = async () => {
+      const dataset: { [key: string]: number | string }[] = [];
+
+      for (const row of rows) {
+        const singleRow: { [key: string]: number | string } | any = {};
+        const rowCells = await getRowCells(row.uid);
+        for (const item of sortedItems) {
+          const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
+          if (singleCell && item.normalizedLabel) {
+            singleRow[item.normalizedLabel] = singleCell.editedValue || singleCell.rowValue || '';
+          } else {
+            singleRow[item.rowLabel!] = ''; // TODO: 懸案: オリジナル項目があった場合、空文字に変換されてしまう
+          }
         }
         dataset.push(singleRow);
       }
