@@ -102,7 +102,7 @@ export const NormalizeLabel: FC = () => {
         )}
         <Flex mt={8} justifyContent="space-between">
           <OstNavLink
-            to={`/${dataset_uid}/auto-convert`}
+            to={`/auto-convert`}
             iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
             mr={8}
           >
