@@ -269,7 +269,6 @@ export const AutoConvert: FC = () => {
       headingText={
         isAllProgressFinished ? 'データの自動変換が完了しました' : 'データを自動変換しています'
       }
-      uid={datasetUid}
       isProcessFinished={isAllProgressFinished}
     >
       {!isAllProgressFinished && (

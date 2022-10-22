@@ -22,7 +22,7 @@ export const StepLayout = (props: StepLayoutProps) => {
     },
     {
       text: 'ステップ２',
-      path: `/${props.uid}/auto-convert`,
+      path: `/auto-convert`,
     },
     {
       text: 'ステップ３',
