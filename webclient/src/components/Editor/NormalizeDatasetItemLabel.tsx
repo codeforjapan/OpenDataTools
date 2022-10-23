@@ -70,7 +70,7 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
         </OstCheckbox>
       </Box>
       <Flex flex="1 1 70%">
-        <Flex p={4} flex="0 0 20em" justifyContent="flex-end">
+        <Flex p={4} flex="0 0 21em" justifyContent="flex-end">
           {isLabelOriginal && (
             <Flex
               alignItems="center"
