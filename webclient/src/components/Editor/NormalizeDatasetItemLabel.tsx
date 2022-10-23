@@ -25,7 +25,7 @@ export const NormalizeDatasetItemLabel: FC<Params> = ({ datasetUid, itemUid }) =
       setIsLabelRecommend(true);
       setIsLabelOriginal(true);
     } else if (success) {
-      setItem({ ...item, normalizedLabel: item.rowLabel });
+      setItem({ ...item, normalizedLabel: item.rowLabel, isActive: true });
     } else {
       setIsLabelOriginal(true);
     }
