@@ -65,7 +65,6 @@ export const FileUpload: FC = () => {
             borderRadius={20}
             bg="information.bg.active"
             textAlign="center"
-            as="label"
             display="block"
             cursor="pointer"
             fontSize="xl"
