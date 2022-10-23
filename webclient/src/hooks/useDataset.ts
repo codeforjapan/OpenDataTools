@@ -193,7 +193,7 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
   });
   const items = [...additionalItems, ...originalItems];
   const mergedItems: Dataset.Item[] = Object.values(
-    items.reduce((acc, cur) => Object.assign(acc, { [cur.normalizedLabel]: cur }), {})
+    items.reduce((acc, cur) => Object.assign(acc, { [cur.rowLabel]: cur }), {})
   );
   const labelList = itemsListOfPublicFacilities.map((item) => item.label); // TODO: itemsListOfPublicFacilitiesのベタうちなので、paramか何かに置き換える
   const sortedItems = mergedItems.sort((x: Dataset.Item, y: Dataset.Item) => {
@@ -221,8 +221,10 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
           const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
           if (singleCell && item.normalizedLabel) {
             singleRow[item.normalizedLabel] = singleCell.editedValue || singleCell.rowValue || '';
+          } else if (singleCell && !item.normalizedLabel && item.rowLabel) {
+            singleRow[item.rowLabel] = singleCell.editedValue || singleCell.rowValue || '';
           } else {
-            singleRow[item.rowLabel!] = ''; // TODO: 懸案: オリジナル項目があった場合、空文字に変換されてしまう
+            singleRow[item.rowLabel!] = '';
           }
         }
         dataset.push(singleRow);

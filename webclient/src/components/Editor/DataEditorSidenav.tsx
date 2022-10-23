@@ -3,7 +3,7 @@ import { InfoOutlineIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { FC } from 'react';
 import { useParams } from 'react-router';
 import { useRecoilValue } from 'recoil';
-import { datasetItemAtom, datasetItemUidListAtom } from '../../stores/dataset';
+import { datasetItemAtom, datasetItemListSelector } from '../../stores/dataset';
 
 type Props = {
   selectedItemUid?: string;
@@ -12,8 +12,8 @@ type Props = {
 
 export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
-  const datasetItemUidList = useRecoilValue(
-    datasetItemUidListAtom({ datasetUid: String(dataset_uid) })
+  const datasetItemList = useRecoilValue(
+    datasetItemListSelector({ datasetUid: String(dataset_uid) })
   );
 
   const DatasetItem: FC<{ datasetUid: string; itemUid: string }> = ({ datasetUid, itemUid }) => {
@@ -46,7 +46,7 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
         <Flex alignItems="center" overflow="hidden">
           <InfoOutlineIcon color="icon.active" />
           <Text px={2} overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
-            {item?.normalizedLabel}
+            {item?.normalizedLabel || item?.rowLabel}
           </Text>
         </Flex>
         {item?.uid === selectedItemUid && <ChevronRightIcon />}
@@ -56,9 +56,11 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
 
   return (
     <Box ml="-40px">
-      {datasetItemUidList.map((itemUid, index) => (
-        <DatasetItem key={index} itemUid={itemUid} datasetUid={String(dataset_uid)} />
-      ))}
+      {datasetItemList
+        .filter((item) => item.isActive)
+        .map((item, index) => (
+          <DatasetItem key={index} itemUid={item.uid} datasetUid={String(dataset_uid)} />
+        ))}
     </Box>
   );
 };
