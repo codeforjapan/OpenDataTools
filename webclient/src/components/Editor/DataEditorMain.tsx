@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLabel2DataType, useValidator } from '../../hooks/useValidate';
 import {
   datasetItemAtom,
+  datasetItemListSelector,
   datasetSingleCellAtom,
   datasetSingleCellUidListByItemAtom,
 } from '../../stores/dataset';
@@ -20,6 +21,20 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
   const [validatorDataType, setValidatorDataType] = useState<Dataset.DataType>(null);
   const label2DataType = useLabel2DataType();
 
+  // セルに対応する名称も表示するため、「名称」項目を取得
+  const datasetItemList = useRecoilValue(
+    datasetItemListSelector({ datasetUid: String(dataset_uid) })
+  );
+  // TODO: 名称項目が存在しない場合のエラーハンドリング
+  const nameDatasetItem: Dataset.Item | null = datasetItemList.filter(item => item.normalizedLabel == '名称')[0];
+  const nameSingleCellUidListByItem = useRecoilValue(
+    datasetSingleCellUidListByItemAtom({
+      datasetUid: String(dataset_uid),
+      itemUid: String(nameDatasetItem?.uid),
+    })
+  );
+
+  // 選択した項目を取得
   const [datasetItem, setDatasetItem] = useRecoilState(
     datasetItemAtom({ datasetUid: String(dataset_uid), itemUid: String(selectedItemUid) })
   );
@@ -37,7 +52,7 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     setDatasetItem({ ...datasetItem, dataType });
   }, [datasetItem?.normalizedLabel]);
 
-  const SingleCellElm: FC<{ singleCellUid: string }> = ({ singleCellUid }) => {
+  const SingleCellElm: FC<{ singleCellUid: string, rowNum: number, nameSingleCellUid: string }> = ({ singleCellUid, rowNum, nameSingleCellUid }) => {
     const validatorFactory = useValidator({ dataType: validatorDataType });
     const [SingleCell, setSingleCell] = useRecoilState(
       datasetSingleCellAtom({
@@ -70,10 +85,17 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
       setSingleCell({ ...SingleCell, editedValue: v });
     };
 
+    const nameSingleCell = useRecoilValue(
+      datasetSingleCellAtom({
+        datasetUid: String(dataset_uid),
+        singleCellUid: nameSingleCellUid,
+      })
+    );
+
     return (
       <Grid gridTemplateColumns="1fr 50px 1fr" alignItems="end" mb={6}>
         <GridItem>
-          <Text>名称がここにくる</Text>
+          <Text>{rowNum}行目: {nameSingleCell?.editedValue || ''}</Text>
           <OstInput
             value={SingleCell?.rowValue || ''}
             readOnly
@@ -124,9 +146,14 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
 
   return (
     <>
-      {SingleCellUidListByItem.map((uid, index) => (
-        <SingleCellElm key={index} singleCellUid={uid} />
-      ))}
+      {SingleCellUidListByItem.map((uid, index) => {
+        const nameSingleCellUid = nameSingleCellUidListByItem[index];
+        // HACK: 行番号 = index(0始まり) + 1(1始まりに変換) + 1(1行目はヘッダーのため)
+        const rowNum = index + 2;
+        return (
+          <SingleCellElm key={index} rowNum={rowNum} singleCellUid={uid} nameSingleCellUid={nameSingleCellUid} />
+        );
+      })}
     </>
   );
 };
