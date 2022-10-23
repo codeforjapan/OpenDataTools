@@ -1,4 +1,4 @@
-import { atom, atomFamily, selector, selectorFamily, DefaultValue, AtomEffect } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily, DefaultValue } from 'recoil';
 import { AtomKeys, SelectorKeys } from './recoil_keys';
 
 // データセットの単体
@@ -229,6 +229,7 @@ export const datasetSingleCellAtom = atomFamily<
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
+          console.log('reset', isReset, node.key);
           localStorage.removeItem(node.key);
         } else {
           localStorage.setItem(node.key, JSON.stringify(newVal));
