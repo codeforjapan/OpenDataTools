@@ -1,4 +1,4 @@
-import { atom, atomFamily, selector, selectorFamily, DefaultValue, AtomEffect } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily, DefaultValue } from 'recoil';
 import { AtomKeys, SelectorKeys } from './recoil_keys';
 
 // データセットの単体

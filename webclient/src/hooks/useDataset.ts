@@ -1,12 +1,18 @@
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import {
   datasetAtom,
+  datasetItemAtom,
   datasetItemListSelector,
+  datasetItemUidListAtom,
   datasetListSelector,
   datasetSingleCellAtom,
   datasetSingleCellListByItemSelector,
   datasetSingleCellListByRowSelector,
+  datasetSingleCellUidListByItemAtom,
+  datasetSingleCellUidListByRowAtom,
+  datasetSingleRowAtom,
   datasetSingleRowListSelector,
+  datasetSingleRowUidListAtom,
   datasetUidListAtom,
 } from '../stores/dataset';
 import { v4 as uuid } from 'uuid';
@@ -235,4 +241,106 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
   }, []);
 
   return dataset;
+};
+
+export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string }) => {
+  const datasetUidList = useRecoilValue(datasetUidListAtom);
+  const datasetItemUidList = useRecoilValue(datasetItemUidListAtom(params));
+  const datasetSingleRowUidList = useRecoilValue(datasetSingleRowUidListAtom(params));
+
+  const [executing, setExecuting] = useState(false);
+
+  const resetDataset = useRecoilCallback(({ reset, set }) => (params: { uid: string }) => {
+    reset(datasetAtom(params));
+    const targetIndex = datasetUidList.findIndex((uid) => uid === params.uid);
+    const list = [...datasetUidList];
+    list.splice(targetIndex, 1);
+    set(datasetUidListAtom, list);
+  });
+
+  const resetDatasetItem = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string; itemUid: string }) => {
+        reset(datasetItemAtom(params));
+      }
+  );
+
+  const resetDatasetItemUidList = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string }) => {
+        reset(datasetItemUidListAtom(params));
+      }
+  );
+
+  const resetSingleRow = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string; singleRowUid: string }) => {
+        reset(datasetSingleRowAtom(params));
+      }
+  );
+
+  const resetSingleRowUidList = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string }) => {
+        reset(datasetSingleRowUidListAtom(params));
+      }
+  );
+
+  const resetSingleCell = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string; singleCellUid: string }) => {
+        reset(datasetSingleCellAtom(params));
+      }
+  );
+
+  const resetSingleCellUidListByItem = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string; itemUid: string }) => {
+        reset(datasetSingleCellUidListByItemAtom(params));
+      }
+  );
+
+  const resetSingleCellUidListByRow = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string; rowUid: string }) => {
+        reset(datasetSingleCellUidListByRowAtom(params));
+      }
+  );
+
+  const getCells = useRecoilCallback(({ snapshot }) => async (itemUids: string[]) => {
+    let cells: Dataset.SingleCell[] = [];
+    for (const itemUid of itemUids) {
+      const itemCells = await snapshot.getPromise(
+        datasetSingleCellListByItemSelector({ ...params, itemUid })
+      );
+      cells = cells.concat(itemCells);
+    }
+    return cells;
+  });
+
+  const removeFromLocalstorage = () => {
+    setExecuting(true);
+
+    setTimeout(async () => {
+      const datasetSingleCells = await getCells(datasetItemUidList);
+
+      for (const singleCell of datasetSingleCells) {
+        resetSingleCell({ ...params, singleCellUid: singleCell.uid });
+      }
+      resetDatasetItemUidList(params);
+      for (const itemUid of datasetItemUidList) {
+        resetDatasetItem({ ...params, itemUid });
+        resetSingleCellUidListByItem({ ...params, itemUid });
+      }
+      resetSingleRowUidList(params);
+      for (const singleRowUid of datasetSingleRowUidList) {
+        resetSingleRow({ ...params, singleRowUid });
+        resetSingleCellUidListByRow({ ...params, rowUid: singleRowUid });
+      }
+      resetDataset({ uid: params.datasetUid });
+      setExecuting(false);
+    }, 100);
+  };
+
+  return { removeFromLocalstorage, executing };
 };
