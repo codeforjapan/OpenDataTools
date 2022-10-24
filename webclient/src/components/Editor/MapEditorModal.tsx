@@ -15,39 +15,35 @@ import { FC, useCallback, useState } from 'react';
 import { GeoloniaMap } from '@geolonia/embed-react';
 import maplibregl, { Map } from 'maplibre-gl';
 
+type LngLat = {
+  lng: number;
+  lat: number;
+};
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: (lat: string, lng: string) => void;
-  initialLat: string | undefined;
-  initialLng: string | undefined;
+  onComplete: (args: LngLat) => void;
+  initialLngLat: LngLat;
 };
 
-export const MapEditorModal: FC<Props> = ({
-  isOpen,
-  onClose,
-  onComplete,
-  initialLat,
-  initialLng,
-}) => {
-  const [lat, setLat] = useState<string>(initialLat || '35.681236');
-  const [lng, setLng] = useState<string>(initialLng || '139.767125');
+export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initialLngLat }) => {
+  const [lngLat, setLngLat] = useState<LngLat>(initialLngLat);
 
   const onLoad = useCallback(
     (map: Map) => {
       const marker = new maplibregl.Marker({
         draggable: true,
       })
-        .setLngLat([Number(lng), Number(lat)])
+        .setLngLat({ ...initialLngLat })
         .addTo(map);
 
       marker.on('dragend', function () {
         const LngLat = marker.getLngLat();
-        setLng(String(LngLat.lng));
-        setLat(String(LngLat.lat));
+        setLngLat({ ...LngLat });
       });
     },
-    [initialLat, initialLng]
+    [initialLngLat]
   );
 
   return (
@@ -59,8 +55,8 @@ export const MapEditorModal: FC<Props> = ({
           <GeoloniaMap
             style={{ height: '500px', width: '100%' }}
             className="geolonia"
-            lng={initialLng || '139.767125'}
-            lat={initialLat || '35.681236'}
+            lng={String(initialLngLat.lng)}
+            lat={String(initialLngLat.lat)}
             zoom="16"
             marker="off"
             onLoad={onLoad}
@@ -68,11 +64,11 @@ export const MapEditorModal: FC<Props> = ({
           <Box display="flex" alignItems="center" pt={3}>
             <FormControl width={'30%'}>
               <FormLabel>緯度</FormLabel>
-              <Input placeholder="緯度" value={lat} readOnly />
+              <Input placeholder="緯度" value={lngLat.lat} readOnly />
             </FormControl>
             <FormControl width={'30%'} ml={4}>
               <FormLabel>経度</FormLabel>
-              <Input placeholder="経度" value={lng} readOnly />
+              <Input placeholder="経度" value={lngLat.lng} readOnly />
             </FormControl>
           </Box>
         </ModalBody>
@@ -80,7 +76,7 @@ export const MapEditorModal: FC<Props> = ({
           <Button onClick={onClose} colorScheme="teal" variant="outline">
             調整をやめる
           </Button>
-          <Button onClick={() => onComplete(lat, lng)} colorScheme="blue" ml={3}>
+          <Button onClick={() => onComplete(lngLat)} colorScheme="blue" ml={3}>
             保存して閉じる
           </Button>
         </ModalFooter>
