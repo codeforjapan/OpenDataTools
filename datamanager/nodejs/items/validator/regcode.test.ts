@@ -1,7 +1,7 @@
-import { ItemValidatorRegcode } from './regcode';
+import { ItemValidatorRegionCode } from './regcode';
 
 describe('items/validator/regcode', () => {
-  const regcodeValidator = new ItemValidatorRegcode();
+  const regcodeValidator = new ItemValidatorRegionCode();
 
   test('文字列かどうか', () => {
     expect(() => regcodeValidator.validateDataType(1000)).toThrow(

@@ -5,7 +5,7 @@ import { ItemValidatorUrl } from './items/validator/url';
 import { Encoding } from './utils/encoding';
 import { PUBLIC_FACILITIES_ITEMS_LIST } from './scheme/constants/items-list';
 import { RECOMMEND_BASIC_DATASET_LIST } from './scheme/constants/dataset';
-import { ItemValidatorRegcode } from './items/validator/regcode';
+import { ItemValidatorRegionCode } from './items/validator/regcode';
 import { SchemeValidater } from './scheme/validator';
 import { ItemValidatorCityname } from './items/validator/cityname';
 import { ItemValidatorDow } from './items/validator/dow';
@@ -16,7 +16,7 @@ import { ItemValidatorTime } from './items/validator/time';
 
 const schemeValidator = new SchemeValidater();
 const itemLabelFormatter = new SchemeFormatterItemLabel();
-const validateRegionCode = new ItemValidatorRegcode();
+const validateRegionCode = new ItemValidatorRegionCode();
 const validateTel = new ItemValidatorTel();
 const validateUrl = new ItemValidatorUrl();
 const validateLatLng = new ItemValidatorLatLng();
