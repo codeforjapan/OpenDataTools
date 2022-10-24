@@ -49,8 +49,8 @@ import {
               onLoad={(map) => {
                 map.on('move', function () {
                   const center = map.getCenter();
-                  setLat(center.lat);
-                  setLng(center.lng);
+                  setLat(String(center.lat));
+                  setLng(String(center.lng));
                 });
               }}
             />
