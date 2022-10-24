@@ -26,7 +26,9 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     datasetItemListSelector({ datasetUid: String(dataset_uid) })
   );
   // TODO: 名称項目が存在しない場合のエラーハンドリング
-  const nameDatasetItem: Dataset.Item | null = datasetItemList.filter(item => item.normalizedLabel == '名称')[0];
+  const nameDatasetItem: Dataset.Item | null = datasetItemList.filter(
+    (item) => item.normalizedLabel == '名称'
+  )[0];
   const nameSingleCellUidListByItem = useRecoilValue(
     datasetSingleCellUidListByItemAtom({
       datasetUid: String(dataset_uid),
@@ -52,7 +54,11 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     setDatasetItem({ ...datasetItem, dataType });
   }, [datasetItem?.normalizedLabel]);
 
-  const SingleCellElm: FC<{ singleCellUid: string, rowNum: number, nameSingleCellUid: string }> = ({ singleCellUid, rowNum, nameSingleCellUid }) => {
+  const SingleCellElm: FC<{ singleCellUid: string; rowNum: number; nameSingleCellUid: string }> = ({
+    singleCellUid,
+    rowNum,
+    nameSingleCellUid,
+  }) => {
     const validatorFactory = useValidator({ dataType: validatorDataType });
     const [SingleCell, setSingleCell] = useRecoilState(
       datasetSingleCellAtom({
@@ -95,7 +101,9 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     return (
       <Grid gridTemplateColumns="1fr 50px 1fr" alignItems="end" mb={6}>
         <GridItem>
-          <Text>{rowNum}行目: {nameSingleCell?.editedValue || ''}</Text>
+          <Text>
+            {rowNum}行目: {nameSingleCell?.editedValue || ''}
+          </Text>
           <OstInput
             value={SingleCell?.rowValue || ''}
             readOnly
@@ -151,7 +159,12 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
         // HACK: 行番号 = index(0始まり) + 1(1始まりに変換) + 1(1行目はヘッダーのため)
         const rowNum = index + 2;
         return (
-          <SingleCellElm key={index} rowNum={rowNum} singleCellUid={uid} nameSingleCellUid={nameSingleCellUid} />
+          <SingleCellElm
+            key={index}
+            rowNum={rowNum}
+            singleCellUid={uid}
+            nameSingleCellUid={nameSingleCellUid}
+          />
         );
       })}
     </>
