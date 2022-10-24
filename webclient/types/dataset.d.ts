@@ -27,7 +27,8 @@ declare namespace Dataset {
   }
 
   type DataType =
-    | 'regcode'
+    | 'regioncode'
+    | 'regionname'
     | 'no'
     | 'kana_string'
     | 'lat'
@@ -40,5 +41,6 @@ declare namespace Dataset {
     | 'date'
     | 'poi'
     | 'barrier_free'
+    | 'url'
     | null;
 }

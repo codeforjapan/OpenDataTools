@@ -1,6 +1,6 @@
 import { containMultibyte } from '../../utils/multibyte';
 
-class ItemValidatorTime {
+export class ItemValidatorTime {
   static INT_EXP = /[^0-9]/;
   validateDataType(data: any) {
     if (typeof data !== 'string') {
@@ -39,5 +39,3 @@ class ItemValidatorTime {
     return;
   }
 }
-
-export default ItemValidatorTime;
