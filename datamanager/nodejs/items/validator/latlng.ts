@@ -16,20 +16,20 @@ export class ItemValidatorLatLng {
     }
     return;
   }
-  validateLat(data: any) {
+  validateLat = (data: any) => {
     this.validateDataType(data);
     const numberedData = Number(data);
     if (numberedData <= 20 || numberedData >= 46) {
       throw new Error('緯度が日本の範囲から外れている可能性があります。');
     }
     return;
-  }
-  validateLng(data: any) {
+  };
+  validateLng = (data: any) => {
     this.validateDataType(data);
     const numberedData = Number(data);
     if (numberedData <= 122 || numberedData >= 154) {
       throw new Error('経度が日本の範囲から外れている可能性があります。');
     }
     return;
-  }
+  };
 }

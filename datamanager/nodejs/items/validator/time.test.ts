@@ -1,4 +1,4 @@
-import ItemValidatorTime from './time';
+import { ItemValidatorTime } from './time';
 
 describe('items/validator/time', () => {
   const timeValidator = new ItemValidatorTime();
