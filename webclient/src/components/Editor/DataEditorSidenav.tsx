@@ -1,6 +1,6 @@
 import { Flex, Box, Text } from '@chakra-ui/react';
 import { InfoOutlineIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { datasetItemAtom, datasetItemListSelector } from '../../stores/dataset';
@@ -15,6 +15,17 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
   const datasetItemList = useRecoilValue(
     datasetItemListSelector({ datasetUid: String(dataset_uid) })
   );
+  const activeDatasetItemList = datasetItemList.filter((item) => item.isActive);
+  const [selectedItemUidState, setSelectedItemUidState] = useState<string>('');
+
+  useEffect(() => {
+    if (selectedItemUid) {
+      setSelectedItemUidState(selectedItemUid);
+    } else {
+      setSelectedItemUidState(activeDatasetItemList[0].uid);
+      onSelect(activeDatasetItemList[0].uid);
+    }
+  }, [selectedItemUid]);
 
   const DatasetItem: FC<{ datasetUid: string; itemUid: string }> = ({ datasetUid, itemUid }) => {
     const item = useRecoilValue(datasetItemAtom({ datasetUid, itemUid }));
@@ -29,7 +40,7 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
         justifyContent="space-between"
         p={4}
         sx={
-          item?.uid === selectedItemUid
+          item?.uid === selectedItemUidState
             ? {
                 bg: 'information.bg.disabled',
                 borderLeft: '3px solid',
@@ -49,18 +60,16 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
             {item?.normalizedLabel || item?.rowLabel}
           </Text>
         </Flex>
-        {item?.uid === selectedItemUid && <ChevronRightIcon />}
+        {item?.uid === selectedItemUidState && <ChevronRightIcon />}
       </Flex>
     );
   };
 
   return (
     <Box ml="-40px">
-      {datasetItemList
-        .filter((item) => item.isActive)
-        .map((item, index) => (
-          <DatasetItem key={index} itemUid={item.uid} datasetUid={String(dataset_uid)} />
-        ))}
+      {activeDatasetItemList.map((item, index) => (
+        <DatasetItem key={index} itemUid={item.uid} datasetUid={String(dataset_uid)} />
+      ))}
     </Box>
   );
 };
