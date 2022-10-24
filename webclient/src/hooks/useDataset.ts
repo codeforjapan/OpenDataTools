@@ -248,6 +248,8 @@ export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string })
   const datasetItemUidList = useRecoilValue(datasetItemUidListAtom(params));
   const datasetSingleRowUidList = useRecoilValue(datasetSingleRowUidListAtom(params));
 
+  const [executing, setExecuting] = useState(false);
+
   const resetDataset = useRecoilCallback(({ reset, set }) => (params: { uid: string }) => {
     reset(datasetAtom(params));
     const targetIndex = datasetUidList.findIndex((uid) => uid === params.uid);
@@ -316,24 +318,29 @@ export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string })
     return cells;
   });
 
-  const removeFromLocalstorage = async () => {
-    const datasetSingleCells = await getCells(datasetItemUidList);
+  const removeFromLocalstorage = () => {
+    setExecuting(true);
 
-    for (const singleCell of datasetSingleCells) {
-      resetSingleCell({ ...params, singleCellUid: singleCell.uid });
-    }
-    resetDatasetItemUidList(params);
-    for (const itemUid of datasetItemUidList) {
-      resetDatasetItem({ ...params, itemUid });
-      resetSingleCellUidListByItem({ ...params, itemUid });
-    }
-    resetSingleRowUidList(params);
-    for (const singleRowUid of datasetSingleRowUidList) {
-      resetSingleRow({ ...params, singleRowUid });
-      resetSingleCellUidListByRow({ ...params, rowUid: singleRowUid });
-    }
-    resetDataset({ uid: params.datasetUid });
+    setTimeout(async () => {
+      const datasetSingleCells = await getCells(datasetItemUidList);
+
+      for (const singleCell of datasetSingleCells) {
+        resetSingleCell({ ...params, singleCellUid: singleCell.uid });
+      }
+      resetDatasetItemUidList(params);
+      for (const itemUid of datasetItemUidList) {
+        resetDatasetItem({ ...params, itemUid });
+        resetSingleCellUidListByItem({ ...params, itemUid });
+      }
+      resetSingleRowUidList(params);
+      for (const singleRowUid of datasetSingleRowUidList) {
+        resetSingleRow({ ...params, singleRowUid });
+        resetSingleCellUidListByRow({ ...params, rowUid: singleRowUid });
+      }
+      resetDataset({ uid: params.datasetUid });
+      setExecuting(false);
+    }, 100);
   };
 
-  return removeFromLocalstorage;
+  return { removeFromLocalstorage, executing };
 };

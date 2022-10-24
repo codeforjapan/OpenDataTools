@@ -1,5 +1,5 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table';
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useRemoveDatasetFromLocalstorage } from '../../hooks/useDataset';
@@ -14,14 +14,17 @@ export const HomeSavedDatasetList: FC = () => {
   const datasets = useRecoilValue(datasetListSelector);
 
   const RemoveButton: FC<RemoveButtonProps> = ({ datasetUid }) => {
-    const remove = useRemoveDatasetFromLocalstorage({ datasetUid });
-
-    const execute = async () => {
-      await remove();
-    };
+    const { executing, removeFromLocalstorage } = useRemoveDatasetFromLocalstorage({
+      datasetUid,
+    });
 
     return (
-      <OstButton size="S" view="button" onClick={() => execute()}>
+      <OstButton
+        size="S"
+        view="button"
+        onClick={() => removeFromLocalstorage()}
+        isLoading={executing}
+      >
         削除
       </OstButton>
     );

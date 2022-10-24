@@ -229,7 +229,6 @@ export const datasetSingleCellAtom = atomFamily<
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          console.log('reset', isReset, node.key);
           localStorage.removeItem(node.key);
         } else {
           localStorage.setItem(node.key, JSON.stringify(newVal));
