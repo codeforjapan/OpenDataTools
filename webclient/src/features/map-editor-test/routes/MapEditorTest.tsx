@@ -21,7 +21,7 @@ export const MapEditorTest: FC = () => {
         onComplete={(lat, lng) => {
           setLat(lat);
           setLng(lng);
-          onClose;
+          onClose();
         }}
       />
     </ContentLayout>
