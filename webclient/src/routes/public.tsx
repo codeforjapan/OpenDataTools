@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { MainLayout } from '../components/Layout';
+import { MapEditorTest } from '../features/map-editor-test';
 import { FileUpload } from '../features/upload';
 import { lazyImport } from '../utils/lazyImport';
 
@@ -38,6 +39,7 @@ export const publicRoutes = [
       { path: '/:dataset_uid/data-editor', element: <DataEditor /> },
       { path: '/:dataset_uid/map', element: <Map /> },
       { path: '/test', element: <Test /> },
+      { path: '/map-editor-test', element: <MapEditorTest /> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },
