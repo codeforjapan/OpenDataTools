@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { GeoloniaMap } from '@geolonia/embed-react';
 import maplibregl, { Map } from 'maplibre-gl';
 
@@ -27,20 +27,31 @@ type Props = {
   initialLngLat: LngLat;
 };
 
+const orgRoundAtSix = (value: number): number => {
+  // NOTE: 小数点６桁で丸める
+  return Math.round(value * 1000000) / 1000000;
+};
+
+const convertLngLat = (LngLat: LngLat): LngLat => {
+  return { lng: orgRoundAtSix(LngLat.lng), lat: orgRoundAtSix(LngLat.lat) };
+};
+
 export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initialLngLat }) => {
-  const [lngLat, setLngLat] = useState<LngLat>(initialLngLat);
+  const convertedInitialLngLat = useMemo(() => convertLngLat(initialLngLat), [initialLngLat]);
+  const [lngLat, setLngLat] = useState<LngLat>(convertedInitialLngLat);
 
   const onLoad = useCallback(
     (map: Map) => {
       const marker = new maplibregl.Marker({
         draggable: true,
       })
-        .setLngLat({ ...initialLngLat })
+        .setLngLat({ ...convertedInitialLngLat })
         .addTo(map);
 
       marker.on('dragend', function () {
-        const LngLat = marker.getLngLat();
-        setLngLat({ ...LngLat });
+        const lngLat = marker.getLngLat();
+        const convertedLngLat = convertLngLat(lngLat);
+        setLngLat({ ...convertedLngLat });
       });
     },
     [initialLngLat]
@@ -55,8 +66,8 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
           <GeoloniaMap
             style={{ height: '500px', width: '100%' }}
             className="geolonia"
-            lng={String(initialLngLat.lng)}
-            lat={String(initialLngLat.lat)}
+            lng={String(convertedInitialLngLat.lng)}
+            lat={String(convertedInitialLngLat.lat)}
             zoom="16"
             marker="off"
             onLoad={onLoad}
