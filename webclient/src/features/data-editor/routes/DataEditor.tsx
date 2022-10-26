@@ -15,7 +15,7 @@ import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { datasetAtom } from '../../../stores/dataset';
-import { useGetDatasetWithNewItems, useRemoveDatasetFromLocalstorage } from '../../../hooks/useDataset';
+import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
 import { exportCsv } from '../../../utils/exportCsv';
 import civitanFinished from '../../../assets/civitan_finished.png';
 import civitanSearching from '../../../assets/civitan_searching.png';
@@ -32,10 +32,6 @@ export const DataEditor: FC = () => {
   const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
 
   const datasetWithNewItems = useGetDatasetWithNewItems({
-    datasetUid: String(dataset_uid),
-  });
-
-  const { removeFromLocalstorage, executing: removingDataset } = useRemoveDatasetFromLocalstorage({
     datasetUid: String(dataset_uid),
   });
 
@@ -122,12 +118,6 @@ export const DataEditor: FC = () => {
             <Text>
               ここまでの作業ファイル（CSV）を、ご自身のパソコン環境にダウンロードしましょう。
             </Text>
-            <Flex alignItems="center" px={6} py={4} bg="information.bg.alert" borderRadius={8}>
-              <InfoOutlineIcon />
-              <Text ml={6}>
-                ファイルのダウンロードが完了すると、作業ファイルは削除されます。作業を再開する場合はCSVアップロードからはじめてください。
-              </Text>
-            </Flex>
           </ModalBody>
 
           <ModalFooter justifyContent="space-between">
@@ -143,7 +133,6 @@ export const DataEditor: FC = () => {
               onClick={() => {
                 onDownloadClose();
                 exportCsv(datasetWithNewItems); // 完成したcsvのダウンロード
-                removeFromLocalstorage(); // ダウンロード済みのため、不要になった作業ファイルを削除
                 onPreviewOpen();
               }}
             >
@@ -155,8 +144,7 @@ export const DataEditor: FC = () => {
 
       <Modal
         closeOnOverlayClick={false}
-        // HACK: モーダル遷移中に作業ファイル削除が走るとアニメーションが中途半端な状態で固まってしまうため、削除完了してから開くようにする
-        isOpen={isPreviewOpen && !removingDataset}
+        isOpen={isPreviewOpen}
         onClose={onPreviewClose}
         isCentered
       >
