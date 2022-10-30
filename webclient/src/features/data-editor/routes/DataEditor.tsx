@@ -98,7 +98,7 @@ export const DataEditor: FC = () => {
             <OstButton
               view="skeleton"
               size="L"
-              icon={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
+              iconLeft={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
               onClick={() => exportCsv(datasetWithNewItems)}
             >
               ダウンロード
@@ -140,13 +140,14 @@ export const DataEditor: FC = () => {
             <OstButton
               size="L"
               view="button"
+              iconRight={<Icon as={DownloadIcon} w={6} h={6}/>}
               onClick={() => {
                 onDownloadClose();
                 exportCsv(datasetWithNewItems); // 完成したcsvのダウンロード
                 onPreviewOpen();
               }}
             >
-              作業ファイルをダウンロード<DownloadIcon w={6} h={6} ml={4} />
+              作業ファイルをダウンロード
             </OstButton>
           </ModalFooter>
         </ModalContent>
@@ -177,8 +178,9 @@ export const DataEditor: FC = () => {
               <OstButton
                 size="L"
                 view="button"
+                iconRight={<Icon as={MdOutlineMap} w={6} h={6}/>}
               >
-                マップでプレビュー確認<Icon as={MdOutlineMap} w={6} h={6} ml={4} />
+                マップでプレビュー確認
               </OstButton>
             </Link>
           </ModalFooter>
