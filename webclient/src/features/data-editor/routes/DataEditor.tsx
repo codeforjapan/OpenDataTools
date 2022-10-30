@@ -7,12 +7,27 @@ import {
   ArrowForwardIcon,
   DownloadIcon,
 } from '@chakra-ui/icons';
-import { Grid, GridItem, Flex, Avatar, Text, Modal, ModalOverlay, ModalHeader, ModalBody, ModalContent, ModalFooter, useDisclosure, Icon } from '@chakra-ui/react';
+import {
+  Grid,
+  GridItem,
+  Flex,
+  Avatar,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  useDisclosure,
+  Icon,
+} from '@chakra-ui/react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
 import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { datasetAtom } from '../../../stores/dataset';
 import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
@@ -111,6 +126,7 @@ export const DataEditor: FC = () => {
           <ModalHeader bg="information.bg.disabled">
             お疲れさまでした！作業を完了します！
           </ModalHeader>
+          <ModalCloseButton />
           <ModalBody pb={6}>
             <Flex mt={6} mb={6} justify="center">
               <img src={civitanFinished} />
@@ -120,24 +136,18 @@ export const DataEditor: FC = () => {
             </Text>
           </ModalBody>
 
-          <ModalFooter justifyContent="space-between">
-            <OstNavLink
-              mr={8}
-              iconLeft={<Avatar size="md" p="12px" icon={<ArrowBackIcon />} />}
-              onClick={onDownloadClose}
-            >
-              キャンセル
-            </OstNavLink>
-            <OstNavLink
-              iconRight={<Avatar size="md" p="12px" icon={<DownloadIcon />} />}
+          <ModalFooter justifyContent="center">
+            <OstButton
+              size="L"
+              view="button"
               onClick={() => {
                 onDownloadClose();
                 exportCsv(datasetWithNewItems); // 完成したcsvのダウンロード
                 onPreviewOpen();
               }}
             >
-              作業ファイルをダウンロード
-            </OstNavLink>
+              作業ファイルをダウンロード<DownloadIcon w={6} h={6} ml={4} />
+            </OstButton>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -153,6 +163,7 @@ export const DataEditor: FC = () => {
           <ModalHeader bg="information.bg.disabled">
             作ったデータをマップ上で確認してみましょう！
           </ModalHeader>
+          <ModalCloseButton />
           <ModalBody pb={6}>
             <Flex mt={6} mb={6} justify="center">
               <img src={civitanSearching} />
@@ -160,13 +171,16 @@ export const DataEditor: FC = () => {
             ここまでの作業ファイルが、マップ上に表示されるか気になりますよね？どんな表示になっているか見てみましょう！
           </ModalBody>
 
-          <ModalFooter>
-            <OstNavLink
-              iconRight={<Avatar size="md" p="12px" icon={<Icon as={MdOutlineMap} />} />}
-              to={`/${dataset_uid}/map`}
-            >
-              マップでプレビュー確認
-            </OstNavLink>
+          <ModalFooter justifyContent="center">
+            {/* NOTE: 見た目を塗りつぶしたボタンにするため、OstNavLinkではなくOstButtonを使用 */}
+            <Link to={`/${dataset_uid}/map`}>
+              <OstButton
+                size="L"
+                view="button"
+              >
+                マップでプレビュー確認<Icon as={MdOutlineMap} w={6} h={6} ml={4} />
+              </OstButton>
+            </Link>
           </ModalFooter>
         </ModalContent>
       </Modal>
