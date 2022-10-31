@@ -1,23 +1,21 @@
-import { Avatar, Box, Flex } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 import { ContentLayout } from '../../../components/Layout';
-import { OstLink, OstNavLink } from '../../../components/Elements/OstLink';
-import { HomeSavedDatasetList } from '../../../components/Home';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { HomeSavedDatasetList, Description } from '../../../components/Home';
 export const Home = () => {
   return (
     <ContentLayout title="ホーム">
-      <Box>ホーム</Box>
-      <Flex mt={4} justifyContent="flex-end">
-        <OstNavLink
-          to="/upload-file-for-map"
-          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
+      <Box mx={6}>
+        <Description />
+        <Box
+          background="white"
+          borderRadius={8}
+          my={6}
+          px={6}
+          py={6}
         >
-          CSVを元にMapを表示する
-        </OstNavLink>
-      </Flex>
-      <HomeSavedDatasetList />
-      <Box w="300px">
-        <OstLink to="/upload-file">はじめる（CSV選択画面）</OstLink>
+          <Heading size="lg" my={4}>データリスト</Heading>
+          <HomeSavedDatasetList />
+        </Box>
       </Box>
     </ContentLayout>
   );
