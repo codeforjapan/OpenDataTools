@@ -10,10 +10,6 @@ const wrapperStyle = css`
   background-color: var(--chakra-colors-body-bg);
 `;
 
-const footerStyle = css`
-  padding: 30px;
-`;
-
 type MainLayoutProps = {
   children: React.ReactNode;
 };
@@ -22,9 +18,6 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div css={wrapperStyle}>
       <main>{children}</main>
-      <footer css={footerStyle}>
-        <div>footer</div>
-      </footer>
     </div>
   );
 };
