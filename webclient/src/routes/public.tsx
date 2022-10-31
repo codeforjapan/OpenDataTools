@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { MainLayout } from '../components/Layout';
 import { MapEditorTest } from '../features/map-editor-test';
 import { FileUpload } from '../features/upload';
+import { FileUploadForMap } from '../features/upload-for-map';
 import { lazyImport } from '../utils/lazyImport';
 
 const { Home } = lazyImport(() => import('../features/home'), 'Home');
@@ -34,6 +35,7 @@ export const publicRoutes = [
     children: [
       { path: '/', element: <Home /> },
       { path: '/upload-file', element: <FileUpload /> },
+      { path: '/upload-file-for-map', element: <FileUploadForMap /> },
       { path: '/auto-convert', element: <AutoConvert /> },
       { path: '/:dataset_uid/normalize-label', element: <NormalizeLabel /> },
       { path: '/:dataset_uid/data-editor', element: <DataEditor /> },

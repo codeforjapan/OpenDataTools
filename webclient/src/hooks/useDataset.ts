@@ -344,3 +344,22 @@ export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string })
 
   return { removeFromLocalstorage, executing };
 };
+
+export const useGetItemsUnnormalized = (params: { datasetUid: string }) => {
+  const [datasetItems, setDatasetItems] = useState<Dataset.Item[]>([]);
+  const items = useRecoilValue(datasetItemListSelector(params));
+
+  useEffect(() => {
+    if (items.length > 0) {
+      const parseDataset = () => {
+        const normalizedItems: Dataset.Item[] = items.map((item) => {
+          return { ...item, normalizedLabel: item.rowLabel };
+        });
+        setDatasetItems(normalizedItems);
+      };
+      parseDataset();
+    }
+  }, [items]);
+
+  return datasetItems;
+};
