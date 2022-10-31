@@ -3,7 +3,8 @@ import { Button, forwardRef, ButtonProps } from '@chakra-ui/react';
 
 export type OstButtonProps = {
   isDisabled?: boolean;
-  icon?: React.ReactElement;
+  iconLeft?: React.ReactElement;
+  iconRight?: React.ReactElement;
   size: 'L' | 'S';
   children?: React.ReactNode;
   view: 'button' | 'skeleton' | 'icon-only';
@@ -30,7 +31,7 @@ export const OstButton = forwardRef<ButtonProps & OstButtonProps, 'button'>((pro
   }
 
   return (
-    <Button ref={ref} variant={variant} leftIcon={props.icon} {...props}>
+    <Button ref={ref} variant={variant} leftIcon={props.iconLeft} rightIcon={props.iconRight} {...props}>
       {props.children}
     </Button>
   );

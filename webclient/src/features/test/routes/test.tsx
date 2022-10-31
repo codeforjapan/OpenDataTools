@@ -29,16 +29,16 @@ export const Test = () => {
       <OstButton view="button" size="L" isDisabled={true}>
         ボタン
       </OstButton>
-      <OstButton view="button" size="L" icon={<Icon as={MdFolder} />}>
+      <OstButton view="button" size="L" iconLeft={<Icon as={MdFolder} />}>
         ボタン
       </OstButton>
-      <OstButton view="button" size="L" isDisabled={true} icon={<Icon as={MdFolder} />}>
+      <OstButton view="button" size="L" isDisabled={true} iconLeft={<Icon as={MdFolder} />}>
         ボタン
       </OstButton>
       <OstButton
         view="skeleton"
         size="L"
-        icon={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
+        iconLeft={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       >
         ボタン
       </OstButton>
@@ -46,20 +46,20 @@ export const Test = () => {
         view="skeleton"
         size="L"
         isDisabled={true}
-        icon={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
+        iconLeft={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       >
         ボタン
       </OstButton>
       <OstButton
         view="icon-only"
         size="L"
-        icon={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
+        iconLeft={<Avatar bg="bg.active" size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
       <OstButton
         view="icon-only"
         size="L"
         isDisabled={true}
-        icon={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
+        iconLeft={<Avatar size="md" p="12px" icon={<Icon as={MdFolder} />} />}
       />
       <OstButton view="button" size="S">
         ボタン
@@ -67,16 +67,16 @@ export const Test = () => {
       <OstButton view="button" size="S" isDisabled={true}>
         ボタン
       </OstButton>
-      <OstButton view="button" size="S" icon={<Icon as={MdSettings} />}>
+      <OstButton view="button" size="S" iconLeft={<Icon as={MdSettings} />}>
         ボタン
       </OstButton>
-      <OstButton view="button" size="S" isDisabled={true} icon={<Icon as={MdSettings} />}>
+      <OstButton view="button" size="S" isDisabled={true} iconLeft={<Icon as={MdSettings} />}>
         ボタン
       </OstButton>
       <OstButton
         view="skeleton"
         size="S"
-        icon={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
+        iconLeft={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
       >
         ボタン
       </OstButton>
@@ -84,20 +84,20 @@ export const Test = () => {
         view="skeleton"
         size="S"
         isDisabled={true}
-        icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
+        iconLeft={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
       >
         ボタン
       </OstButton>
       <OstButton
         view="icon-only"
         size="S"
-        icon={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
+        iconLeft={<Avatar bg="bg.active" size="sm" icon={<Icon as={MdSettings} />} />}
       />
       <OstButton
         view="icon-only"
         size="S"
         isDisabled={true}
-        icon={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
+        iconLeft={<Avatar size="sm" icon={<Icon as={MdSettings} />} />}
       />
       <OstLink url="https://www.google.com">リンク</OstLink>
       <OstLink url="https://www.google.com" icon={<Icon as={MdSupervisedUserCircle} />}>
