@@ -27,8 +27,8 @@ export const NormalizeLabel: FC = () => {
 
   return (
     <StepLayout
-      pageTitle="データ項目名の正規化"
-      headingText="データ項目名の正規化"
+      pageTitle="データ項目名を整合させる"
+      headingText="データ項目名を整合させる"
       uid={dataset_uid}
       isProcessFinished={isFormatSelected && isCheckFinished}
     >
@@ -40,7 +40,7 @@ export const NormalizeLabel: FC = () => {
         bg={isFormatSelected ? 'information.bg.disabled' : 'information.bg.active'}
       >
         <Box flex="0 0 50%" pr={8}>
-          <Text>正規化したい推奨データフォーマットを選択してください</Text>
+          <Text>整合させたい推奨データフォーマットを選択してください</Text>
         </Box>
         <Box flex="0 0 50%">
           <OstSelect
@@ -69,7 +69,7 @@ export const NormalizeLabel: FC = () => {
                 <Text ml={6}>
                   推奨データフォーマットの項目名と一致した項目はチェック済みです。
                   <br />
-                  未チェックの項目で正規化できる項目があれば、チェックを入れ正規化する対象項目を選択してください。
+                  未チェックの項目で整合できる項目があればチェックを入れ、整合させる対象項目を選択してください。
                 </Text>
               </>
             ) : (
