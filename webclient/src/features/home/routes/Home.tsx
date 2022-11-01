@@ -1,6 +1,7 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { ContentLayout } from '../../../components/Layout';
 import { HomeSavedDatasetList, Description } from '../../../components/Home';
+
 export const Home = () => {
   return (
     <ContentLayout title="ホーム">
@@ -13,7 +14,6 @@ export const Home = () => {
           px={6}
           py={6}
         >
-          <Heading size="lg" my={4}>データリスト</Heading>
           <HomeSavedDatasetList />
         </Box>
       </Box>
