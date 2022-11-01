@@ -11,28 +11,30 @@ export type OstButtonProps = {
 };
 
 export const OstButton = forwardRef<ButtonProps & OstButtonProps, 'button'>((props, ref) => {
+  const { iconLeft, iconRight, ...buttonProps } = props;
+
   let variant;
-  if (props.view === 'button') {
-    if (props.size === 'L') {
+  if (buttonProps.view === 'button') {
+    if (buttonProps.size === 'L') {
       variant = 'buttonL';
-    } else if (props.size === 'S') {
+    } else if (buttonProps.size === 'S') {
       variant = 'buttonS';
     }
-  } else if (props.view === 'skeleton') {
-    if (props.size === 'L') {
+  } else if (buttonProps.view === 'skeleton') {
+    if (buttonProps.size === 'L') {
       variant = 'skeletonL';
-    } else if (props.size === 'S') {
+    } else if (buttonProps.size === 'S') {
       variant = 'skeletonS';
     }
-  } else if (props.view === 'icon-only') {
+  } else if (buttonProps.view === 'icon-only') {
     variant = 'iconOnly';
   } else {
     variant = 'buttonL';
   }
 
   return (
-    <Button ref={ref} variant={variant} leftIcon={props.iconLeft} rightIcon={props.iconRight} {...props}>
-      {props.children}
+    <Button ref={ref} variant={variant} leftIcon={iconLeft} rightIcon={iconRight} {...buttonProps}>
+      {buttonProps.children}
     </Button>
   );
 });
