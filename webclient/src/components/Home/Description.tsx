@@ -26,8 +26,7 @@ const StepCard = ({ children, title, subTitle }: StepCardProps) => {
         color="white"
         px={6}
         py={4}
-        // HACK: 上側だけ角を丸くする
-        borderRadius="8px 8px 0 0"
+        borderTopRadius={8}
       >
         <Text fontSize="md">
           {subTitle}

@@ -100,8 +100,8 @@ export const HomeSavedDatasetList: FC = () => {
                   <Flex align="center">
                     {/* NOTE: 文字を等幅にし全体の長さを揃えるためmonospaceを使用 */}
                     {/* TODO: 別箇所でも同様のデザインが必要になったらElement化 */}
-                    <Box px={3} py={1} fontFamily="monospace, serif" background="dimgray" color="white" borderRadius="10px 0 0 10px">ID</Box>
-                    <Box px={3} py={1} fontFamily="monospace, serif" background="lightgray" borderRadius="0 10px 10px 0">{dataset?.uid}</Box>
+                    <Box px={3} py={1} fontFamily="monospace, serif" background="dimgray" color="white" borderLeftRadius={10}>ID</Box>
+                    <Box px={3} py={1} fontFamily="monospace, serif" background="lightgray" borderRightRadius={10}>{dataset?.uid}</Box>
                   </Flex>
                 </Td>
                 <Td>
