@@ -12,7 +12,9 @@ import {
   datasetSingleRowUidListAtom,
   datasetSingleCellListByRowSelector
 } from '../../stores/dataset';
+import OstLatLngInput from '../Elements/OstLatLngInput/OstLatLngInput';
 import { OstInput } from '../Elements/OstInput';
+import { MapEditorModal } from './MapEditorModal';
 
 type Props = {
   selectedItemUid?: string;
@@ -73,6 +75,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     );
     const [latUid, setLatUid] = useState('');
     const [lngUid, setLngUid] = useState('');
+    const [open, setOpen] = useState(false);
     const [latCell, setLatCell] = useRecoilState(
       datasetSingleCellAtom({
         datasetUid: String(dataset_uid),
@@ -136,7 +139,6 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
       // TODO: 二重呼び出しみたいになっているので変えたい
       setLatUid(getLngLatCellUid(latItemId))
       setLngUid(getLngLatCellUid(lngItemId))
-      console.log(singleRow)
     },[singleRow])
 
     useEffect(() => {
@@ -160,6 +162,15 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
         singleCellUid: nameSingleCellUid,
       })
     );
+
+    // NOTE: 緯度経度のデータがない場合のチェック。ない場合は東京駅の緯度経度をかえしている。
+    const targetLngLat = useMemo((): { lng: number; lat: number } => {
+      if (latCell?.editedValue === undefined || lngCell?.editedValue === undefined) {
+        return { lng: 139.767125, lat: 35.681236 };
+      } else {
+        return { lng: Number(lngCell.editedValue), lat: Number(latCell.editedValue) };
+      }
+    }, [latCell?.editedValue, lngCell?.editedValue]);
 
     return (
       <Grid gridTemplateColumns="1fr 50px 1fr" alignItems="end" mb={6}>
@@ -216,18 +227,29 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
                 完了メッセージ
               </Text>
             )}
-            <OstInput
+            <OstLatLngInput
               value={latCell?.editedValue || ''}
               onChange={(e) => handleChangeLatData(e.target.value)}
+              onClick={() => setOpen(true)}
             />
             <Box pt="3" width={'100%'}>
-              <OstInput
+              <OstLatLngInput
                 value={lngCell?.editedValue || ''}
                 onChange={(e) => handleChangeLngData(e.target.value)}
+                onClick={() => setOpen(true)}
               />
             </Box>
           </Flex>
         </GridItem>
+        <MapEditorModal
+          isOpen={open}
+          onClose={()=> setOpen(false)}
+          initialLngLat={targetLngLat}
+          onComplete={(latLng) => {
+            handleChangeLatData(String(latLng.lat))
+            handleChangeLngData(String(latLng.lng))
+            setOpen(false)
+        }}/>
       </Grid>
     );
   };

@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { GeoloniaMap } from '@geolonia/embed-react';
 import maplibregl, { Map } from 'maplibre-gl';
 
@@ -37,8 +37,12 @@ const convertLngLat = (LngLat: LngLat): LngLat => {
 };
 
 export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initialLngLat }) => {
-  const convertedInitialLngLat = useMemo(() => convertLngLat(initialLngLat), [initialLngLat]);
+  const convertedInitialLngLat = useMemo(() => convertLngLat(initialLngLat), [initialLngLat.lat, initialLngLat.lng]);
   const [lngLat, setLngLat] = useState<LngLat>(convertedInitialLngLat);
+
+  useEffect(() => {
+    setLngLat(convertedInitialLngLat)
+  },[convertedInitialLngLat])
 
   const onLoad = useCallback(
     (map: Map) => {
