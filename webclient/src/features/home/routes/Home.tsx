@@ -7,13 +7,7 @@ export const Home = () => {
     <ContentLayout title="ホーム">
       <Box mx={6}>
         <Description />
-        <Box
-          background="white"
-          borderRadius={8}
-          my={6}
-          px={6}
-          py={6}
-        >
+        <Box background="white" borderRadius={8} my={6} px={6} py={6}>
           <HomeSavedDatasetList />
         </Box>
       </Box>
