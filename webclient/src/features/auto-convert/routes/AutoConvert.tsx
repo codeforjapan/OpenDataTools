@@ -12,13 +12,15 @@ import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { useRecoilValue } from 'recoil';
 import { uploadedFileBufferAtom } from '../../../stores/upload_file';
-import { utilCharEncoding } from 'opendatatool-datamanager';
+import { utilCharEncoding, item2bytes2byteFormatter } from 'opendatatool-datamanager';
 import parser, { ParseResult } from 'papaparse';
 import { useImportDataset } from '../../../hooks/useDataset';
 
 export const AutoConvert: FC = () => {
   const [datasetUid, setDatasetUid] = useState<string>();
   const [charCodeConvertedData, setCharCodeConvertedData] = useState<string>();
+  const [charTypeConvertedData, setCharTypeConvertedData] =
+    useState<{ [header: string]: string }[]>();
   const [characterCodeProgress, setCharacterCodeProgress] = useState({
     status: 'waiting',
     errorMessage: '',
@@ -62,16 +64,29 @@ export const AutoConvert: FC = () => {
   }, [characterCodeProgress]);
 
   useEffect(() => {
-    if (characterTypeProgress.status === 'processing') {
-      setCharacterTypeProgress({ status: 'finished', errorMessage: '' });
-      setRequiredFieldProgress({ status: 'processing', errorMessage: '' });
+    if (characterTypeProgress.status === 'processing' && charCodeConvertedData) {
+      try {
+        const { data }: ParseResult<any> = parser.parse(charCodeConvertedData, {
+          header: true,
+        });
+        const convertedData = item2bytes2byteFormatter.format(data);
+        setCharTypeConvertedData(convertedData);
+        setCharacterTypeProgress({ status: 'finished', errorMessage: '' });
+        setRequiredFieldProgress({ status: 'processing', errorMessage: '' });
+      } catch (error) {
+        setCharacterTypeProgress({
+          status: 'failed',
+          errorMessage: '全角半角の変換に失敗しました',
+        });
+      }
     }
-  }, [characterTypeProgress]);
+  }, [characterTypeProgress, charCodeConvertedData]);
 
   useEffect(() => {
     if (
       requiredFieldProgress.status === 'processing' &&
       charCodeConvertedData &&
+      charTypeConvertedData &&
       uploadedFileBuffer
     ) {
       try {
@@ -84,7 +99,7 @@ export const AutoConvert: FC = () => {
         const importedDatasetUid = importRowData({
           datasetName: uploadedFileBuffer.fileName,
           headers: rowHeaders,
-          rowDatas: rowDataObject.data,
+          rowDatas: charTypeConvertedData,
         });
         setDatasetUid(importedDatasetUid);
         setRequiredFieldProgress({ status: 'finished', errorMessage: '' });
@@ -95,7 +110,7 @@ export const AutoConvert: FC = () => {
         });
       }
     }
-  }, [requiredFieldProgress, charCodeConvertedData]);
+  }, [requiredFieldProgress, charCodeConvertedData, charTypeConvertedData]);
 
   const statusStyle = (status: string) => {
     switch (status) {
