@@ -1,12 +1,6 @@
 import { FC, useState } from 'react';
 import { MdOutlineMap } from 'react-icons/md';
-import {
-  InfoOutlineIcon,
-  CheckIcon,
-  ArrowBackIcon,
-  ArrowForwardIcon,
-  DownloadIcon,
-} from '@chakra-ui/icons';
+import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon } from '@chakra-ui/icons';
 import {
   Grid,
   GridItem,
@@ -26,7 +20,11 @@ import {
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
-import { DataEditorMain, DataEditorSidenav } from '../../../components/Editor';
+import {
+  DataEditorMain,
+  DataEditorNumOfError,
+  DataEditorSidenav,
+} from '../../../components/Editor';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { datasetAtom } from '../../../stores/dataset';
@@ -62,21 +60,7 @@ export const DataEditor: FC = () => {
       isProcessFinished={isCheckFinished}
     >
       {dataset?.datasetName}
-      <Flex
-        alignItems="center"
-        px={6}
-        py={4}
-        mb={10}
-        bg={isCheckFinished ? 'information.bg.active' : 'information.bg.alert'}
-        borderRadius={8}
-      >
-        {isCheckFinished ? <CheckIcon /> : <InfoOutlineIcon />}
-        <Text ml={6}>
-          {isCheckFinished
-            ? '形式の確認が完了しました。'
-            : `X件のデータ形式を確認して修正してください。`}
-        </Text>
-      </Flex>
+      <DataEditorNumOfError />
       <Grid gridTemplateColumns="200px 1fr" mt={4}>
         <GridItem borderRight="1px solid" borderColor="inputAreaBorder.active">
           <DataEditorSidenav
