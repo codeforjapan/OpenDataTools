@@ -50,6 +50,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     })
   );
   const latLngItems = datasetItemList.filter((item) => ["緯度", "経度"].includes(item.normalizedLabel || ""));
+  const nameItemId = datasetItemList.find((item) => item.normalizedLabel === "名称")?.uid;
   const latItemId = latLngItems.find((item) => item.normalizedLabel == "緯度")?.uid;
   const lngItemId = latLngItems.find((item) => item.normalizedLabel === "経度")?.uid
 
@@ -75,7 +76,14 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     );
     const [latUid, setLatUid] = useState('');
     const [lngUid, setLngUid] = useState('');
+    const [nameUid, setNameUid] = useState('');
     const [open, setOpen] = useState(false);
+    const name = useRecoilValue(
+      datasetSingleCellAtom({
+        datasetUid: String(dataset_uid),
+        singleCellUid: nameUid,
+      })
+    );
     const [latCell, setLatCell] = useRecoilState(
       datasetSingleCellAtom({
         datasetUid: String(dataset_uid),
@@ -89,7 +97,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
       })
     );
 
-    const getLngLatCellUid = (itemUid: string | undefined): string => {
+    const getCellUid = (itemUid: string | undefined): string => {
       if(itemUid === undefined) return "";
       const item = singleRow.find((row) => row.itemUid === itemUid)
 
@@ -137,8 +145,9 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     useEffect(() => {
       if(!singleRow.length) return;
       // TODO: 二重呼び出しみたいになっているので変えたい
-      setLatUid(getLngLatCellUid(latItemId))
-      setLngUid(getLngLatCellUid(lngItemId))
+      setLatUid(getCellUid(latItemId))
+      setLngUid(getCellUid(lngItemId))
+      setNameUid(getCellUid(nameItemId))
     },[singleRow])
 
     useEffect(() => {
@@ -243,6 +252,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
         </GridItem>
         <MapEditorModal
           isOpen={open}
+          name={String(name?.editedValue)}
           onClose={()=> setOpen(false)}
           initialLngLat={targetLngLat}
           onComplete={(latLng) => {
