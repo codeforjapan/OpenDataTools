@@ -6,9 +6,11 @@ export const DataEditorNumOfError: FC = () => {
   const [numOfErrorMessage, setNumOfError] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
+    const count = setInterval(() => {
       setNumOfError(document.getElementsByClassName('ost-error').length);
     }, 1000);
+
+    return () => clearInterval(count);
   }, []);
 
   return (
