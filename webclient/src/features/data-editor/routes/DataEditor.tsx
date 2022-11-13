@@ -37,7 +37,11 @@ import civitanSearching from '../../../assets/civitan_searching.png';
 
 export const DataEditor: FC = () => {
   // Modalの状態管理
-  const { isOpen: isDownloadOpen, onOpen: onDownloadOpen, onClose: onDownloadClose } = useDisclosure();
+  const {
+    isOpen: isDownloadOpen,
+    onOpen: onDownloadOpen,
+    onClose: onDownloadClose,
+  } = useDisclosure();
   const { isOpen: isPreviewOpen, onOpen: onPreviewOpen, onClose: onPreviewClose } = useDisclosure();
 
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
@@ -140,7 +144,7 @@ export const DataEditor: FC = () => {
             <OstButton
               size="L"
               view="button"
-              iconRight={<Icon as={DownloadIcon} w={6} h={6}/>}
+              iconRight={<Icon as={DownloadIcon} w={6} h={6} />}
               onClick={() => {
                 onDownloadClose();
                 exportCsv(datasetWithNewItems); // 完成したcsvのダウンロード
@@ -153,12 +157,7 @@ export const DataEditor: FC = () => {
         </ModalContent>
       </Modal>
 
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isPreviewOpen}
-        onClose={onPreviewClose}
-        isCentered
-      >
+      <Modal closeOnOverlayClick={false} isOpen={isPreviewOpen} onClose={onPreviewClose} isCentered>
         <ModalOverlay />
         <ModalContent maxW="640px" maxH="640py">
           <ModalHeader bg="information.bg.disabled">
@@ -175,18 +174,13 @@ export const DataEditor: FC = () => {
           <ModalFooter justifyContent="center">
             {/* NOTE: 見た目を塗りつぶしたボタンにするため、OstNavLinkではなくOstButtonを使用 */}
             <Link to={`/${dataset_uid}/map`}>
-              <OstButton
-                size="L"
-                view="button"
-                iconRight={<Icon as={MdOutlineMap} w={6} h={6}/>}
-              >
+              <OstButton size="L" view="button" iconRight={<Icon as={MdOutlineMap} w={6} h={6} />}>
                 マップでプレビュー確認
               </OstButton>
             </Link>
           </ModalFooter>
         </ModalContent>
       </Modal>
-
     </StepLayout>
   );
 };
