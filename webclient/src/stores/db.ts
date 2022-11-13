@@ -35,7 +35,7 @@ export class openDataFormatterDB extends Dexie {
     datasetSingleCellUids!: Table<idListType>;
   
     constructor() {
-      super('openDataFormatterDB');
+      super('formatterDB');
       this.version(1).stores({
         datasets: '&nodeKey, dataset',
         items: '&nodeKey, item',
