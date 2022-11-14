@@ -233,7 +233,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
                 py={2}
                 mb={1}
               >
-                完了メッセージ
+                完了
               </Text>
             )}
             <OstLatLngInput

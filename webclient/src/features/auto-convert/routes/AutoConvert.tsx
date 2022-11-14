@@ -57,9 +57,7 @@ export const AutoConvert: FC = () => {
   useEffect(() => {
     if (checkingStorageProgress.status === 'processing') {
       navigator.storage.estimate().then((v) => {
-        console.log(v.usage, "quota")
         if (isOverStorageLimit(v.usage)) {
-          console.log("called")
           setCheckingStorageProgress({
             status: 'failed',
             errorMessage: '一度に編集できるファイルの数又は容量を超えています',

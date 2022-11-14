@@ -40,6 +40,7 @@ const OstLatLngInput = forwardRef<InputProps & OstInputProps, 'input'>((props, r
           ref={ref}
           value={props.value}
           onChange={(e) => props.changeValue?.(e)}
+          type="number"
           placeholder={props.placeholder}
           {...props}
         />
