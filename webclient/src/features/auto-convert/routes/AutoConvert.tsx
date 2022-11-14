@@ -44,11 +44,11 @@ export const AutoConvert: FC = () => {
   const uploadedFileBuffer = useRecoilValue(uploadedFileBufferAtom);
   const importRowData = useImportDataset();
   const isOverStorageLimit = (usage: number | undefined) => {
-    if(usage === undefined) return true
+    if (usage === undefined) return true;
 
-    const usageMb = usage / 1048576
-    return usageMb > limitSize
-  }
+    const usageMb = usage / 1048576;
+    return usageMb > limitSize;
+  };
 
   useEffect(() => {
     setCheckingStorageProgress({ status: 'processing', errorMessage: '' });
@@ -66,7 +66,7 @@ export const AutoConvert: FC = () => {
           setCheckingStorageProgress({ status: 'finished', errorMessage: '' });
           setCharacterCodeProgress({ status: 'processing', errorMessage: '' });
         }
-      })
+      });
     }
   }, [checkingStorageProgress]);
 
@@ -346,7 +346,12 @@ export const AutoConvert: FC = () => {
     } else {
       return false;
     }
-  }, [characterCodeProgress, characterTypeProgress, requiredFieldProgress, checkingStorageProgress]);
+  }, [
+    characterCodeProgress,
+    characterTypeProgress,
+    requiredFieldProgress,
+    checkingStorageProgress,
+  ]);
 
   return (
     <StepLayout
@@ -364,7 +369,7 @@ export const AutoConvert: FC = () => {
       )}
 
       <Box py={4}>
-      <Flex
+        <Flex
           alignItems="center"
           px={6}
           py={4}
