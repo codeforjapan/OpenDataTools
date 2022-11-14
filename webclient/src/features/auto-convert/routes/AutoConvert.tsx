@@ -16,7 +16,7 @@ import { utilCharEncoding } from 'opendatatool-datamanager';
 import parser, { ParseResult } from 'papaparse';
 import { useImportDataset } from '../../../hooks/useDataset';
 
-// indexDBの容量上限
+// indexDBの容量上限。単位MB
 const limitSize = 150;
 
 export const AutoConvert: FC = () => {
