@@ -1,4 +1,5 @@
 import {
+  validateAddress,
   validateDayOfWeek,
   validateLatLng,
   validateNo,
@@ -34,6 +35,8 @@ export const useValidator = (params: { dataType: Dataset.DataType }) => {
         return validateLatLng.validateLng;
       case 'url':
         return validateUrl.validateDataType;
+      case 'address':
+        return validateAddress.validateDataType;
       default:
         return () => {
           return;
@@ -69,6 +72,8 @@ export const useLabel2DataType = () => {
         return 'day_of_week';
       case 'URL':
         return 'url';
+      case '住所':
+        return 'address';
       default:
         return null;
     }
