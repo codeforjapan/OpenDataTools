@@ -4,3 +4,4 @@ export * from './DataEditorMain';
 export * from './DataEditorLatLng';
 export * from './MapEditorModal';
 export * from './DataEditorNumOfError';
+export * from './DataEditorCompleteButton';

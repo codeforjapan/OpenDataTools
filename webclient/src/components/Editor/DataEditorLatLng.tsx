@@ -10,7 +10,7 @@ import {
   datasetSingleCellAtom,
   datasetSingleCellUidListByItemAtom,
   datasetSingleRowUidListAtom,
-  datasetSingleCellListByRowSelector
+  datasetSingleCellListByRowSelector,
 } from '../../stores/dataset';
 import OstLatLngInput from '../Elements/OstLatLngInput/OstLatLngInput';
 import { OstInput } from '../Elements/OstInput';
@@ -49,11 +49,12 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
       datasetUid: String(dataset_uid),
     })
   );
-  const latLngItems = datasetItemList.filter((item) => ["緯度", "経度"].includes(item.normalizedLabel || ""));
-  const nameItemId = datasetItemList.find((item) => item.normalizedLabel === "名称")?.uid;
-  const latItemId = latLngItems.find((item) => item.normalizedLabel == "緯度")?.uid;
-  const lngItemId = latLngItems.find((item) => item.normalizedLabel === "経度")?.uid
-
+  const latLngItems = datasetItemList.filter((item) =>
+    ['緯度', '経度'].includes(item.normalizedLabel || '')
+  );
+  const nameItemId = datasetItemList.find((item) => item.normalizedLabel === '名称')?.uid;
+  const latItemId = latLngItems.find((item) => item.normalizedLabel == '緯度')?.uid;
+  const lngItemId = latLngItems.find((item) => item.normalizedLabel === '経度')?.uid;
 
   useEffect(() => {
     if (!datasetItem || !datasetItem.normalizedLabel) return;
@@ -98,10 +99,10 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     );
 
     const getCellUid = (itemUid: string | undefined): string => {
-      if(itemUid === undefined) return "";
-      const item = singleRow.find((row) => row.itemUid === itemUid)
+      if (itemUid === undefined) return '';
+      const item = singleRow.find((row) => row.itemUid === itemUid);
 
-      return item ? item.uid : ""
+      return item ? item.uid : '';
     };
 
     const validateLatValue = () => {
@@ -121,7 +122,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
           });
         }
       }
-    }
+    };
 
     const validateLngValue = () => {
       if (!lngCell) return;
@@ -140,15 +141,15 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
           });
         }
       }
-    }
+    };
 
     useEffect(() => {
-      if(!singleRow.length) return;
+      if (!singleRow.length) return;
       // TODO: 二重呼び出しみたいになっているので変えたい
-      setLatUid(getCellUid(latItemId))
-      setLngUid(getCellUid(lngItemId))
-      setNameUid(getCellUid(nameItemId))
-    },[singleRow])
+      setLatUid(getCellUid(latItemId));
+      setLngUid(getCellUid(lngItemId));
+      setNameUid(getCellUid(nameItemId));
+    }, [singleRow]);
 
     useEffect(() => {
       validateLatValue();
@@ -188,11 +189,11 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
             {rowNum}行目: {nameSingleCell?.editedValue || ''}
           </Text>
           <OstInput
-              value={latCell?.rowValue || ''}
-              readOnly
-              bg="information.bg.disabled"
-              color="body.text"
-            />
+            value={latCell?.rowValue || ''}
+            readOnly
+            bg="information.bg.disabled"
+            color="body.text"
+          />
           <Box pt="3">
             <OstInput
               value={lngCell?.rowValue || ''}
@@ -220,6 +221,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
                   px={4}
                   py={2}
                   mb={1}
+                  className="ost-error"
                 >
                   {err.message}
                 </Text>
@@ -253,13 +255,14 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
         <MapEditorModal
           isOpen={open}
           name={String(name?.editedValue)}
-          onClose={()=> setOpen(false)}
+          onClose={() => setOpen(false)}
           initialLngLat={targetLngLat}
           onComplete={(latLng) => {
-            handleChangeLatData(String(latLng.lat))
-            handleChangeLngData(String(latLng.lng))
-            setOpen(false)
-        }}/>
+            handleChangeLatData(String(latLng.lat));
+            handleChangeLngData(String(latLng.lng));
+            setOpen(false);
+          }}
+        />
       </Grid>
     );
   };

@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { MdOutlineMap } from 'react-icons/md';
 import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon } from '@chakra-ui/icons';
 import {
@@ -20,7 +20,13 @@ import {
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
-import { DataEditorMain, DataEditorNumOfError, DataEditorSidenav, DataEditorLatLng } from '../../../components/Editor';
+import {
+  DataEditorMain,
+  DataEditorNumOfError,
+  DataEditorSidenav,
+  DataEditorLatLng,
+  DataEditorCompleteButton,
+} from '../../../components/Editor';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { datasetAtom, datasetItemListSelector } from '../../../stores/dataset';
@@ -42,8 +48,6 @@ export const DataEditor: FC = () => {
   const [selectedItemUid, setItemUid] = useState<string>();
   const dataset = useRecoilValue(datasetAtom({ uid: dataset_uid || '' }));
 
-  const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
-
   const datasetWithNewItems = useGetDatasetWithNewItems({
     datasetUid: String(dataset_uid),
   });
@@ -52,19 +56,16 @@ export const DataEditor: FC = () => {
   const datasetItemList = useRecoilValue(
     datasetItemListSelector({ datasetUid: String(dataset_uid) })
   );
-  const latLngUids = datasetItemList.filter((item) => ["緯度", "経度"].includes(item.normalizedLabel || "")).map((item) => item.uid);
+  const latLngUids = datasetItemList
+    .filter((item) => ['緯度', '経度'].includes(item.normalizedLabel || ''))
+    .map((item) => item.uid);
   const isIncludeLatLng = useMemo(() => {
-    if(selectedItemUid === undefined) return false
-    return latLngUids.includes(selectedItemUid)
-  },[latLngUids, selectedItemUid])
+    if (selectedItemUid === undefined) return false;
+    return latLngUids.includes(selectedItemUid);
+  }, [latLngUids, selectedItemUid]);
 
   return (
-    <StepLayout
-      pageTitle="データ形式確認"
-      headingText="データ形式確認"
-      uid={dataset_uid}
-      isProcessFinished={isCheckFinished}
-    >
+    <StepLayout pageTitle="データ形式確認" headingText="データ形式確認" uid={dataset_uid}>
       {dataset?.datasetName}
       <DataEditorNumOfError />
       <Grid gridTemplateColumns="200px 1fr" mt={4}>
@@ -75,12 +76,11 @@ export const DataEditor: FC = () => {
           />
         </GridItem>
         <GridItem pl={10}>
-          {
-            isIncludeLatLng ?
+          {isIncludeLatLng ? (
             <DataEditorLatLng selectedItemUid={selectedItemUid} />
-            :
+          ) : (
             <DataEditorMain selectedItemUid={selectedItemUid} />
-          }
+          )}
         </GridItem>
       </Grid>
 
@@ -93,24 +93,16 @@ export const DataEditor: FC = () => {
           >
             ステップ３に戻る
           </OstNavLink>
-          {isCheckFinished && (
-            <OstButton
-              view="skeleton"
-              size="L"
-              iconLeft={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
-              onClick={() => exportCsv(datasetWithNewItems)}
-            >
-              ダウンロード
-            </OstButton>
-          )}
+          <OstButton
+            view="skeleton"
+            size="L"
+            iconLeft={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
+            onClick={() => exportCsv(datasetWithNewItems)}
+          >
+            ダウンロード
+          </OstButton>
         </Flex>
-        <OstNavLink
-          onClick={onDownloadOpen}
-          isDisabled={!isCheckFinished}
-          iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
-        >
-          完了
-        </OstNavLink>
+        <DataEditorCompleteButton onClick={onDownloadOpen} />
       </Flex>
 
       {/* TODO: モーダル利用箇所が増えたら共通デザインとしてコンポーネント化する */}
