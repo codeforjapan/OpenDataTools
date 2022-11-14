@@ -3,7 +3,12 @@ import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table';
 import { Avatar, Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdDeleteOutline, MdModeEditOutline, MdOutlineMap, MdOutlineTextSnippet } from "react-icons/md";
+import {
+  MdDeleteOutline,
+  MdModeEditOutline,
+  MdOutlineMap,
+  MdOutlineTextSnippet,
+} from 'react-icons/md';
 import { useRecoilValue } from 'recoil';
 import { useRemoveDatasetFromLocalstorage } from '../../hooks/useDataset';
 import { datasetListSelector } from '../../stores/dataset';
@@ -16,7 +21,9 @@ const RemoveAllButton: FC = () => {
   // (関数コンポーネント内のフックの個数が動的に変化するとReactがクラッシュするため https://ja.reactjs.org/docs/hooks-rules.html)
   const [deleting, setDeleting] = useState(false);
   // 先頭のdatasetを削除する関数
-  const { removeFromLocalstorage } = useRemoveDatasetFromLocalstorage({datasetUid: String(datasets[0]?.uid)});
+  const { removeFromLocalstorage } = useRemoveDatasetFromLocalstorage({
+    datasetUid: String(datasets[0]?.uid),
+  });
 
   useEffect(() => {
     // HACK: 以下のループにより、要素を逐次的にすべて削除
@@ -64,7 +71,7 @@ export const HomeSavedDatasetList: FC = () => {
         view="button"
         onClick={() => removeFromLocalstorage()}
         isLoading={executing}
-        iconRight={<Icon as={MdDeleteOutline} w={5} h={5}/>}
+        iconRight={<Icon as={MdDeleteOutline} w={5} h={5} />}
         mx={1}
       >
         削除
@@ -74,11 +81,13 @@ export const HomeSavedDatasetList: FC = () => {
 
   return (
     <>
-      <Heading size="lg" my={4}>データリスト</Heading>
+      <Heading size="lg" my={4}>
+        データリスト
+      </Heading>
       <Flex justifyContent="right">
-        <RemoveAllButton/>
+        <RemoveAllButton />
       </Flex>
-      <Table variant='striped' colorScheme='gray'>
+      <Table variant="striped" colorScheme="gray">
         <Thead>
           <Tr>
             <Th visibility="hidden">ファイル名</Th>
@@ -92,16 +101,34 @@ export const HomeSavedDatasetList: FC = () => {
             .map((dataset) => (
               <Tr key={dataset?.uid}>
                 <Td>
-                  <Flex align="center" >
-                    <Icon as={MdOutlineTextSnippet} w={6} h={6} mr={2}/><Text>{dataset?.datasetName}</Text>
+                  <Flex align="center">
+                    <Icon as={MdOutlineTextSnippet} w={6} h={6} mr={2} />
+                    <Text>{dataset?.datasetName}</Text>
                   </Flex>
                 </Td>
                 <Td>
                   <Flex align="center">
                     {/* NOTE: 文字を等幅にし全体の長さを揃えるためmonospaceを使用 */}
                     {/* TODO: 別箇所でも同様のデザインが必要になったらElement化 */}
-                    <Box px={3} py={1} fontFamily="monospace, serif" background="dimgray" color="white" borderLeftRadius={10}>ID</Box>
-                    <Box px={3} py={1} fontFamily="monospace, serif" background="lightgray" borderRightRadius={10}>{dataset?.uid}</Box>
+                    <Box
+                      px={3}
+                      py={1}
+                      fontFamily="monospace, serif"
+                      background="dimgray"
+                      color="white"
+                      borderLeftRadius={10}
+                    >
+                      ID
+                    </Box>
+                    <Box
+                      px={3}
+                      py={1}
+                      fontFamily="monospace, serif"
+                      background="lightgray"
+                      borderRightRadius={10}
+                    >
+                      {dataset?.uid}
+                    </Box>
                   </Flex>
                 </Td>
                 <Td>
@@ -109,7 +136,7 @@ export const HomeSavedDatasetList: FC = () => {
                     <OstButton
                       size="S"
                       view="button"
-                      iconRight={<Icon as={MdOutlineMap} w={5} h={5}/>}
+                      iconRight={<Icon as={MdOutlineMap} w={5} h={5} />}
                       mx={1}
                     >
                       マップ表示
@@ -119,7 +146,7 @@ export const HomeSavedDatasetList: FC = () => {
                     <OstButton
                       size="S"
                       view="button"
-                      iconRight={<Icon as={MdModeEditOutline} w={5} h={5}/>}
+                      iconRight={<Icon as={MdModeEditOutline} w={5} h={5} />}
                       mx={1}
                     >
                       編集

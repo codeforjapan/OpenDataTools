@@ -126,6 +126,7 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
                   px={4}
                   py={2}
                   mb={1}
+                  className="ost-error"
                 >
                   {err.message}
                 </Text>
@@ -139,7 +140,7 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
                 py={2}
                 mb={1}
               >
-                完了メッセージ
+                完了
               </Text>
             )}
             <OstInput

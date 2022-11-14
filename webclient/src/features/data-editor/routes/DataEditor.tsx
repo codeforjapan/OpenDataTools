@@ -1,12 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { MdOutlineMap } from 'react-icons/md';
-import {
-  InfoOutlineIcon,
-  CheckIcon,
-  ArrowBackIcon,
-  ArrowForwardIcon,
-  DownloadIcon,
-} from '@chakra-ui/icons';
+import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon } from '@chakra-ui/icons';
 import {
   Grid,
   GridItem,
@@ -26,7 +20,7 @@ import {
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
-import { DataEditorMain, DataEditorSidenav, DataEditorLatLng } from '../../../components/Editor';
+import { DataEditorMain, DataEditorNumOfError, DataEditorSidenav, DataEditorLatLng } from '../../../components/Editor';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { datasetAtom, datasetItemListSelector } from '../../../stores/dataset';
@@ -37,7 +31,11 @@ import civitanSearching from '../../../assets/civitan_searching.png';
 
 export const DataEditor: FC = () => {
   // Modalの状態管理
-  const { isOpen: isDownloadOpen, onOpen: onDownloadOpen, onClose: onDownloadClose } = useDisclosure();
+  const {
+    isOpen: isDownloadOpen,
+    onOpen: onDownloadOpen,
+    onClose: onDownloadClose,
+  } = useDisclosure();
   const { isOpen: isPreviewOpen, onOpen: onPreviewOpen, onClose: onPreviewClose } = useDisclosure();
 
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
@@ -68,21 +66,7 @@ export const DataEditor: FC = () => {
       isProcessFinished={isCheckFinished}
     >
       {dataset?.datasetName}
-      <Flex
-        alignItems="center"
-        px={6}
-        py={4}
-        mb={10}
-        bg={isCheckFinished ? 'information.bg.active' : 'information.bg.alert'}
-        borderRadius={8}
-      >
-        {isCheckFinished ? <CheckIcon /> : <InfoOutlineIcon />}
-        <Text ml={6}>
-          {isCheckFinished
-            ? '形式の確認が完了しました。'
-            : `X件のデータ形式を確認して修正してください。`}
-        </Text>
-      </Flex>
+      <DataEditorNumOfError />
       <Grid gridTemplateColumns="200px 1fr" mt={4}>
         <GridItem borderRight="1px solid" borderColor="inputAreaBorder.active">
           <DataEditorSidenav
@@ -155,7 +139,7 @@ export const DataEditor: FC = () => {
             <OstButton
               size="L"
               view="button"
-              iconRight={<Icon as={DownloadIcon} w={6} h={6}/>}
+              iconRight={<Icon as={DownloadIcon} w={6} h={6} />}
               onClick={() => {
                 onDownloadClose();
                 exportCsv(datasetWithNewItems); // 完成したcsvのダウンロード
@@ -168,12 +152,7 @@ export const DataEditor: FC = () => {
         </ModalContent>
       </Modal>
 
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isPreviewOpen}
-        onClose={onPreviewClose}
-        isCentered
-      >
+      <Modal closeOnOverlayClick={false} isOpen={isPreviewOpen} onClose={onPreviewClose} isCentered>
         <ModalOverlay />
         <ModalContent maxW="640px" maxH="640py">
           <ModalHeader bg="information.bg.disabled">
@@ -190,18 +169,13 @@ export const DataEditor: FC = () => {
           <ModalFooter justifyContent="center">
             {/* NOTE: 見た目を塗りつぶしたボタンにするため、OstNavLinkではなくOstButtonを使用 */}
             <Link to={`/${dataset_uid}/map`}>
-              <OstButton
-                size="L"
-                view="button"
-                iconRight={<Icon as={MdOutlineMap} w={6} h={6}/>}
-              >
+              <OstButton size="L" view="button" iconRight={<Icon as={MdOutlineMap} w={6} h={6} />}>
                 マップでプレビュー確認
               </OstButton>
             </Link>
           </ModalFooter>
         </ModalContent>
       </Modal>
-
     </StepLayout>
   );
 };

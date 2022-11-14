@@ -13,9 +13,11 @@ import { ItemValidatorNo } from './items/validator/no';
 import { ItemValidatorPoi } from './items/validator/poi';
 import { ItemValidatorRegname } from './items/validator/regname';
 import { ItemValidatorTime } from './items/validator/time';
+import { ItemFormatter2bytes2byte } from './items/formatter/2bytes2byte';
 
 const schemeValidator = new SchemeValidater();
 const itemLabelFormatter = new SchemeFormatterItemLabel();
+const item2bytes2byteFormatter = new ItemFormatter2bytes2byte();
 const validateRegionCode = new ItemValidatorRegcode();
 const validateTel = new ItemValidatorTel();
 const validateUrl = new ItemValidatorUrl();
@@ -33,6 +35,7 @@ const datasetListOfRecommendBasic = RECOMMEND_BASIC_DATASET_LIST;
 export {
   schemeValidator,
   itemLabelFormatter,
+  item2bytes2byteFormatter,
   validateRegionCode,
   validateTel,
   validateUrl,
