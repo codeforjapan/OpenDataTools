@@ -23,10 +23,12 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
     if (selectedItemUid) {
       setSelectedItemUidState(selectedItemUid);
     } else {
-      setSelectedItemUidState(activeDatasetItemList[0].uid);
-      onSelect(activeDatasetItemList[0].uid);
+      if(activeDatasetItemList.length > 0) {
+        setSelectedItemUidState(activeDatasetItemList[0].uid);
+        onSelect(activeDatasetItemList[0].uid);
+      }
     }
-  }, [selectedItemUid]);
+  }, [selectedItemUid, activeDatasetItemList[0]]);
 
   const DatasetItem: FC<{ datasetUid: string; itemUid: string }> = ({ datasetUid, itemUid }) => {
     const item = useRecoilValue(datasetItemAtom({ datasetUid, itemUid }));
@@ -80,3 +82,7 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
     </Box>
   );
 };
+function useMemo(arg0: () => Dataset.Item[], arg1: Dataset.Item[][]) {
+  throw new Error('Function not implemented.');
+}
+

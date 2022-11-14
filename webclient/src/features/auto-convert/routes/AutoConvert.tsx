@@ -16,9 +16,16 @@ import { utilCharEncoding, item2bytes2byteFormatter } from 'opendatatool-dataman
 import parser, { ParseResult } from 'papaparse';
 import { useImportDataset } from '../../../hooks/useDataset';
 
+// indexDBの容量上限。単位MB
+const limitSize = 150;
+
 export const AutoConvert: FC = () => {
   const [datasetUid, setDatasetUid] = useState<string>();
   const [charCodeConvertedData, setCharCodeConvertedData] = useState<string>();
+  const [checkingStorageProgress, setCheckingStorageProgress] = useState({
+    status: 'waiting',
+    errorMessage: '',
+  });
   const [charTypeConvertedData, setCharTypeConvertedData] =
     useState<{ [header: string]: string }[]>();
   const [characterCodeProgress, setCharacterCodeProgress] = useState({
@@ -36,10 +43,34 @@ export const AutoConvert: FC = () => {
 
   const uploadedFileBuffer = useRecoilValue(uploadedFileBufferAtom);
   const importRowData = useImportDataset();
+  const isOverStorageLimit = (usage: number | undefined) => {
+    if(usage === undefined) return true
+
+    const usageMb = usage / 1048576
+    return usageMb > limitSize
+  }
 
   useEffect(() => {
-    setCharacterCodeProgress({ status: 'processing', errorMessage: '' });
+    setCheckingStorageProgress({ status: 'processing', errorMessage: '' });
   }, []);
+
+  useEffect(() => {
+    if (checkingStorageProgress.status === 'processing') {
+      navigator.storage.estimate().then((v) => {
+        console.log(v.usage, "quota")
+        if (isOverStorageLimit(v.usage)) {
+          console.log("called")
+          setCheckingStorageProgress({
+            status: 'failed',
+            errorMessage: '一度に編集できるファイルの数又は容量を超えています',
+          });
+        } else {
+          setCheckingStorageProgress({ status: 'finished', errorMessage: '' });
+          setCharacterCodeProgress({ status: 'processing', errorMessage: '' });
+        }
+      })
+    }
+  }, [checkingStorageProgress]);
 
   useEffect(() => {
     if (characterCodeProgress.status === 'processing') {
@@ -143,6 +174,46 @@ export const AutoConvert: FC = () => {
           border: '1px solid',
           borderColor: 'inputAreaBorder.active',
         };
+    }
+  };
+
+  const CheckingStorageStatusElm: FC = () => {
+    switch (checkingStorageProgress.status) {
+      case 'waiting':
+        return (
+          <>
+            <MinusIcon mr={6} />
+            <Text>待機中です</Text>
+          </>
+        );
+      case 'processing':
+        return (
+          <>
+            <Spinner mr={6} w={5} h={5} />
+            <Text>現在の保存容量を計測中です</Text>
+          </>
+        );
+      case 'finished':
+        return (
+          <>
+            <CheckIcon mr={6} />
+            <Text>現在の保存容量の確認が完了しました</Text>
+          </>
+        );
+      case 'failed':
+        return (
+          <>
+            <NotAllowedIcon mr={6} />
+            <Text>{checkingStorageProgress.errorMessage}</Text>
+          </>
+        );
+      default:
+        return (
+          <>
+            <MinusIcon mr={6} />
+            <Text>現在の保存容量を確認しています</Text>
+          </>
+        );
     }
   };
 
@@ -268,6 +339,7 @@ export const AutoConvert: FC = () => {
 
   const isAllProgressFinished = useMemo(() => {
     if (
+      checkingStorageProgress.status === 'finished' &&
       characterCodeProgress.status === 'finished' &&
       characterTypeProgress.status === 'finished' &&
       requiredFieldProgress.status === 'finished'
@@ -276,7 +348,7 @@ export const AutoConvert: FC = () => {
     } else {
       return false;
     }
-  }, [characterCodeProgress, characterTypeProgress, requiredFieldProgress]);
+  }, [characterCodeProgress, characterTypeProgress, requiredFieldProgress, checkingStorageProgress]);
 
   return (
     <StepLayout
@@ -294,6 +366,17 @@ export const AutoConvert: FC = () => {
       )}
 
       <Box py={4}>
+      <Flex
+          alignItems="center"
+          px={6}
+          py={4}
+          my={6}
+          borderRadius={8}
+          textStyle="navigationLarge"
+          {...statusStyle(checkingStorageProgress.status)}
+        >
+          <CheckingStorageStatusElm />
+        </Flex>
         <Flex
           alignItems="center"
           px={6}

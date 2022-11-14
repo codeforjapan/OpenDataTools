@@ -1,4 +1,5 @@
 import { atom, atomFamily, selector, selectorFamily, DefaultValue } from 'recoil';
+import { db } from './db';
 import { AtomKeys, SelectorKeys } from './recoil_keys';
 
 // データセットの単体
@@ -7,16 +8,19 @@ export const datasetAtom = atomFamily<Dataset.Dataset | null, { uid: string }>({
   default: null,
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.datasets.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.dataset);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.datasets.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal) {
+            db.datasets.put({nodeKey: String(node.key), dataset: newVal})
+          }
         }
       });
     },
@@ -29,16 +33,19 @@ export const datasetUidListAtom = atom<string[]>({
   default: [],
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.datasetUids.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.uids);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.datasetUids.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal.length > 0) {
+            db.datasetUids.put({nodeKey: String(node.key), uids: newVal})
+          }
         }
       });
     },
@@ -67,16 +74,19 @@ export const datasetItemAtom = atomFamily<
   default: null,
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.items.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.item);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.items.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal) {
+            db.items.put({nodeKey: String(node.key), item: newVal})
+          }
         }
       });
     },
@@ -89,16 +99,19 @@ export const datasetItemUidListAtom = atomFamily<string[], { datasetUid: string 
   default: [],
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.datasetItemUids.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.uids);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.datasetItemUids.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal.length > 0) {
+            db.datasetItemUids.put({nodeKey: String(node.key), uids: newVal})
+          }
         }
       });
     },
@@ -143,16 +156,19 @@ export const datasetSingleRowAtom = atomFamily<
   default: null,
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.rows.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.singleRow);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.rows.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal) {
+            db.rows.put({nodeKey: String(node.key), singleRow: newVal})
+          }
         }
       });
     },
@@ -165,16 +181,19 @@ export const datasetSingleRowUidListAtom = atomFamily<string[], { datasetUid: st
   default: [],
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.datasetSingleRowUids.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.uids);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.datasetSingleRowUids.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal.length > 0) {
+            db.datasetSingleRowUids.put({nodeKey: String(node.key), uids: newVal})
+          }
         }
       });
     },
@@ -222,16 +241,19 @@ export const datasetSingleCellAtom = atomFamily<
   default: null,
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.cells.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.singleCell);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.cells.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal) {
+            db.cells.put({nodeKey: String(node.key), singleCell: newVal})
+          }
         }
       });
     },
@@ -247,16 +269,19 @@ export const datasetSingleCellUidListByItemAtom = atomFamily<
   default: [],
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+      db.datasetSingleCellUidsByItems.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.uids);
+        }
+      })
 
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.datasetSingleCellUidsByItems.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal.length > 0) {
+            db.datasetSingleCellUidsByItems.put({nodeKey: String(node.key), uids: newVal})
+          }
         }
       });
     },
@@ -272,16 +297,18 @@ export const datasetSingleCellUidListByRowAtom = atomFamily<
   default: [],
   effects: [
     ({ setSelf, onSet, node }) => {
-      const savedValue = localStorage.getItem(node.key);
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
-
+      db.datasetSingleCellUidListByRows.get(String(node.key)).then(v => {
+        if (v) {
+          setSelf(v.uids);
+        }
+      })
       onSet((newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          localStorage.removeItem(node.key);
+          db.datasetSingleCellUidListByRows.delete(String(node.key))
         } else {
-          localStorage.setItem(node.key, JSON.stringify(newVal));
+          if(newVal.length > 0) {
+            db.datasetSingleCellUidListByRows.put({nodeKey: String(node.key), uids: newVal})
+          }
         }
       });
     },
