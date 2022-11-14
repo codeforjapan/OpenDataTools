@@ -29,7 +29,7 @@ const OstLatLngInput = forwardRef<InputProps & OstInputProps, 'input'>((props, r
   const isError = props.isRequired ? props.value === '' : false;
 
   return (
-    <InputGroup size='md'>
+    <InputGroup size="md">
       <FormControl
         isRequired={props.isRequired || false}
         isDisabled={props.isDisabled}
@@ -49,8 +49,13 @@ const OstLatLngInput = forwardRef<InputProps & OstInputProps, 'input'>((props, r
         ) : (
           <FormErrorMessage>{props.errorMessage}</FormErrorMessage>
         )}
-        <InputRightElement width='4.5rem'>
-          <IconButton aria-label='open map edit' icon={<MapEditIcon />} backgroundColor="none" onClick={() => props.onClick()}/>
+        <InputRightElement width="4.5rem">
+          <IconButton
+            aria-label="open map edit"
+            icon={<MapEditIcon />}
+            backgroundColor="none"
+            onClick={() => props.onClick()}
+          />
         </InputRightElement>
       </FormControl>
     </InputGroup>
@@ -59,4 +64,4 @@ const OstLatLngInput = forwardRef<InputProps & OstInputProps, 'input'>((props, r
 
 OstLatLngInput.displayName = 'OstLatLngInput';
 
-export default OstLatLngInput
+export default OstLatLngInput;

@@ -16,14 +16,16 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
     datasetItemListSelector({ datasetUid: String(dataset_uid) })
   );
   const activeDatasetItemList = datasetItemList.filter((item) => item.isActive);
-  const LatLngUids = datasetItemList.filter((item) => ["緯度", "経度"].includes(item.normalizedLabel || "")).map((item) => item.uid);
+  const LatLngUids = datasetItemList
+    .filter((item) => ['緯度', '経度'].includes(item.normalizedLabel || ''))
+    .map((item) => item.uid);
   const [selectedItemUidState, setSelectedItemUidState] = useState<string>('');
 
   useEffect(() => {
     if (selectedItemUid) {
       setSelectedItemUidState(selectedItemUid);
     } else {
-      if(activeDatasetItemList.length > 0) {
+      if (activeDatasetItemList.length > 0) {
         setSelectedItemUidState(activeDatasetItemList[0].uid);
         onSelect(activeDatasetItemList[0].uid);
       }
@@ -39,9 +41,10 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
 
     const isSelectedItem = useMemo(() => {
       // note: 緯度と経度の時だけ両方選択された状態にする
-      if(LatLngUids.includes(selectedItemUidState) && LatLngUids.includes(item?.uid || "")) return true
-      return item?.uid === selectedItemUidState
-    },[LatLngUids, selectedItemUidState])
+      if (LatLngUids.includes(selectedItemUidState) && LatLngUids.includes(item?.uid || ''))
+        return true;
+      return item?.uid === selectedItemUidState;
+    }, [LatLngUids, selectedItemUidState]);
 
     return (
       <Flex

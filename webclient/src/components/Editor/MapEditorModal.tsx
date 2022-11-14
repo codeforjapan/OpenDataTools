@@ -38,12 +38,15 @@ const convertLngLat = (LngLat: LngLat): LngLat => {
 };
 
 export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initialLngLat, name }) => {
-  const convertedInitialLngLat = useMemo(() => convertLngLat(initialLngLat), [initialLngLat.lat, initialLngLat.lng]);
+  const convertedInitialLngLat = useMemo(
+    () => convertLngLat(initialLngLat),
+    [initialLngLat.lat, initialLngLat.lng]
+  );
   const [lngLat, setLngLat] = useState<LngLat>(convertedInitialLngLat);
 
   useEffect(() => {
-    setLngLat(convertedInitialLngLat)
-  },[convertedInitialLngLat])
+    setLngLat(convertedInitialLngLat);
+  }, [convertedInitialLngLat]);
 
   const onLoad = useCallback(
     (map: Map) => {
@@ -77,9 +80,7 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
             marker="off"
             onLoad={onLoad}
           />
-          <Box py={3}>
-            {name}
-          </Box>
+          <Box py={3}>{name}</Box>
           <Box display="flex" alignItems="center">
             <FormControl width={'30%'}>
               <Input placeholder="緯度" value={lngLat.lat} readOnly />
