@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { GeoloniaMap } from '@geolonia/embed-react';
 import maplibregl, { Map } from 'maplibre-gl';
 
@@ -22,6 +22,7 @@ type LngLat = {
 
 type Props = {
   isOpen: boolean;
+  name: string;
   onClose: () => void;
   onComplete: (args: LngLat) => void;
   initialLngLat: LngLat;
@@ -36,9 +37,13 @@ const convertLngLat = (LngLat: LngLat): LngLat => {
   return { lng: orgRoundAtSix(LngLat.lng), lat: orgRoundAtSix(LngLat.lat) };
 };
 
-export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initialLngLat }) => {
-  const convertedInitialLngLat = useMemo(() => convertLngLat(initialLngLat), [initialLngLat]);
+export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initialLngLat, name }) => {
+  const convertedInitialLngLat = useMemo(() => convertLngLat(initialLngLat), [initialLngLat.lat, initialLngLat.lng]);
   const [lngLat, setLngLat] = useState<LngLat>(convertedInitialLngLat);
+
+  useEffect(() => {
+    setLngLat(convertedInitialLngLat)
+  },[convertedInitialLngLat])
 
   const onLoad = useCallback(
     (map: Map) => {
@@ -72,13 +77,14 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
             marker="off"
             onLoad={onLoad}
           />
-          <Box display="flex" alignItems="center" pt={3}>
+          <Box py={3}>
+            {name}
+          </Box>
+          <Box display="flex" alignItems="center">
             <FormControl width={'30%'}>
-              <FormLabel>緯度</FormLabel>
               <Input placeholder="緯度" value={lngLat.lat} readOnly />
             </FormControl>
             <FormControl width={'30%'} ml={4}>
-              <FormLabel>経度</FormLabel>
               <Input placeholder="経度" value={lngLat.lng} readOnly />
             </FormControl>
           </Box>

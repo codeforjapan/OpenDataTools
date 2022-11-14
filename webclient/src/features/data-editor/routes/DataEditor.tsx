@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { MdOutlineMap } from 'react-icons/md';
 import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon } from '@chakra-ui/icons';
 import {
@@ -20,14 +20,10 @@ import {
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
-import {
-  DataEditorMain,
-  DataEditorNumOfError,
-  DataEditorSidenav,
-} from '../../../components/Editor';
+import { DataEditorMain, DataEditorNumOfError, DataEditorSidenav, DataEditorLatLng } from '../../../components/Editor';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { datasetAtom } from '../../../stores/dataset';
+import { datasetAtom, datasetItemListSelector } from '../../../stores/dataset';
 import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
 import { exportCsv } from '../../../utils/exportCsv';
 import civitanFinished from '../../../assets/civitan_finished.png';
@@ -52,6 +48,16 @@ export const DataEditor: FC = () => {
     datasetUid: String(dataset_uid),
   });
 
+  // NOTE: 緯度経度のitemチェックのため
+  const datasetItemList = useRecoilValue(
+    datasetItemListSelector({ datasetUid: String(dataset_uid) })
+  );
+  const latLngUids = datasetItemList.filter((item) => ["緯度", "経度"].includes(item.normalizedLabel || "")).map((item) => item.uid);
+  const isIncludeLatLng = useMemo(() => {
+    if(selectedItemUid === undefined) return false
+    return latLngUids.includes(selectedItemUid)
+  },[latLngUids, selectedItemUid])
+
   return (
     <StepLayout
       pageTitle="データ形式確認"
@@ -69,7 +75,12 @@ export const DataEditor: FC = () => {
           />
         </GridItem>
         <GridItem pl={10}>
-          <DataEditorMain selectedItemUid={selectedItemUid} />
+          {
+            isIncludeLatLng ?
+            <DataEditorLatLng selectedItemUid={selectedItemUid} />
+            :
+            <DataEditorMain selectedItemUid={selectedItemUid} />
+          }
         </GridItem>
       </Grid>
 
