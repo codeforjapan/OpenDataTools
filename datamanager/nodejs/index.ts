@@ -14,6 +14,7 @@ import { ItemValidatorPoi } from './items/validator/poi';
 import { ItemValidatorRegname } from './items/validator/regname';
 import { ItemValidatorTime } from './items/validator/time';
 import { ItemFormatter2bytes2byte } from './items/formatter/2bytes2byte';
+import { ItemValidatorAddress } from './items/validator/address';
 
 const schemeValidator = new SchemeValidater();
 const itemLabelFormatter = new SchemeFormatterItemLabel();
@@ -28,6 +29,7 @@ const validateNo = new ItemValidatorNo();
 const validatePoi = new ItemValidatorPoi();
 const validateRegionName = new ItemValidatorRegname();
 const validateTime = new ItemValidatorTime();
+const validateAddress = new ItemValidatorAddress();
 const utilCharEncoding = new Encoding();
 const itemsListOfPublicFacilities = PUBLIC_FACILITIES_ITEMS_LIST;
 const datasetListOfRecommendBasic = RECOMMEND_BASIC_DATASET_LIST;
@@ -46,6 +48,7 @@ export {
   validatePoi,
   validateRegionName,
   validateTime,
+  validateAddress,
   utilCharEncoding,
   itemsListOfPublicFacilities,
   datasetListOfRecommendBasic,

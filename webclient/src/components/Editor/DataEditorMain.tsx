@@ -69,21 +69,24 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
 
     useEffect(() => {
       if (!SingleCell) return;
-      try {
-        const validator = validatorFactory();
-        validator(SingleCell.editedValue);
-        setSingleCell({
-          ...SingleCell,
-          error: [],
-        });
-      } catch (error: any) {
-        if (error.message) {
+      const validate = async () => {
+        try {
+          const validator = validatorFactory();
+          await validator(SingleCell.editedValue);
           setSingleCell({
             ...SingleCell,
-            error: [{ message: error.message, status: 'warning' }],
+            error: [],
           });
+        } catch (error: any) {
+          if (error.message) {
+            setSingleCell({
+              ...SingleCell,
+              error: [{ message: error.message, status: 'warning' }],
+            });
+          }
         }
-      }
+      };
+      validate();
     }, [SingleCell?.editedValue]);
 
     const handleChangeData = (v: string) => {
