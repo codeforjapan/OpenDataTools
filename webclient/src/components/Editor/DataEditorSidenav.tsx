@@ -75,7 +75,3 @@ export const DataEditorSidenav: FC<Props> = ({ onSelect, selectedItemUid }) => {
     </Box>
   );
 };
-function useMemo(arg0: () => Dataset.Item[], arg1: Dataset.Item[][]) {
-  throw new Error('Function not implemented.');
-}
-
