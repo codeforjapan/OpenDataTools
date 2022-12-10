@@ -21,7 +21,7 @@ export type OstInputProps = {
   helperText?: string;
   errorMessage?: string;
   value?: string | number;
-  changeValue?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick: () => void;
 };
 
@@ -39,7 +39,7 @@ const OstLatLngInput = forwardRef<InputProps & OstInputProps, 'input'>((props, r
         <Input
           ref={ref}
           value={props.value}
-          onChange={(e) => props.changeValue?.(e)}
+          onChange={(e) => props.onChange?.(e)}
           type="number"
           placeholder={props.placeholder}
           {...props}
