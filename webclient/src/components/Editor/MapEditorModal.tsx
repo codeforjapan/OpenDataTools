@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -96,10 +97,16 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
           <Box py={3}>名称：{name}</Box>
           <Box display="flex" alignItems="center">
             <FormControl width={'30%'}>
-              <Input placeholder="緯度" value={lngLat.lat} readOnly />
+              <Flex wordBreak="keep-all" alignItems="center">
+                緯度：
+                <Input placeholder="緯度" value={lngLat.lat} readOnly />
+              </Flex>
             </FormControl>
             <FormControl width={'30%'} ml={4}>
-              <Input placeholder="経度" value={lngLat.lng} readOnly />
+              <Flex wordBreak="keep-all" alignItems="center">
+                経度：
+                <Input placeholder="経度" value={lngLat.lng} readOnly />
+              </Flex>
             </FormControl>
           </Box>
         </ModalBody>
