@@ -16,6 +16,121 @@ type Props = {
   selectedItemUid?: string;
 };
 
+const SingleCellElm: FC<{
+  singleCellUid: string;
+  rowNum: number;
+  nameSingleCellUid: string;
+  validatorDataType: Dataset.DataType | null;
+  datasetUid: string;
+  selectedItemUid?: string;
+}> = ({
+  singleCellUid,
+  rowNum,
+  nameSingleCellUid,
+  validatorDataType,
+  datasetUid,
+  selectedItemUid,
+}) => {
+  const validatorFactory = useValidator({ dataType: validatorDataType });
+  const datasetItem = useRecoilValue(
+    datasetItemAtom({ datasetUid: datasetUid, itemUid: String(selectedItemUid) })
+  );
+  const [SingleCell, setSingleCell] = useRecoilState(
+    datasetSingleCellAtom({
+      datasetUid: datasetUid,
+      singleCellUid,
+    })
+  );
+
+  useEffect(() => {
+    if (!SingleCell || datasetItem?.dataType !== validatorDataType) return;
+    const validate = async () => {
+      try {
+        const validator = validatorFactory();
+        validator(SingleCell.editedValue);
+        setSingleCell({
+          ...SingleCell,
+          error: [],
+        });
+      } catch (error: any) {
+        if (error.message) {
+          setSingleCell({
+            ...SingleCell,
+            error: [{ message: error.message, status: 'warning' }],
+          });
+        }
+      }
+    };
+    validate();
+  }, [SingleCell?.editedValue, validatorFactory]);
+
+  const handleChangeData = (v: string) => {
+    if (!SingleCell) return;
+    setSingleCell({ ...SingleCell, editedValue: v });
+  };
+
+  const nameSingleCell = useRecoilValue(
+    datasetSingleCellAtom({
+      datasetUid: datasetUid,
+      singleCellUid: nameSingleCellUid,
+    })
+  );
+
+  return (
+    <Grid gridTemplateColumns="1fr 50px 1fr" alignItems="end" mb={6}>
+      <GridItem>
+        <Text>
+          {rowNum}行目: {nameSingleCell?.editedValue || ''}
+        </Text>
+        <OstInput
+          value={SingleCell?.rowValue || ''}
+          readOnly
+          bg="information.bg.disabled"
+          color="body.text"
+        />
+      </GridItem>
+      <GridItem>
+        <ChevronRightIcon w={10} h={10} />
+      </GridItem>
+      <GridItem justifyContent="end">
+        <Flex flexDirection="column" alignItems="end">
+          {SingleCell && SingleCell.error.length > 0 ? (
+            SingleCell.error.map((err, index) => (
+              <Text
+                key={`error-${index}`}
+                display="inline-block"
+                bg="information.bg.alert"
+                borderRadius={8}
+                px={4}
+                py={2}
+                mb={1}
+                className="ost-error"
+              >
+                {err.message}
+              </Text>
+            ))
+          ) : (
+            <Text
+              display="inline-block"
+              bg="information.bg.disabled"
+              borderRadius={8}
+              px={4}
+              py={2}
+              mb={1}
+            >
+              完了
+            </Text>
+          )}
+          <OstInput
+            value={SingleCell?.editedValue || ''}
+            onChange={(e) => handleChangeData(e.target.value)}
+          />
+        </Flex>
+      </GridItem>
+    </Grid>
+  );
+};
+
 export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [validatorDataType, setValidatorDataType] = useState<Dataset.DataType>(null);
@@ -54,108 +169,6 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
     setDatasetItem({ ...datasetItem, dataType });
   }, [datasetItem?.normalizedLabel]);
 
-  const SingleCellElm: FC<{ singleCellUid: string; rowNum: number; nameSingleCellUid: string }> = ({
-    singleCellUid,
-    rowNum,
-    nameSingleCellUid,
-  }) => {
-    const validatorFactory = useValidator({ dataType: validatorDataType });
-    const [SingleCell, setSingleCell] = useRecoilState(
-      datasetSingleCellAtom({
-        datasetUid: String(dataset_uid),
-        singleCellUid,
-      })
-    );
-
-    useEffect(() => {
-      if (!SingleCell) return;
-      const validate = async () => {
-        try {
-          const validator = validatorFactory();
-          await validator(SingleCell.editedValue);
-          setSingleCell({
-            ...SingleCell,
-            error: [],
-          });
-        } catch (error: any) {
-          if (error.message) {
-            setSingleCell({
-              ...SingleCell,
-              error: [{ message: error.message, status: 'warning' }],
-            });
-          }
-        }
-      };
-      validate();
-    }, [SingleCell?.editedValue]);
-
-    const handleChangeData = (v: string) => {
-      if (!SingleCell) return;
-      setSingleCell({ ...SingleCell, editedValue: v });
-    };
-
-    const nameSingleCell = useRecoilValue(
-      datasetSingleCellAtom({
-        datasetUid: String(dataset_uid),
-        singleCellUid: nameSingleCellUid,
-      })
-    );
-
-    return (
-      <Grid gridTemplateColumns="1fr 50px 1fr" alignItems="end" mb={6}>
-        <GridItem>
-          <Text>
-            {rowNum}行目: {nameSingleCell?.editedValue || ''}
-          </Text>
-          <OstInput
-            value={SingleCell?.rowValue || ''}
-            readOnly
-            bg="information.bg.disabled"
-            color="body.text"
-          />
-        </GridItem>
-        <GridItem>
-          <ChevronRightIcon w={10} h={10} />
-        </GridItem>
-        <GridItem justifyContent="end">
-          <Flex flexDirection="column" alignItems="end">
-            {SingleCell && SingleCell.error.length > 0 ? (
-              SingleCell.error.map((err, index) => (
-                <Text
-                  key={`error-${index}`}
-                  display="inline-block"
-                  bg="information.bg.alert"
-                  borderRadius={8}
-                  px={4}
-                  py={2}
-                  mb={1}
-                  className="ost-error"
-                >
-                  {err.message}
-                </Text>
-              ))
-            ) : (
-              <Text
-                display="inline-block"
-                bg="information.bg.disabled"
-                borderRadius={8}
-                px={4}
-                py={2}
-                mb={1}
-              >
-                完了
-              </Text>
-            )}
-            <OstInput
-              value={SingleCell?.editedValue || ''}
-              onChange={(e) => handleChangeData(e.target.value)}
-            />
-          </Flex>
-        </GridItem>
-      </Grid>
-    );
-  };
-
   return (
     <>
       {SingleCellUidListByItem.map((uid, index) => {
@@ -168,6 +181,9 @@ export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
             rowNum={rowNum}
             singleCellUid={uid}
             nameSingleCellUid={nameSingleCellUid}
+            datasetUid={String(dataset_uid)}
+            validatorDataType={validatorDataType}
+            selectedItemUid={selectedItemUid}
           />
         );
       })}
