@@ -4,6 +4,11 @@ export class ItemValidatorUrl {
       throw new Error('URLは文字列である必要があります。');
     }
 
+    // 空白の場合は値が存在しないものとして許容（バリデーションチェックしない）
+    if (data === '') {
+      return;
+    }
+
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const unused = new URL(data);
