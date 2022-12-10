@@ -68,7 +68,8 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     rowNum,
     nameSingleCellUid,
   }) => {
-    const validatorFactory = useValidator({ dataType: validatorDataType });
+    const latValidatorFactory = useValidator({ dataType: 'lat' });
+    const lngValidatorFactory = useValidator({ dataType: 'lng' });
     const [singleRow, setSingleRow] = useRecoilState(
       datasetSingleCellListByRowSelector({
         datasetUid: String(dataset_uid),
@@ -108,7 +109,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     const validateLatValue = () => {
       if (!latCell) return;
       try {
-        const validator = validatorFactory();
+        const validator = latValidatorFactory();
         validator(latCell.editedValue);
         setLatCell({
           ...latCell,
@@ -127,7 +128,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     const validateLngValue = () => {
       if (!lngCell) return;
       try {
-        const validator = validatorFactory();
+        const validator = lngValidatorFactory();
         validator(lngCell.editedValue);
         setLngCell({
           ...lngCell,
@@ -226,6 +227,21 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
                   {err.message}
                 </Text>
               ))
+            ) : lngCell && lngCell.error.length > 0 ? (
+              lngCell.error.map((err, index) => (
+                <Text
+                  key={`error-${index}`}
+                  display="inline-block"
+                  bg="information.bg.alert"
+                  borderRadius={8}
+                  px={4}
+                  py={2}
+                  mb={1}
+                  className="ost-error"
+                >
+                  {err.message}
+                </Text>
+              ))
             ) : (
               <Text
                 display="inline-block"
@@ -240,13 +256,13 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
             )}
             <OstLatLngInput
               value={latCell?.editedValue || ''}
-              onChange={(e) => handleChangeLatData(e.target.value)}
+              onChange={(e) => e.preventDefault()}
               onClick={() => setOpen(true)}
             />
             <Box pt="3" width={'100%'}>
               <OstLatLngInput
                 value={lngCell?.editedValue || ''}
-                onChange={(e) => handleChangeLngData(e.target.value)}
+                onChange={(e) => e.preventDefault()}
                 onClick={() => setOpen(true)}
               />
             </Box>

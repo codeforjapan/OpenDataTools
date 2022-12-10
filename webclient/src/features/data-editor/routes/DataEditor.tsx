@@ -22,7 +22,6 @@ import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
 import {
   DataEditorMain,
-  DataEditorNumOfError,
   DataEditorSidenav,
   DataEditorLatLng,
   DataEditorCompleteButton,
@@ -66,8 +65,6 @@ export const DataEditor: FC = () => {
 
   return (
     <StepLayout pageTitle="データ形式確認" headingText="データ形式確認" uid={dataset_uid}>
-      {dataset?.datasetName}
-      <DataEditorNumOfError />
       <Grid gridTemplateColumns="200px 1fr" mt={4}>
         <GridItem borderRight="1px solid" borderColor="inputAreaBorder.active">
           <DataEditorSidenav

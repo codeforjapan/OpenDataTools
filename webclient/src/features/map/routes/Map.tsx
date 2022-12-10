@@ -50,7 +50,7 @@ export const Map: FC = () => {
     <ContentLayout title="マップ">
       <Box></Box>
       <GeoloniaMap
-        style={{ height: '500px', width: '100%' }}
+        style={{ height: '100vh', width: '100%' }}
         className="geolonia"
         lat="35.681236"
         lng="139.767125"

@@ -12,4 +12,8 @@ describe('items/validator/url', () => {
     expect(() => urlValidator.validateDataType('https//google.com')).toThrow('入力がURLとして認識されません。');
     expect(() => urlValidator.validateDataType('google．com')).toThrow('入力がURLとして認識されません。');
   });
+
+  test('空白の場合は値が存在しないものとして許容', () => {
+    expect(() => urlValidator.validateDataType('')).not.toThrow('入力がURLとして認識されません。');
+  });
 });

@@ -62,6 +62,7 @@ export const FileUploadForMap: FC = () => {
       try {
         const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
           header: true,
+          skipEmptyLines: 'greedy',
         });
         const rowHeaders = rowDataObject.meta.fields;
         if (!rowHeaders) throw new Error('file is not selected');
