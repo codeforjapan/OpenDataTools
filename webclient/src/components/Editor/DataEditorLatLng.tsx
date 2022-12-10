@@ -240,13 +240,13 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
             )}
             <OstLatLngInput
               value={latCell?.editedValue || ''}
-              onChange={(e) => handleChangeLatData(e.target.value)}
+              onChange={(e) => e.preventDefault()}
               onClick={() => setOpen(true)}
             />
             <Box pt="3" width={'100%'}>
               <OstLatLngInput
                 value={lngCell?.editedValue || ''}
-                onChange={(e) => handleChangeLngData(e.target.value)}
+                onChange={(e) => e.preventDefault()}
                 onClick={() => setOpen(true)}
               />
             </Box>

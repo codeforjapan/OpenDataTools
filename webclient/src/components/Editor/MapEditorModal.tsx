@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
 } from '@chakra-ui/react';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { GeoloniaMap } from '@geolonia/embed-react';
@@ -20,20 +21,26 @@ type LngLat = {
   lat: number;
 };
 
+type LngLatString = {
+  lng: string;
+  lat: string;
+};
+
 type Props = {
   isOpen: boolean;
   name: string;
   onClose: () => void;
-  onComplete: (args: LngLat) => void;
+  onComplete: (args: LngLatString) => void;
   initialLngLat: LngLat;
 };
 
-const orgRoundAtSix = (value: number): number => {
+const orgRoundAtSix = (value: number): string => {
   // NOTE: 小数点６桁で丸める
-  return Math.round(value * 1000000) / 1000000;
+  const roundedValue = String(Math.round(value * 1000000) / 1000000);
+  return `${roundedValue}${new Array(6 - roundedValue.split('.')[1]?.length).fill('0').join('')}`;
 };
 
-const convertLngLat = (LngLat: LngLat): LngLat => {
+const convertLngLat = (LngLat: LngLat): LngLatString => {
   return { lng: orgRoundAtSix(LngLat.lng), lat: orgRoundAtSix(LngLat.lat) };
 };
 
@@ -42,7 +49,7 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
     () => convertLngLat(initialLngLat),
     [initialLngLat.lat, initialLngLat.lng]
   );
-  const [lngLat, setLngLat] = useState<LngLat>(convertedInitialLngLat);
+  const [lngLat, setLngLat] = useState<LngLatString>(convertedInitialLngLat);
 
   useEffect(() => {
     setLngLat(convertedInitialLngLat);
@@ -53,7 +60,10 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
       const marker = new maplibregl.Marker({
         draggable: true,
       })
-        .setLngLat({ ...convertedInitialLngLat })
+        .setLngLat({
+          lat: Number(convertedInitialLngLat.lat),
+          lng: Number(convertedInitialLngLat.lng),
+        })
         .addTo(map);
 
       marker.on('dragend', function () {
@@ -71,6 +81,9 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
       <ModalContent mx="1rem">
         <ModalHeader backgroundColor={'#B9C5D3'}>緯度と経度の調整</ModalHeader>
         <ModalBody pb={6}>
+          <Text background="focus" p={3} mb={2} borderRadius={5}>
+            マップ上のピンを動かすと該当地点の緯度・経度が入力されます。
+          </Text>
           <GeoloniaMap
             style={{ height: '500px', width: '100%' }}
             className="geolonia"
@@ -80,7 +93,7 @@ export const MapEditorModal: FC<Props> = ({ isOpen, onClose, onComplete, initial
             marker="off"
             onLoad={onLoad}
           />
-          <Box py={3}>{name}</Box>
+          <Box py={3}>名称：{name}</Box>
           <Box display="flex" alignItems="center">
             <FormControl width={'30%'}>
               <Input placeholder="緯度" value={lngLat.lat} readOnly />
