@@ -97,6 +97,7 @@ export const AutoConvert: FC = () => {
       try {
         const { data }: ParseResult<any> = parser.parse(charCodeConvertedData, {
           header: true,
+          skipEmptyLines: 'greedy',
         });
         const convertedData = item2bytes2byteFormatter.format(data);
         setCharTypeConvertedData(convertedData);
@@ -122,6 +123,7 @@ export const AutoConvert: FC = () => {
         setRequiredFieldProgress({ status: 'processing', errorMessage: '' });
         const rowDataObject: ParseResult<any> = parser.parse(charCodeConvertedData, {
           header: true,
+          skipEmptyLines: 'greedy',
         });
         const rowHeaders = rowDataObject.meta.fields;
         if (!rowHeaders) throw new Error('file is not selected');
