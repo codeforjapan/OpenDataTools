@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 
 export const Map: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
-  const dataset = useGetDataset({ datasetUid: dataset_uid || '' });
+  const { dataset } = useGetDataset({ datasetUid: dataset_uid || '' });
 
   const description = (point: any) => {
     return `<div>

@@ -29,6 +29,7 @@ declare namespace Dataset {
   type DataType =
     | 'regioncode'
     | 'regionname'
+    | 'cityname'
     | 'no'
     | 'kana_string'
     | 'lat'

@@ -8,6 +8,7 @@ export enum AtomKeys {
   datasetSingleRow = 'datasetSingleRow',
   datasetSingleRowUidList = 'datasetSingleRowUidList',
   datasetSingleCell = 'datasetSingleCell',
+  datasetSingleCellUidList = 'datasetSingleCellUidList',
   datasetSingleCellUidListByItem = 'datasetSingleCellUidListByItem',
   datasetSingleCellUidListByRow = 'datasetSingleCellUidListByRow',
 

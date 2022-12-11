@@ -47,7 +47,7 @@ const SingleCellElm: FC<{
     const validate = async () => {
       try {
         const validator = validatorFactory();
-        validator(SingleCell.editedValue);
+        await validator(SingleCell.editedValue);
         setSingleCell({
           ...SingleCell,
           error: [],
