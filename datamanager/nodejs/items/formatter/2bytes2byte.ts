@@ -22,7 +22,10 @@ export class ItemFormatter2bytes2byte {
       for (const header of Object.keys(item)) {
         const isTarget = this.formatTargetList.includes(this.labelFormatter.format(header).collectedLabel);
         if (isTarget) {
-          formatedData[header] = new Moji(item[header]).convert('kana', 'HtoZ').convert('alphanumeric', 'ZtoH').toString();
+          formatedData[header] = new Moji(item[header])
+            .convert('kana', 'HtoZ')
+            .convert('alphanumeric', 'ZtoH')
+            .toString();
         } else {
           formatedData[header] = item[header];
         }
