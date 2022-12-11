@@ -37,8 +37,10 @@ type Props = {
 
 const orgRoundAtSix = (value: number): string => {
   // NOTE: 小数点６桁で丸める
-  const roundedValue = String(Math.round(value * 1000000) / 1000000);
-  return `${roundedValue}${new Array(6 - roundedValue.split('.')[1]?.length).fill('0').join('')}`;
+  if (Number.isNaN(value)) {
+    return (0).toFixed(6);
+  }
+  return value.toFixed(6);
 };
 
 const convertLngLat = (LngLat: LngLat): LngLatString => {
