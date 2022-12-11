@@ -85,6 +85,7 @@ const DatasetItem: FC<{
             borderRadius="full"
             as="span"
             display="inline-block"
+            className="ost-error"
           >
             {errorLength}件
           </Box>
