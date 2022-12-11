@@ -1,5 +1,6 @@
 import {
   validateAddress,
+  validateCityName,
   validateDayOfWeek,
   validateLatLng,
   validateNo,
@@ -21,6 +22,8 @@ export const useValidator = (params: { dataType: Dataset.DataType }) => {
         return validateRegionCode.validateDataType;
       case 'regionname':
         return validateRegionName.validateDataType;
+      case 'cityname':
+        return validateCityName.validateDataType;
       case 'poi':
         return validatePoi.validateDataType;
       case 'day_of_week':
@@ -60,6 +63,8 @@ export const useLabel2DataType = () => {
         return 'no';
       case '都道府県名':
         return 'regionname';
+      case '市区町村名':
+        return 'cityname';
       case '開始時間':
         return 'time';
       case '終了時間':

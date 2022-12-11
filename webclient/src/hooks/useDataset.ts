@@ -8,6 +8,8 @@ import {
   datasetSingleCellAtom,
   datasetSingleCellListByItemSelector,
   datasetSingleCellListByRowSelector,
+  datasetSingleCellListSelector,
+  datasetSingleCellUidListAtom,
   datasetSingleCellUidListByItemAtom,
   datasetSingleCellUidListByRowAtom,
   datasetSingleRowAtom,
@@ -99,6 +101,13 @@ export const useImportDataset = () => {
       }
   );
 
+  const importDatasetSingleCellsUid = useRecoilCallback(
+    ({ set }) =>
+      (params: { datasetUid: string }, singleCellUids: string[]) => {
+        set(datasetSingleCellUidListAtom(params), singleCellUids);
+      }
+  );
+
   const executeImport: (params: {
     datasetName: string;
     headers: string[];
@@ -122,6 +131,7 @@ export const useImportDataset = () => {
       }),
       {}
     );
+    const singleCells: Dataset.SingleCell[] = [];
 
     for (const row of datasetRows) {
       for (const item of datasetItems) {
@@ -130,6 +140,7 @@ export const useImportDataset = () => {
         const singleCell = importDatasetSingleCell({ datasetUid }, item.uid, row.uid, data);
         itemCells[item.uid].push(singleCell);
         rowCells[row.uid].push(singleCell);
+        singleCells.push(singleCell);
       }
     }
 
@@ -139,6 +150,10 @@ export const useImportDataset = () => {
     for (const rowUid of Object.keys(rowCells)) {
       importDatasetSingleCellsOfRow({ datasetUid, rowUid }, rowCells[rowUid]);
     }
+    importDatasetSingleCellsUid(
+      { datasetUid },
+      singleCells.map((sc) => sc.uid)
+    );
 
     return datasetUid;
   };
@@ -150,37 +165,40 @@ export const useGetDataset = (params: { datasetUid: string }) => {
   const [dataset, setDataset] = useState<{ [key: string]: number | string }[]>([]);
   const items = useRecoilValue(datasetItemListSelector(params));
   const rows = useRecoilValue(datasetSingleRowListSelector(params));
+  const cellsUid = useRecoilValue(datasetSingleCellUidListAtom(params));
+  const cells = useRecoilValue(datasetSingleCellListSelector(params));
 
-  const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
-    const cells = snapshot.getPromise(datasetSingleCellListByRowSelector({ ...params, rowUid }));
-    return cells;
-  });
-
-  useEffect(() => {
-    const parseDataset = async () => {
-      const dataset: { [key: string]: number | string }[] = [];
+  const parseDataset = () => {
+    const dataset: { [key: string]: number | string }[] = [];
+    if (params.datasetUid && cellsUid.length === cells.length) {
       for (const row of rows) {
         const singleRow: { [key: string]: number | string } = {};
-        const rowCells = await getRowCells(row.uid);
+        const rowCells = cells.filter((c) => c.singleRowUid === row.uid);
         for (const item of items) {
           const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
-          if (!item.normalizedLabel || !singleCell) break;
-          singleRow[item.normalizedLabel] = singleCell.editedValue || '';
+          if (item.normalizedLabel && singleCell) {
+            singleRow[item.normalizedLabel] = singleCell.editedValue || '';
+          }
         }
         dataset.push(singleRow);
       }
-      setDataset(dataset);
-    };
-    parseDataset();
-  }, []);
+    }
+    return dataset;
+  };
 
-  return dataset;
+  useEffect(() => {
+    if (params.datasetUid && cellsUid.length === cells.length) {
+      const dataset = parseDataset();
+      setDataset(dataset);
+    }
+  }, [cells]);
+
+  return { dataset, parseDataset };
 };
 
-export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
-  const [dataset, setDataset] = useState<{ [key: string]: number | string }[]>([]);
+export const useParseDatasetWithNewItems = (params: { datasetUid: string }) => {
   const originalItems = useRecoilValue(datasetItemListSelector(params));
-  const currentItems = originalItems.map((item) => item.rowLabel || '');
+  const currentItems = originalItems.map((item) => item.normalizedLabel || '');
   const missingItems = schemeValidator
     .getMissingItems({
       current_items: currentItems,
@@ -210,21 +228,18 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
     }
   });
   const rows = useRecoilValue(datasetSingleRowListSelector(params));
+  const cellsUid = useRecoilValue(datasetSingleCellUidListAtom(params));
+  const cells = useRecoilValue(datasetSingleCellListSelector(params));
 
-  const getRowCells = useRecoilCallback(({ snapshot }) => (rowUid: string) => {
-    const cells = snapshot.getPromise(datasetSingleCellListByRowSelector({ ...params, rowUid }));
-    return cells;
-  });
-
-  useEffect(() => {
-    const parseDataset = async () => {
-      const dataset: { [key: string]: number | string }[] = [];
-
+  const parseDataset = async () => {
+    if (params.datasetUid && cellsUid.length === cells.length) {
+      const dataset: { [key: string]: string }[] = [];
       for (const row of rows) {
-        const singleRow: { [key: string]: number | string } | any = {};
-        const rowCells = await getRowCells(row.uid);
+        const singleRow: { [key: string]: string } | any = {};
         for (const item of sortedItems) {
-          const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
+          const singleCell = cells.find(
+            (cell) => cell.singleRowUid === row.uid && cell.itemUid === item.uid
+          );
           if (singleCell && item.normalizedLabel) {
             singleRow[item.normalizedLabel] = singleCell.editedValue
               ? singleCell.editedValue
@@ -243,12 +258,13 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
         }
         dataset.push(singleRow);
       }
-      setDataset(dataset);
-    };
-    parseDataset();
-  }, []);
+      return dataset;
+    } else {
+      return;
+    }
+  };
 
-  return dataset;
+  return { parseDataset };
 };
 
 export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string }) => {
@@ -301,6 +317,13 @@ export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string })
       }
   );
 
+  const resetSingleCellUidList = useRecoilCallback(
+    ({ reset }) =>
+      (params: { datasetUid: string }) => {
+        reset(datasetSingleCellUidListAtom(params));
+      }
+  );
+
   const resetSingleCellUidListByItem = useRecoilCallback(
     ({ reset }) =>
       (params: { datasetUid: string; itemUid: string }) => {
@@ -345,6 +368,7 @@ export const useRemoveDatasetFromLocalstorage = (params: { datasetUid: string })
         resetSingleRow({ ...params, singleRowUid });
         resetSingleCellUidListByRow({ ...params, rowUid: singleRowUid });
       }
+      resetSingleCellUidList({ datasetUid: params.datasetUid });
       resetDataset({ uid: params.datasetUid });
       setExecuting(false);
     }, 100);

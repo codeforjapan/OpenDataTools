@@ -40,7 +40,8 @@ const StepCardWithImage = ({ image, children, stepNum }: StepCardProps) => {
 
 export const Map: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
-  const dataset = useGetDataset({ datasetUid: dataset_uid || '' });
+
+  const { dataset } = useGetDataset({ datasetUid: dataset_uid || '' });
   const csvFile = useRecoilValue(datasetAtom({ uid: dataset_uid || '' }));
 
   const description = (point: any) => {

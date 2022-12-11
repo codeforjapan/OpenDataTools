@@ -260,6 +260,31 @@ export const datasetSingleCellAtom = atomFamily<
   ],
 });
 
+// セル単位データのuidリスト
+export const datasetSingleCellUidListAtom = atomFamily<string[], { datasetUid: string }>({
+  key: AtomKeys.datasetSingleCellUidList,
+  default: [],
+  effects: [
+    ({ setSelf, onSet, node }) => {
+      db.datasetSingleCellUids.get(String(node.key)).then((v) => {
+        if (v) {
+          setSelf(v.uids);
+        }
+      });
+
+      onSet((newVal, _, isReset) => {
+        if (newVal instanceof DefaultValue || isReset) {
+          db.datasetSingleCellUids.delete(String(node.key));
+        } else {
+          if (newVal.length > 0) {
+            db.datasetSingleCellUids.put({ nodeKey: String(node.key), uids: newVal });
+          }
+        }
+      });
+    },
+  ],
+});
+
 // itemでまとめたセル単位データのuidリスト
 export const datasetSingleCellUidListByItemAtom = atomFamily<
   string[],
@@ -313,6 +338,27 @@ export const datasetSingleCellUidListByRowAtom = atomFamily<
       });
     },
   ],
+});
+
+// セル単位データのリスト
+export const datasetSingleCellListSelector = selectorFamily<
+  Dataset.SingleCell[],
+  { datasetUid: string }
+>({
+  key: SelectorKeys.datasetSingleCellList,
+  get:
+    ({ datasetUid }) =>
+    ({ get }) => {
+      const uidList = get(datasetSingleCellUidListAtom({ datasetUid }));
+      const datasetSingleCells = [];
+      for (const singleCellUid of uidList) {
+        const singleCell = get(datasetSingleCellAtom({ datasetUid, singleCellUid }));
+        if (singleCell) {
+          datasetSingleCells.push(singleCell);
+        }
+      }
+      return datasetSingleCells;
+    },
 });
 
 // itemでまとめたセル単位データのリスト
