@@ -17,7 +17,6 @@ export type OstInputProps = {
   helperText?: string;
   errorMessage?: string;
   value?: string | number;
-  changeValue?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const OstInput = forwardRef<InputProps & OstInputProps, 'input'>((props, ref) => {
@@ -30,13 +29,7 @@ export const OstInput = forwardRef<InputProps & OstInputProps, 'input'>((props, 
       isInvalid={isError}
     >
       {props.label && <OstFormLabel>{props.label}</OstFormLabel>}
-      <Input
-        ref={ref}
-        value={props.value}
-        onChange={(e) => props.changeValue?.(e)}
-        placeholder={props.placeholder}
-        {...props}
-      />
+      <Input ref={ref} value={props.value} placeholder={props.placeholder} {...props} />
       {!isError && props.helperText ? (
         <FormHelperText>{props.helperText}</FormHelperText>
       ) : (

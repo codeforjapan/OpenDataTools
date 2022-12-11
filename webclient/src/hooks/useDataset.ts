@@ -226,9 +226,17 @@ export const useGetDatasetWithNewItems = (params: { datasetUid: string }) => {
         for (const item of sortedItems) {
           const singleCell = rowCells.find((cell) => cell.itemUid === item.uid);
           if (singleCell && item.normalizedLabel) {
-            singleRow[item.normalizedLabel] = singleCell.editedValue || singleCell.rowValue || '';
+            singleRow[item.normalizedLabel] = singleCell.editedValue
+              ? singleCell.editedValue
+              : singleCell.rowValue
+              ? singleCell.rowValue
+              : '';
           } else if (singleCell && !item.normalizedLabel && item.rowLabel) {
-            singleRow[item.rowLabel] = singleCell.editedValue || singleCell.rowValue || '';
+            singleRow[item.rowLabel] = singleCell.editedValue
+              ? singleCell.editedValue
+              : singleCell.rowValue
+              ? singleCell.rowValue
+              : '';
           } else {
             singleRow[item.rowLabel!] = '';
           }

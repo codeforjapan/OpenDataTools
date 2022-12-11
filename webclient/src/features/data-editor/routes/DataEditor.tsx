@@ -1,34 +1,34 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { MdOutlineMap } from 'react-icons/md';
-import { ArrowBackIcon, ArrowForwardIcon, DownloadIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, DownloadIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
+  Flex,
   Grid,
   GridItem,
-  Flex,
-  Avatar,
-  Text,
+  Icon,
   Modal,
-  ModalOverlay,
-  ModalHeader,
-  ModalCloseButton,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
   useDisclosure,
-  Icon,
 } from '@chakra-ui/react';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstButton } from '../../../components/Elements/OstButton';
 import {
+  DataEditorCompleteButton,
+  DataEditorLatLng,
   DataEditorMain,
   DataEditorSidenav,
-  DataEditorLatLng,
-  DataEditorCompleteButton,
 } from '../../../components/Editor';
 import { Link, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { datasetAtom, datasetItemListSelector } from '../../../stores/dataset';
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
+import { datasetItemListSelector, datasetAtom } from '../../../stores/dataset';
 import { useGetDatasetWithNewItems } from '../../../hooks/useDataset';
 import { exportCsv } from '../../../utils/exportCsv';
 import civitanFinished from '../../../assets/civitan_finished.png';
@@ -45,11 +45,14 @@ export const DataEditor: FC = () => {
 
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [selectedItemUid, setItemUid] = useState<string>();
-  const dataset = useRecoilValue(datasetAtom({ uid: dataset_uid || '' }));
+  const refresh = useRecoilRefresher_UNSTABLE(datasetAtom({ uid: dataset_uid || '' }));
 
-  const datasetWithNewItems = useGetDatasetWithNewItems({
-    datasetUid: String(dataset_uid),
-  });
+  const datasetWithNewItems = useGetDatasetWithNewItems({ datasetUid: String(dataset_uid) });
+
+  const downloadCsv = () => {
+    refresh();
+    exportCsv(datasetWithNewItems);
+  };
 
   // NOTE: 緯度経度のitemチェックのため
   const datasetItemList = useRecoilValue(
@@ -94,7 +97,7 @@ export const DataEditor: FC = () => {
             view="skeleton"
             size="L"
             iconLeft={<Avatar bg="bg.active" size="md" p="12px" icon={<DownloadIcon />} />}
-            onClick={() => exportCsv(datasetWithNewItems)}
+            onClick={() => downloadCsv()}
           >
             ダウンロード
           </OstButton>
@@ -131,7 +134,7 @@ export const DataEditor: FC = () => {
               iconRight={<Icon as={DownloadIcon} w={6} h={6} />}
               onClick={() => {
                 onDownloadClose();
-                exportCsv(datasetWithNewItems); // 完成したcsvのダウンロード
+                downloadCsv(); // 完成したcsvのダウンロード
                 onPreviewOpen();
               }}
             >
