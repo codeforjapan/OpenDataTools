@@ -23,9 +23,6 @@ jobs:
         run: yarn test
       - name: License Datamanager Node.js
         run: yarn generate:license
-      - name: Install packages
-        run: yarn install
-        working-directory: webclient
       - name: License Webclient
         run: yarn generate:license
         working-directory: webclient
