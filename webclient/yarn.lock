@@ -7706,11 +7706,6 @@ murmurhash-js@^1.0.0:
   resolved "https://registry.npmjs.org/murmurhash-js/-/murmurhash-js-1.0.0.tgz"
   integrity sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw==
 
-nan@^2.14.1:
-  version "2.16.0"
-  resolved "https://registry.npmjs.org/nan/-/nan-2.16.0.tgz"
-  integrity sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==
-
 nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz"
@@ -9668,13 +9663,6 @@ slash@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/slash/-/slash-4.0.0.tgz"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
-
-sleep@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.npmjs.org/sleep/-/sleep-6.3.0.tgz"
-  integrity sha512-+WgYl951qdUlb1iS97UvQ01pkauoBK9ML9I/CMPg41v0Ze4EyMlTgFTDDo32iYj98IYqxIjDMRd+L71lawFfpQ==
-  dependencies:
-    nan "^2.14.1"
 
 sockjs@^0.3.24:
   version "0.3.24"
