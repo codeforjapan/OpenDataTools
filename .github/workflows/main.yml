@@ -1,5 +1,5 @@
 name: Lint n Test
-on: [ push, pull_request ]
+on: [push, pull_request]
 defaults:
   run:
     working-directory: datamanager/nodejs
@@ -21,3 +21,11 @@ jobs:
         run: yarn build
       - name: Test
         run: yarn test
+      - name: License Datamanager Node.js
+        run: yarn generate:license
+      - name: Install packages
+        run: yarn install
+        working-directory: webclient
+      - name: License Webclient
+        run: yarn generate:license
+        working-directory: webclient

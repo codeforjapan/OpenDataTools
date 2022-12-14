@@ -46,7 +46,8 @@
     "lint:eslint": "eslint ./src --ext '**/*.{js,jsx,ts,tsx}'",
     "format": "yarn format:eslint && yarn format:prettier",
     "format:eslint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
-    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'"
+    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
+    "generate:license": "npx generate-license-file --input package.json --output LICENSE.txt --overwrite"
   },
   "browserslist": {
     "production": [
@@ -69,6 +70,7 @@
     "@typescript-eslint/parser": "^5.33.1",
     "eslint": "^8.22.0",
     "eslint-plugin-react": "^7.30.1",
+    "generate-license-file": "^2.0.0",
     "prettier": "^2.7.1"
   }
 }

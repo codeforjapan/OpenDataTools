@@ -17,7 +17,8 @@
     "format:eslint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
     "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
     "format:stylelint": "stylelint --fix '**/*.{css,scss,sass}'",
-    "build": "tsc"
+    "build": "tsc",
+    "generate:license": "npx generate-license-file --input package.json --output LICENSE.txt --overwrite"
   },
   "devDependencies": {
     "@types/encoding-japanese": "^2.0.0",
