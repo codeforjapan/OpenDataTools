@@ -19,6 +19,7 @@ declare namespace Dataset {
 
   interface SingleCell {
     uid: string;
+    datasetUid: string;
     itemUid: string;
     singleRowUid: string;
     rowValue: string | number | null;

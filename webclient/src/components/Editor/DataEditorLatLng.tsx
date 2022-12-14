@@ -3,7 +3,7 @@ import { Box, Flex, Grid, GridItem, layout, Text } from '@chakra-ui/react';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useLabel2DataType, useValidator } from '../../hooks/useValidate';
+import { label2DataType, validatorFactory } from '../../utils/validator';
 import {
   datasetItemAtom,
   datasetItemListSelector,
@@ -23,7 +23,6 @@ type Props = {
 export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [validatorDataType, setValidatorDataType] = useState<Dataset.DataType>(null);
-  const label2DataType = useLabel2DataType();
 
   // セルに対応する名称も表示するため、「名称」項目を取得
   const datasetItemList = useRecoilValue(
@@ -68,8 +67,6 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     rowNum,
     nameSingleCellUid,
   }) => {
-    const latValidatorFactory = useValidator({ dataType: 'lat' });
-    const lngValidatorFactory = useValidator({ dataType: 'lng' });
     const [singleRow, setSingleRow] = useRecoilState(
       datasetSingleCellListByRowSelector({
         datasetUid: String(dataset_uid),
@@ -109,7 +106,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     const validateLatValue = () => {
       if (!latCell) return;
       try {
-        const validator = latValidatorFactory();
+        const validator = validatorFactory('lat');
         validator(latCell.editedValue);
         setLatCell({
           ...latCell,
@@ -128,7 +125,7 @@ export const DataEditorLatLng: FC<Props> = ({ selectedItemUid }) => {
     const validateLngValue = () => {
       if (!lngCell) return;
       try {
-        const validator = lngValidatorFactory();
+        const validator = validatorFactory('lng');
         validator(lngCell.editedValue);
         setLngCell({
           ...lngCell,

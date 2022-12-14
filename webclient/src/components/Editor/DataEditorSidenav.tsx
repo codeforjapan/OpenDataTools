@@ -38,7 +38,7 @@ const DatasetItem: FC<{
     return item?.uid === selectedItemUidState;
   }, [LatLngUids, selectedItemUidState]);
 
-  const SingleCellUidListByItem = useRecoilValue(
+  const SingleCellListByItem = useRecoilValue(
     datasetSingleCellListByItemSelector({
       datasetUid: String(datasetUid),
       itemUid: String(itemUid),
@@ -46,8 +46,8 @@ const DatasetItem: FC<{
   );
 
   const errorLength = useMemo(() => {
-    return SingleCellUidListByItem.filter((i) => i.error.length > 0).length;
-  }, [SingleCellUidListByItem]);
+    return SingleCellListByItem.filter((i) => i.error.length > 0).length;
+  }, [SingleCellListByItem]);
 
   return (
     <Flex
