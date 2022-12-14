@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 import { Head } from '../Head';
 import { useLocation } from 'react-router-dom';
@@ -8,6 +8,7 @@ type StepLayoutProps = {
   children: React.ReactNode;
   headingText: string;
   pageTitle: string;
+  intro: string;
   uid?: string;
   isProcessFinished?: boolean;
 };
@@ -127,12 +128,13 @@ export const StepLayout = (props: StepLayoutProps) => {
           </Flex>
         </Box>
         <Box mx={4} borderBottomRadius={20} bg="white">
-          <Box textStyle="h1" p={10}>
+          <Box textStyle="h1" p={10} pb={5}>
             {/* 2022/10/2時点 chakra-uiのバグ？でHeadingに直接textStyleを指定できない*/}
             <Heading as="h1" fontSize="inherit" fontWeight="inherit" textAlign="center">
               {props.headingText}
             </Heading>
           </Box>
+          <Center mb={8}>{props.intro}</Center>
           <Box p={10} pt={0}>
             {props.children}
           </Box>

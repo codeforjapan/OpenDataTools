@@ -361,6 +361,7 @@ export const AutoConvert: FC = () => {
       headingText={
         isAllProgressFinished ? 'データの自動変換が完了しました' : 'データを自動変換しています'
       }
+      intro="アップロードしたファイル内容を確認し検証前に必要な変換を行っています"
       isProcessFinished={isAllProgressFinished}
     >
       {!isAllProgressFinished && (
@@ -427,7 +428,7 @@ export const AutoConvert: FC = () => {
               px={8}
               py={2}
             >
-              次のステップではデータ項目名の整合を行います
+              次のステップにすすむと、政府が公開している「推奨データセット」のデータ項目名と整合を行っていただきます
             </Text>
           </Flex>
         )}

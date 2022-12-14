@@ -29,6 +29,7 @@ export const NormalizeLabel: FC = () => {
     <StepLayout
       pageTitle="データ項目名を整合させる"
       headingText="データ項目名を整合させる"
+      intro="変換が完了したCSVファイルと、政府が公開している「推奨データセット」のデータ項目名と整合を行います"
       uid={dataset_uid}
       isProcessFinished={isFormatSelected && isCheckFinished}
     >

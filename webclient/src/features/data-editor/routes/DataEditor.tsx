@@ -78,8 +78,13 @@ export const DataEditor: FC = () => {
   }, [latLngUids, selectedItemUid]);
 
   return (
-    <StepLayout pageTitle="データ形式確認" headingText="データ形式確認" uid={dataset_uid}>
-      <Grid gridTemplateColumns="200px 1fr" mt={4}>
+    <StepLayout
+      pageTitle="データ形式確認"
+      headingText="データ形式確認"
+      intro="項目名別に細かく修正ポイントが表示されますので、メッセージに従ってデータ形式を修正してください"
+      uid={dataset_uid}
+    >
+      <Grid gridTemplateColumns="200px 1fr">
         <GridItem borderRight="1px solid" borderColor="inputAreaBorder.active">
           <DataEditorSidenav
             selectedItemUid={selectedItemUid}

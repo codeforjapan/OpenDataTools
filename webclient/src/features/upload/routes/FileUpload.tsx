@@ -45,6 +45,7 @@ export const FileUpload: FC = () => {
           ? 'CSVファイルをアップロードしてください'
           : '以下のCSVファイルがアップロードされました'
       }
+      intro="検証を行いたいファイルを下記の枠内にドラッグ＆ドロップしてください"
     >
       {isFilesMultiple && (
         <Flex alignItems="center" px={6} py={4} mb={10} bg="information.bg.alert" borderRadius={8}>
@@ -53,13 +54,19 @@ export const FileUpload: FC = () => {
         </Flex>
       )}
       {!csvName && (
-        <Center>検証を行いたいファイルを下記の枠内にドラッグ＆ドロップしてください</Center>
+        <Flex mt={6} alignItems="center" px={6} py={4} bg={'information.bg.alert'} borderRadius={8}>
+          <InfoOutlineIcon />
+          <Text ml={6} fontSize="md">
+            Excel（.xls/.xlsx）のファイルはアップロード対応していませんので、Excelファイルの場合はファイル形式を「CSV
+            UTF-8(コンマ区切り)(.csv)」で保存した状態で、アップロードしてください。
+          </Text>
+        </Flex>
       )}
       {!csvName ? (
         <div {...getRootProps()}>
           <Box
             p={20}
-            mt={10}
+            mt={8}
             border="4px dashed"
             borderColor="icon.active"
             borderRadius={20}
