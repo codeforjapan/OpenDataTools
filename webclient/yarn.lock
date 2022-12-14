@@ -2088,9 +2088,9 @@
   integrity sha512-etY8yCd2eAiZ/7kONFPLKAjFo1IQ1IICwhocCATD8I1peAeKmo3lEFGoRomeMkLKhiJOAeE/Uoy5gzyrQRj7lg==
 
 "@geolonia/normalize-japanese-addresses@^2.7.2":
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/@geolonia/normalize-japanese-addresses/-/normalize-japanese-addresses-2.7.2.tgz#cd531e8e2dc82b3bf874692adc1e642aa55be76e"
-  integrity sha512-590DaENe/iBbkz/85A/to11k9AfbHt2bdVRiNqNlBK62ZDqDIa7ESYTpVak/2EQXvV3bk77eEYMln3JGU7ZvkQ==
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/@geolonia/normalize-japanese-addresses/-/normalize-japanese-addresses-2.7.3.tgz#26c8ddc6f54e31eb747bb043efe0ba4fa6ed1438"
+  integrity sha512-Gc1FI2oS8SjpL6l5Avkj+qcdBMbOIhUpZoETXgydxXMtvM2b9bVVQ7+YtlnBo4NDVIwFPSxaqeRqsXasig/mtg==
   dependencies:
     "@geolonia/japanese-numeral" "^0.1.16"
     isomorphic-unfetch "^3.1.0"
@@ -7484,7 +7484,7 @@ lower-case@^2.0.2:
 
 lru-cache@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-6.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
@@ -10987,7 +10987,7 @@ y18n@^5.0.5:
 
 yallist@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yaml@^1.10.0, yaml@^1.10.2, yaml@^1.7.2:

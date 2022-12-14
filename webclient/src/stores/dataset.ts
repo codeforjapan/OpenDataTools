@@ -1,4 +1,5 @@
 import { atom, atomFamily, selector, selectorFamily, DefaultValue } from 'recoil';
+import { label2DataType, validatorFactory } from '../utils/validator';
 import { db } from './db';
 import { AtomKeys, SelectorKeys } from './recoil_keys';
 
@@ -240,14 +241,25 @@ export const datasetSingleCellAtom = atomFamily<
   key: AtomKeys.datasetSingleCell,
   default: null,
   effects: [
-    ({ setSelf, onSet, node }) => {
-      db.cells.get(String(node.key)).then((v) => {
+    ({ setSelf, onSet, node, getPromise }) => {
+      db.cells.get(String(node.key)).then(async (v) => {
         if (v) {
-          setSelf(v.singleCell);
+          const item = await getPromise(
+            datasetItemAtom({ datasetUid: v.singleCell.datasetUid, itemUid: v.singleCell.itemUid })
+          );
+          const validator = validatorFactory(label2DataType(String(item?.normalizedLabel)));
+          try {
+            await validator(v.singleCell.editedValue);
+            setSelf({ ...v.singleCell, error: [] });
+          } catch (error: any) {
+            if (error.message) {
+              setSelf({ ...v.singleCell, error: [{ message: error.message, status: 'warning' }] });
+            }
+          }
         }
       });
 
-      onSet((newVal, _, isReset) => {
+      onSet(async (newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
           db.cells.delete(String(node.key));
         } else {
