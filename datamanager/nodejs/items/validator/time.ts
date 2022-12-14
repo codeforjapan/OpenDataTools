@@ -1,4 +1,4 @@
-import { containMultibyte } from '../../utils/multibyte';
+import { Moji } from '../../utils/multibyte';
 
 export class ItemValidatorTime {
   static INT_EXP = /[^0-9]/;
@@ -7,7 +7,7 @@ export class ItemValidatorTime {
       throw new Error('時間表記は文字列である必要があります。');
     }
 
-    const isMultibyte = containMultibyte(data);
+    const isMultibyte = new Moji(data).doesContain('non-ascii');
     if (isMultibyte) {
       throw new Error('時間表記は半角である必要があります。');
     }
