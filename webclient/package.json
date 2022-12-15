@@ -45,7 +45,8 @@
     "lint:eslint": "eslint ./src --ext '**/*.{js,jsx,ts,tsx}'",
     "format": "yarn format:eslint && yarn format:prettier",
     "format:eslint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
-    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'"
+    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
+    "generate:license": "npx generate-license-file --input package.json --output LICENSE.txt --overwrite"
   },
   "browserslist": {
     "production": [
