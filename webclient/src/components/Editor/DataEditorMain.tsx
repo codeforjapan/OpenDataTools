@@ -3,7 +3,7 @@ import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useLabel2DataType, useValidator } from '../../hooks/useValidate';
+import { label2DataType, validatorFactory } from '../../utils/validator';
 import {
   datasetItemAtom,
   datasetItemListSelector,
@@ -31,7 +31,6 @@ const SingleCellElm: FC<{
   datasetUid,
   selectedItemUid,
 }) => {
-  const validatorFactory = useValidator({ dataType: validatorDataType });
   const datasetItem = useRecoilValue(
     datasetItemAtom({ datasetUid: datasetUid, itemUid: String(selectedItemUid) })
   );
@@ -46,7 +45,7 @@ const SingleCellElm: FC<{
     if (!SingleCell || datasetItem?.dataType !== validatorDataType) return;
     const validate = async () => {
       try {
-        const validator = validatorFactory();
+        const validator = validatorFactory(validatorDataType);
         await validator(SingleCell.editedValue);
         setSingleCell({
           ...SingleCell,
@@ -62,7 +61,7 @@ const SingleCellElm: FC<{
       }
     };
     validate();
-  }, [SingleCell?.editedValue, validatorFactory]);
+  }, [SingleCell?.editedValue]);
 
   const handleChangeData = (v: string) => {
     if (!SingleCell) return;
@@ -134,7 +133,6 @@ const SingleCellElm: FC<{
 export const DataEditorMain: FC<Props> = ({ selectedItemUid }) => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
   const [validatorDataType, setValidatorDataType] = useState<Dataset.DataType>(null);
-  const label2DataType = useLabel2DataType();
 
   // セルに対応する名称も表示するため、「名称」項目を取得
   const datasetItemList = useRecoilValue(

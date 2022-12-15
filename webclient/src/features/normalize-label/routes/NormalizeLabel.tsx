@@ -110,7 +110,7 @@ export const NormalizeLabel: FC = () => {
             ステップ２に戻る
           </OstNavLink>
           <OstNavLink
-            to={`/${dataset_uid}/data-editor`}
+            onClick={() => (window.location.href = `/${dataset_uid}/data-editor`)}
             isDisabled={!isFormatSelected || !isCheckFinished}
             iconRight={<Avatar size="md" p="12px" icon={<ArrowForwardIcon />} />}
           >

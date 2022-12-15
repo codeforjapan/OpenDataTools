@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "@geolonia/normalize-japanese-addresses": "^2.7.2",
-    "encoding-japanese": "^2.0.0",
-    "moji": "^0.5.1"
+    "encoding-japanese": "^2.0.0"
   }
 }

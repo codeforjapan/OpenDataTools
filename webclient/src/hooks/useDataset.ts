@@ -76,6 +76,7 @@ export const useImportDataset = () => {
         const uid = uuid();
         const singleCell: Dataset.SingleCell = {
           uid,
+          datasetUid: params.datasetUid,
           itemUid,
           singleRowUid,
           rowValue,
