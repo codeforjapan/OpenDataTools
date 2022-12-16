@@ -24,11 +24,11 @@ import { schemeValidator, itemsListOfPublicFacilities } from 'opendatatool-datam
 export const useImportDataset = () => {
   const datasets = useRecoilValue(datasetListSelector);
 
-  const importDataset = useRecoilCallback(({ set }) => (datasetName: string) => {
+  const importDataset = useRecoilCallback(({ set }) => (datasetName: string, rowLength: number) => {
     const uid = uuid();
     const datasetUidList = [...datasets.map((d) => d?.uid || ''), uid];
     set(datasetUidListAtom, datasetUidList);
-    set(datasetAtom({ uid }), { uid, datasetName: datasetName });
+    set(datasetAtom({ uid }), { uid, datasetName, rowLength });
     return uid;
   });
 
@@ -114,7 +114,7 @@ export const useImportDataset = () => {
     headers: string[];
     rowDatas: { [header: string]: string }[];
   }) => string = ({ datasetName, headers, rowDatas }) => {
-    const datasetUid = importDataset(datasetName);
+    const datasetUid = importDataset(datasetName, rowDatas.length);
     const datasetItems = importDatasetItems({ datasetUid }, headers);
     const datasetRows = importDatasetRows({ datasetUid }, rowDatas.length);
 
