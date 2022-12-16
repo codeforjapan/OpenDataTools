@@ -22,7 +22,7 @@ export class SchemeFormatterItemLabel {
     availableDayOfWeekName: { collectValue: '利用可能曜日', whiteList: ['利用可能日'] },
     openTime: { collectValue: '開始時間', whiteList: ['開始時刻'] },
     closeTime: { collectValue: '終了時間', whiteList: ['終了時刻'] },
-    availableDateTimeAdditional: { collectValue: '利用可能日時特記事項', whiteList: ['特記事項'] },
+    availableDateTimeAdditional: { collectValue: '利用可能時間特記事項', whiteList: ['特記事項'] },
     description: { collectValue: '説明', whiteList: [''] },
     barrierFreeInformation: { collectValue: 'バリアフリー情報', whiteList: ['バリアフリー', 'バリアフリ-情報'] },
     urk: { collectValue: 'URL', whiteList: ['url'] },

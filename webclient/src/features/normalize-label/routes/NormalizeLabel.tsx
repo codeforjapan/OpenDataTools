@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Avatar, Box, Flex, Text, Spinner } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { useParams } from 'react-router-dom';
@@ -7,15 +7,16 @@ import { NormalizeDatasetItemLabel } from '../../../components/Editor';
 import { StepLayout } from '../../../components/Layout';
 import { OstNavLink } from '../../../components/Elements/OstLink';
 import { OstSelect } from '../../../components/Elements/OstSelect';
-import { datasetItemUidListAtom } from '../../../stores/dataset';
+import { datasetAtom, datasetItemUidListAtom } from '../../../stores/dataset';
 
 export const NormalizeLabel: FC = () => {
   const { dataset_uid } = useParams<{ dataset_uid: string }>();
+  const dataset = useRecoilValue(datasetAtom({ uid: dataset_uid! }));
   const datasetItemUidList = useRecoilValue(
     datasetItemUidListAtom({ datasetUid: String(dataset_uid) })
   );
-  const [isFormatSelected, setIsFormatSelected] = useState<boolean>(false);
-  const isCheckFinished = true; //TODO: 確認終了のステータスを監視する
+  const [isFormatSelected, setIsFormatSelected] = useState(false);
+  const [isCheckFinished, setIsCheckFinished] = useState(false);
 
   const handleSelectFormat = (value: string) => {
     if (value !== '') {
@@ -24,6 +25,23 @@ export const NormalizeLabel: FC = () => {
       setIsFormatSelected(false);
     }
   };
+
+  useEffect(() => {
+    if (!dataset) return;
+    if (dataset.rowLength < 150) {
+      setTimeout(() => {
+        setIsCheckFinished(true);
+      }, 5000);
+    } else if (dataset.rowLength < 300) {
+      setTimeout(() => {
+        setIsCheckFinished(true);
+      }, 10000);
+    } else if (dataset.rowLength < 450) {
+      setTimeout(() => {
+        setIsCheckFinished(true);
+      }, 15000);
+    }
+  }, [dataset]);
 
   return (
     <StepLayout

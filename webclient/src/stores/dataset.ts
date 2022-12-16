@@ -211,7 +211,7 @@ export const datasetSingleRowListSelector = selectorFamily<
     ({ datasetUid }) =>
     ({ get }) => {
       const uidList = get(datasetSingleRowUidListAtom({ datasetUid }));
-      const datasetSingleRows = [];
+      const datasetSingleRows: any[] = [];
       for (const singleRowUid of uidList) {
         const singleRow = get(datasetSingleRowAtom({ datasetUid, singleRowUid }));
         if (singleRow) {
@@ -261,10 +261,10 @@ export const datasetSingleCellAtom = atomFamily<
 
       onSet(async (newVal, _, isReset) => {
         if (newVal instanceof DefaultValue || isReset) {
-          db.cells.delete(String(node.key));
+          await db.cells.delete(String(node.key));
         } else {
           if (newVal) {
-            db.cells.put({ nodeKey: String(node.key), singleCell: newVal });
+            await db.cells.put({ nodeKey: String(node.key), singleCell: newVal });
           }
         }
       });
