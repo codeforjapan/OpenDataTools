@@ -1,14 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { css } from '@emotion/react';
-
-const wrapperStyle = css`
-  display: grid;
-  grid-template-rows: 1fr auto;
-  grid-template-columns: 100%;
-  min-height: 100vh;
-  background-color: var(--chakra-colors-body-bg);
-`;
+import { Box } from '@chakra-ui/react';
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -16,8 +7,14 @@ type MainLayoutProps = {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div css={wrapperStyle}>
+    <Box
+      display="grid"
+      gridTemplateRows="1fr auto"
+      gridTemplateColumns="100%"
+      minHeight="100vh"
+      backgroundColor="body.bg"
+    >
       <main>{children}</main>
-    </div>
+    </Box>
   );
 };
