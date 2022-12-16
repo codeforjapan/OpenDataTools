@@ -7,7 +7,6 @@ import { FileUploadForMap } from '../features/upload-for-map';
 import { lazyImport } from '../utils/lazyImport';
 
 const { Home } = lazyImport(() => import('../features/home'), 'Home');
-// const { FileUpload } = lazyImport(() => import('../features/upload'), 'FileUpload');
 const { NormalizeLabel } = lazyImport(
   () => import('../features/normalize-label'),
   'NormalizeLabel'
@@ -15,7 +14,6 @@ const { NormalizeLabel } = lazyImport(
 const { AutoConvert } = lazyImport(() => import('../features/auto-convert'), 'AutoConvert');
 const { DataEditor } = lazyImport(() => import('../features/data-editor'), 'DataEditor');
 const { Map } = lazyImport(() => import('../features/map'), 'Map');
-const { Test } = lazyImport(() => import('../features/test'), 'Test');
 
 const App = () => {
   return (
@@ -39,7 +37,6 @@ export const publicRoutes = [
       { path: '/:dataset_uid/normalize-label', element: <NormalizeLabel /> },
       { path: '/:dataset_uid/data-editor', element: <DataEditor /> },
       { path: '/:dataset_uid/map', element: <Map /> },
-      { path: '/test', element: <Test /> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },
