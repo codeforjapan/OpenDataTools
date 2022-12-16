@@ -2,6 +2,7 @@ declare namespace Dataset {
   interface Dataset {
     uid: string;
     datasetName: string | null;
+    rowLength: number;
   }
 
   interface Item {
