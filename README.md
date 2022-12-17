@@ -104,6 +104,13 @@ $ sh webclient_dev.sh
     └── types # 型定義
 ```
 
+## 依存ライブラリ
+
+本アプリケーションでは [Geolonia Maps Embed for React](https://github.com/geolonia/embed-react) を使用しています。
+
+© [GSI Japan](https://www.gsi.go.jp/) | © [Geolonia](https://geolonia.com/) | © [OpenStreetMap](https://www.openstreetmap.org/)
+
+
 ## ライセンス
 
 本ソフトウェアは、[MIT ライセンス](./LICENSE.md)の元提供されています。
