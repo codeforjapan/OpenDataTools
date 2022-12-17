@@ -6,6 +6,10 @@ export const buttonTheme = {
     transitionDuration: 'normal',
     color: 'var(--chakra-colors-text-active)',
     backgroundColor: 'var(--chakra-colors-bg-active)',
+    '.chakra-avatar': {
+      color: 'inherit',
+      backgroundColor: 'bg.active',
+    },
     _focusVisible: {
       boxShadow: 'outline',
     },
@@ -16,6 +20,11 @@ export const buttonTheme = {
       color: 'var(--chakra-colors-text-disabled)',
       backgroundColor: 'var(--chakra-colors-white)',
       border: '1px solid var(--chakra-colors-border-disabled)',
+      '.chakra-avatar': {
+        color: 'inherit',
+        backgroundColor: 'transparent',
+        border: '1px solid currentColor',
+      },
     },
     _hover: {
       _disabled: {
