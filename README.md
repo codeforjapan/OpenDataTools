@@ -14,6 +14,10 @@
 
 ## アプリケーションについて
 
+### デモ
+
+http://open-data-tools.vercel.app/
+
 ### 留意事項
 
 2022年12月17日現在、本アプリケーションはプロトタイプ版であるため動作保証はいたしません。
@@ -70,7 +74,9 @@
 
 プロジェクトのルートで、
 
-`$ sh webclient_dev.sh`
+```
+$ sh webclient_dev.sh
+```
 
 を実行し、http://localhost:3000/ にアクセスしてください。
 
@@ -82,7 +88,6 @@
 ├── datamanager # データマネージャ（データ構造の分析/提案ロジック）
 │   └── nodejs # Node.js版
 ├── docs
-├── node_modules
 └── webclient # フロントアプリ
     ├── public
     ├── src
