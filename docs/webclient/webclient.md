@@ -37,5 +37,5 @@ const [singleData, setSingleData] = useRecoilState(
 
 という風にすれば値の取得と、更新ができるので比較的シンプルとおもっています。
 
-#実装における注意点
+# 実装における注意点
 datasetSingleData と datasetSingleDataUidList のように、個別データとデータのリストを別の Atom として管理しているため、データインポート時や、データの追加などをするときには、リストと個別データの両方の atom を更新するのを忘れないようにする必要があります。
