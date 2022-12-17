@@ -42,6 +42,7 @@ export const OstNavLink = forwardRef<LinkProps & OstNavLinkProps, 'button'>((pro
             }
           : {
               '.chakra-avatar': {
+                color: 'inherit',
                 backgroundColor: 'bg.active',
               },
             }
