@@ -106,7 +106,7 @@ $ sh webclient_dev.sh
 
 ## 依存ライブラリ
 
-本アプリケーションでは[Geolonia Maps](https://github.com/geoloniamaps/)を使用しています。 
+本アプリケーションでは [Geolonia Maps Embed for React](https://github.com/geolonia/embed-react) を使用しています。
 
 © [GSI Japan](https://www.gsi.go.jp/) | © [Geolonia](https://geolonia.com/) | © [OpenStreetMap](https://www.openstreetmap.org/)
 
