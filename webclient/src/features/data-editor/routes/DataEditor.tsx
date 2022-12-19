@@ -30,8 +30,6 @@ import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { datasetItemListSelector, datasetSingleCellListSelector } from '../../../stores/dataset';
 import { useParseDatasetWithNewItems } from '../../../hooks/useDataset';
-import civitanFinished from '../../../assets/civitan_finished.png';
-import civitanSearching from '../../../assets/civitan_searching.png';
 import { exportCsv } from '../../../utils/exportCsv';
 
 export const DataDownloader: FC<{ onDownloaded: () => void }> = ({ onDownloaded }) => {
@@ -141,9 +139,6 @@ export const DataEditor: FC = () => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Flex mt={6} mb={6} justify="center">
-              <img src={civitanFinished} />
-            </Flex>
             <Text>
               ここまでの作業ファイル（CSV）を、ご自身のパソコン環境にダウンロードしましょう。
             </Text>
@@ -175,9 +170,6 @@ export const DataEditor: FC = () => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Flex mt={6} mb={6} justify="center">
-              <img src={civitanSearching} />
-            </Flex>
             ここまでの作業ファイルが、マップ上に表示されるか気になりますよね？どんな表示になっているか見てみましょう！
           </ModalBody>
 
